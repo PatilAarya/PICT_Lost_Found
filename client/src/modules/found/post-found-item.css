@@ -1,0 +1,12 @@
+.post-found-item {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 600px;
+}
+
+.post-found-item__step {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

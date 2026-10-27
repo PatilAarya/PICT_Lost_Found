@@ -1,0 +1,41 @@
+/* The blur editor: a canvas showing one photo, with a dashed live
+   selection box drawn on top while the finder drags. */
+
+.photo-blur-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.photo-blur-editor__hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.photo-blur-editor__canvas-wrap {
+  position: relative;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  overflow: hidden;
+  touch-action: none; /* stops the page from scrolling while dragging on the photo */
+}
+
+.photo-blur-editor__canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.photo-blur-editor__drag-box {
+  position: absolute;
+  border: 2px dashed var(--berry);
+  background: color-mix(in srgb, var(--berry) 15%, transparent);
+  pointer-events: none;
+}
+
+.photo-blur-editor__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
