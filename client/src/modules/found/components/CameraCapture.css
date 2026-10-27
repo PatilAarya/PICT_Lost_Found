@@ -1,0 +1,97 @@
+/* Styling for the camera capture step of "post a found item". Uses the
+   shared design tokens (colours, spacing) defined in styles/tokens.css,
+   loaded globally by the app shell. */
+
+.camera-capture {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.camera-capture__live {
+  position: relative;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.camera-capture__video {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+.camera-capture__hidden-canvas {
+  display: none;
+}
+
+.camera-capture__live-actions {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.camera-capture__start {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.camera-capture__error {
+  color: var(--berry-ink);
+  font-size: 15px;
+}
+
+.camera-capture__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.camera-capture__thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid var(--frost);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.camera-capture__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.camera-capture__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.camera-capture__count {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin: 0;
+}

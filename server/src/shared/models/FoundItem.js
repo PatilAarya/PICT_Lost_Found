@@ -7,7 +7,11 @@ import { CATEGORIES, COLORS, FOUND_STATUS } from '../constants.js';
 import { locationSchema } from './locationSchema.js';
 
 const imageSchema = new mongoose.Schema(
-  { publicUrl: String, privateId: String, order: { type: Number, default: 0 } },
+  {
+    publicUrl: String,
+    privateId: { type: String, select: false },
+    order: { type: Number, default: 0 },
+  },
   { _id: false }
 );
 
@@ -15,7 +19,7 @@ const hiddenDetailSchema = new mongoose.Schema(
   {
     promptKey: { type: String, required: true },
     promptText: { type: String, required: true },
-    answer: { type: String, select: false },
+    answer: { type: String, required: true, select: false, trim: true },
   },
   { _id: false }
 );
@@ -47,5 +51,8 @@ const foundItemSchema = new mongoose.Schema(
   },
   { timestamps: { createdAt: true, updatedAt: false } }
 );
+
+foundItemSchema.index({ finderId: 1, status: 1 });
+foundItemSchema.index({ 'location.buildingId': 1, 'location.floorId': 1 });
 
 export const FoundItem = mongoose.model('FoundItem', foundItemSchema);
