@@ -1,0 +1,72 @@
+{
+  "buildings": [
+    {
+      "id": "main",
+      "name": "Main building (placeholder)",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/main-g.svg",
+          "areas": [
+            { "id": "entrance", "name": "Main entrance" },
+            { "id": "office", "name": "College office" },
+            { "id": "corridor", "name": "Ground corridor" }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "First floor",
+          "plan": "/floorplans/main-1.svg",
+          "areas": [
+            { "id": "classroom-101", "name": "Classroom 101" },
+            { "id": "classroom-102", "name": "Classroom 102" },
+            { "id": "staff-room", "name": "Staff room" }
+          ]
+        },
+        {
+          "id": "2",
+          "label": "Second floor",
+          "plan": "/floorplans/main-2.svg",
+          "areas": [
+            { "id": "seminar-hall", "name": "Seminar hall" },
+            { "id": "library", "name": "Library" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lab",
+      "name": "Lab building (placeholder)",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/lab-g.svg",
+          "areas": [
+            { "id": "canteen", "name": "Canteen" },
+            { "id": "parking", "name": "Two-wheeler parking" }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "First floor",
+          "plan": "/floorplans/lab-1.svg",
+          "areas": [
+            { "id": "computer-lab-1", "name": "Computer lab 1" },
+            { "id": "computer-lab-2", "name": "Computer lab 2" }
+          ]
+        },
+        {
+          "id": "2",
+          "label": "Second floor",
+          "plan": "/floorplans/lab-2.svg",
+          "areas": [
+            { "id": "electronics-lab", "name": "Electronics lab" },
+            { "id": "project-lab", "name": "Project lab" }
+          ]
+        }
+      ]
+    }
+  ]
+}

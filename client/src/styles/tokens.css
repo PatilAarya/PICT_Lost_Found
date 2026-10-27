@@ -1,0 +1,62 @@
+/*
+  Design tokens from DESIGN.md: the five brand colours, derived values, type scale,
+  spacing and radius. Every other stylesheet uses these variables, never raw hex codes.
+  Dark mode swaps the meaning of paper and ink using prefers-color-scheme.
+  Owned by Member 1 after Phase 0.
+*/
+:root {
+  --paper: #f1faee;
+  --ink: #1d3557;
+  --frost: #a8dadc;
+  --steel: #457b9d;
+  --berry: #e63946;
+
+  --berry-ink: #b02a37;
+  --paper-deep: color-mix(in srgb, var(--paper) 92%, var(--ink));
+  --ink-soft: color-mix(in srgb, var(--ink) 65%, var(--paper));
+
+  /* What each surface uses; dark mode changes these, not the brand colours. */
+  --bg: var(--paper);
+  --text: var(--ink);
+  --surface: var(--paper-deep);
+  --text-soft: var(--ink-soft);
+  --accent: var(--steel);
+  --focus: var(--steel);
+  --error-text: var(--berry-ink);
+  --line: var(--ink);
+
+  --font-heading: 'Archivo Variable', system-ui, sans-serif;
+  --font-body: 'Source Sans 3 Variable', system-ui, sans-serif;
+  --text-xs: 13px;
+  --text-sm: 15px;
+  --text-md: 17px;
+  --text-lg: 21px;
+  --text-xl: 28px;
+  --text-2xl: 38px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius: 4px;
+  --touch: 44px;
+  --content-max: 1100px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--ink);
+    --text: var(--paper);
+    --surface: color-mix(in srgb, var(--ink) 85%, var(--paper));
+    --text-soft: color-mix(in srgb, var(--paper) 70%, var(--ink));
+    --accent: var(--frost);
+    --focus: var(--frost);
+    /* Red is never small text in dark mode, so error text stays paper-coloured. */
+    --error-text: var(--paper);
+    --line: var(--paper);
+  }
+}

@@ -1,0 +1,138 @@
+/*
+  Layout of the app shell: top bar, main menu and page area. Mobile first:
+  the menu is a bar fixed to the bottom of the screen. From 900px wide it becomes
+  a left rail (DESIGN.md section 5). Also styles the login page.
+*/
+.shell {
+  min-height: 100vh;
+  padding-bottom: 72px;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.brand {
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.topbar-user {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.topbar .btn-quiet {
+  color: var(--paper);
+  border-color: var(--paper);
+}
+
+.role-tag {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--frost);
+  font-size: var(--text-xs);
+}
+
+.dev-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.dev-switcher select {
+  min-height: 36px;
+  font: inherit;
+}
+
+.mainnav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  overflow-x: auto;
+  background: var(--bg);
+  border-top: 2px solid var(--line);
+  z-index: 5;
+}
+
+.mainnav a {
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 var(--space-3);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mainnav a.active {
+  background: var(--frost);
+  color: var(--ink);
+}
+
+.content,
+.login {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+}
+
+.login {
+  max-width: 420px;
+  padding-top: var(--space-7);
+}
+
+.home-links {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.home-links a {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--line);
+  font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .shell {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto 1fr;
+    padding-bottom: 0;
+  }
+
+  .topbar {
+    grid-column: 1 / -1;
+  }
+
+  .mainnav {
+    position: static;
+    flex-direction: column;
+    border-top: 0;
+    border-right: 1px solid var(--frost);
+  }
+
+  .mainnav a {
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    padding: 0 var(--space-4);
+  }
+}

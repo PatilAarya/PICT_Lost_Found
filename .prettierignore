@@ -1,0 +1,15 @@
+node_modules
+dist
+coverage
+package-lock.json
+docs/prompts
+# Shared team docs: keep them exactly as written
+CLAUDE.md
+CONTRIBUTIONS.md
+DESIGN.md
+docs/CONTRACT.md
+docs/OWNERSHIP.md
+docs/PROJECT_BRIEF.md
+docs/TEAM_PLAN.md
+docs/contributions/member1.md
+docs/contributions/member3.md

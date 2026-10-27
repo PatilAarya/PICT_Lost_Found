@@ -1,0 +1,31 @@
+{
+  "desks": [
+    {
+      "id": "security-main-gate",
+      "name": "Security desk, main gate (placeholder)",
+      "type": "security_desk",
+      "buildingId": "main",
+      "floorId": "g",
+      "hours": "8:00 to 20:00, all days",
+      "nearBuildingIds": ["main"]
+    },
+    {
+      "id": "lab-office",
+      "name": "Lab building department office (placeholder)",
+      "type": "department_office",
+      "buildingId": "lab",
+      "floorId": "1",
+      "hours": "9:30 to 17:30, Monday to Saturday",
+      "nearBuildingIds": ["lab"]
+    },
+    {
+      "id": "admin-office",
+      "name": "Admin office (placeholder)",
+      "type": "admin_office",
+      "buildingId": "main",
+      "floorId": "g",
+      "hours": "10:00 to 17:00, Monday to Friday",
+      "nearBuildingIds": ["main", "lab"]
+    }
+  ]
+}

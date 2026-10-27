@@ -1,0 +1,255 @@
+/*
+  Plain styles for the STUB shared components (Phase 0). Uses tokens.css only.
+  Member 1 replaces these with the full design system (ticket anatomy, stamps,
+  pictograms) from DESIGN.md; class names may change, component props may not.
+*/
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch);
+  padding: 0 var(--space-4);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-lg {
+  min-height: 52px;
+  font-size: 18px;
+}
+
+.btn-primary,
+.btn-danger {
+  background: var(--berry);
+  color: var(--paper);
+  font-size: 18px;
+}
+
+.btn-secondary {
+  background: var(--steel);
+  color: #fff;
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.icon-button {
+  min-width: var(--touch);
+  min-height: var(--touch);
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.input {
+  min-height: var(--touch);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.field-hint {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.field-error {
+  margin: 0;
+  color: var(--error-text);
+  font-size: var(--text-sm);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  min-height: var(--touch);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--frost);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--frost);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+}
+
+.ticket {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  border: 2px solid var(--line);
+  border-left-width: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+.ticket-lost {
+  border-left-color: var(--berry);
+}
+
+.ticket-found {
+  border-left-color: var(--steel);
+}
+
+.ticket-body {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.ticket-meta {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.ticket-stub {
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-size: var(--text-sm);
+}
+
+.stamp {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border: 3px double currentColor;
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-weight: 700;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+}
+
+.stamp-berry {
+  color: var(--berry);
+}
+
+.stamp-steel {
+  color: var(--accent);
+}
+
+.stamp-ink {
+  color: var(--text);
+}
+
+.sheet {
+  width: min(100%, 640px);
+  margin: auto auto 0;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.sheet-header,
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.page-subtitle {
+  margin-top: 0;
+  color: var(--text-soft);
+}
+
+.toasts {
+  position: fixed;
+  bottom: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  gap: var(--space-2);
+  z-index: 10;
+}
+
+.toast {
+  padding: var(--space-3) var(--space-4);
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--paper);
+}
+
+.empty-state {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  border: 1px dashed var(--frost);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  margin: var(--space-6) auto;
+  border: 3px solid var(--frost);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.timeline,
+.stepper {
+  padding-left: var(--space-5);
+}
+
+.timeline-done {
+  font-weight: 700;
+}
+
+.stepper [aria-current='step'] {
+  font-weight: 700;
+  color: var(--accent);
+}
