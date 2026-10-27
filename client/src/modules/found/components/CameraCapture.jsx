@@ -31,11 +31,15 @@ export default function CameraCapture({ photos, onPhotosChange }) {
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
 
-    canvas.toBlob(async (rawBlob) => {
-      const smallBlob = await resizeImage(rawBlob);
-      addPhoto(smallBlob);
-      setBusy(false);
-    }, 'image/jpeg', 0.9);
+    canvas.toBlob(
+      async (rawBlob) => {
+        const smallBlob = await resizeImage(rawBlob);
+        addPhoto(smallBlob);
+        setBusy(false);
+      },
+      'image/jpeg',
+      0.9
+    );
   }
 
   // Shared by both the camera and the file-picker fallback, so a photo
@@ -69,10 +73,23 @@ export default function CameraCapture({ photos, onPhotosChange }) {
     <div className="camera-capture">
       {isStreaming && (
         <div className="camera-capture__live">
-          <video ref={videoRef} className="camera-capture__video" playsInline muted aria-label="Camera preview" />
+          <video
+            ref={videoRef}
+            className="camera-capture__video"
+            playsInline
+            muted
+            aria-label="Camera preview"
+          />
           <canvas ref={canvasRef} className="camera-capture__hidden-canvas" />
           <div className="camera-capture__live-actions">
-            <Button variant="primary" size="lg" icon="camera" loading={busy} onClick={capturePhoto} disabled={reachedLimit}>
+            <Button
+              variant="primary"
+              size="lg"
+              icon="camera"
+              loading={busy}
+              onClick={capturePhoto}
+              disabled={reachedLimit}
+            >
               Take photo
             </Button>
             <Button variant="quiet" size="lg" icon="close" onClick={stop}>
@@ -87,7 +104,13 @@ export default function CameraCapture({ photos, onPhotosChange }) {
           <Button variant="primary" size="lg" icon="camera" onClick={start} disabled={reachedLimit}>
             Open camera
           </Button>
-          <Button variant="quiet" size="lg" icon="upload" onClick={() => fileInputRef.current.click()} disabled={reachedLimit}>
+          <Button
+            variant="quiet"
+            size="lg"
+            icon="upload"
+            onClick={() => fileInputRef.current.click()}
+            disabled={reachedLimit}
+          >
             Choose photo instead
           </Button>
           <input
@@ -121,7 +144,9 @@ export default function CameraCapture({ photos, onPhotosChange }) {
         </ul>
       )}
 
-      <p className="camera-capture__count">{photos.length} of {MAX_PHOTOS} photos added</p>
+      <p className="camera-capture__count">
+        {photos.length} of {MAX_PHOTOS} photos added
+      </p>
     </div>
   );
 }

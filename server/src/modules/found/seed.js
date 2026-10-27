@@ -89,7 +89,13 @@ const DEMO_ITEMS = [
 function buildHiddenDetail(category) {
   const prompts = getHiddenDetailPrompts(category);
   const prompt = prompts[0];
-  return [{ promptKey: prompt.promptKey, promptText: prompt.promptText, answer: 'Demo answer for defense purposes.' }];
+  return [
+    {
+      promptKey: prompt.promptKey,
+      promptText: prompt.promptText,
+      answer: 'Demo answer for defense purposes.',
+    },
+  ];
 }
 
 // Insert demo found items.

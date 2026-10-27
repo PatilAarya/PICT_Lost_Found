@@ -2,9 +2,10 @@
 // Shows the logged-in user's own found-item posts as claim-ticket cards.
 // Uses GET /found/items (server defaults to finderId = current user unless ?all=true).
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PageHeader, EmptyState, Spinner, PropertyTag, Button } from '../../../shared/ui/index.js';
 import { api, errorMessage } from '../../../shared/api/client.js';
+import { formatDateTime, placeLabel } from '../utils/format.js';
 
 // Turn a server FoundItem doc into the plain shape PropertyTag expects.
 function toTicketItem(doc) {
@@ -14,10 +15,8 @@ function toTicketItem(doc) {
     category: doc.category,
     title: doc.title,
     status: doc.status,
-    // Placeholder label: we only have ids here, not human names, until the
-    // meta module's location list is wired in. Good enough to show progress.
-    locationLabel: `${doc.location?.buildingId || ''} / ${doc.location?.floorId || ''}`,
-    timeLabel: doc.foundAt ? new Date(doc.foundAt).toLocaleDateString() : '',
+    locationLabel: placeLabel(doc.location),
+    timeLabel: formatDateTime(doc.foundAt),
     imageUrl: doc.images?.[0]?.publicUrl || null,
   };
 }
@@ -25,6 +24,7 @@ function toTicketItem(doc) {
 export default function MyFoundItemsPage() {
   const [items, setItems] = useState(null); // null = loading
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     let cancelled = false;
@@ -47,9 +47,9 @@ export default function MyFoundItemsPage() {
         title="My found items"
         subtitle="Everything you've posted, and what's happening with it."
         actions={
-          <Link to="/found/new">
-            <Button>Post another</Button>
-          </Link>
+          <Button icon="plus" onClick={() => navigate('/found/new')}>
+            Post found item
+          </Button>
         }
       />
 
@@ -61,9 +61,9 @@ export default function MyFoundItemsPage() {
         <EmptyState
           title="You haven't posted any found items yet."
           action={
-            <Link to="/found/new">
-              <Button>Post a found item</Button>
-            </Link>
+            <Button icon="plus" onClick={() => navigate('/found/new')}>
+              Post found item
+            </Button>
           }
         />
       ) : null}

@@ -10,7 +10,8 @@ import { TOKEN_COOKIE, requireAuth } from '../../shared/middleware/requireAuth.j
 import { strictLimiter } from '../../shared/middleware/rateLimit.js';
 import { HttpError } from '../../shared/utils/httpError.js';
 import { sendMail } from '../../shared/utils/mailer.js';
-import { checkEmailDomain, checkLoginCode, createLoginCode } from './loginCodes.js';
+import { CODE_MINUTES, checkEmailDomain, checkLoginCode, createLoginCode } from './loginCodes.js';
+import { buildCodeEmail } from './codeEmail.js';
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const emailSchema = z.object({ email: z.email().toLowerCase() });
@@ -42,11 +43,14 @@ router.post('/request-code', strictLimiter, async (req, res) => {
   const { email } = emailSchema.parse(req.body);
   checkEmailDomain(email);
   const code = await createLoginCode(email);
-  await sendMail({
-    to: email,
-    subject: `Your PICT Lost and Found code: ${code}`,
-    text: `Your login code is ${code}. It works for 10 minutes.`,
-  });
+  try {
+    await sendMail({ to: email, ...buildCodeEmail(code, CODE_MINUTES) });
+  } catch (err) {
+    // The email server said no (wrong SMTP login, daily limit, no internet). Log the
+    // reason for us, and tell the user plainly what to do instead of a raw error.
+    console.error('[mail] could not send the login code:', err.message);
+    throw new HttpError(502, 'EMAIL_FAILED', 'We could not send the email. Try again in a minute.');
+  }
   // Tests cannot open an inbox, so only in test mode the code is returned in the response.
   res.json(config.isTest ? { ok: true, devCode: code } : { ok: true });
 });

@@ -1,80 +1,49 @@
 // HTTP routes for the found module: post a found item, list items, read
-// one item, get a signed Cloudinary upload, and get a desk suggestion.
-// Mounted at /api/found by app.js. See docs/CONTRACT.md section E.
+// one item, get a desk suggestion and the secret questions. Photo upload
+// routes live in imageRoutes.js. Mounted at /api/found by app.js.
+// See docs/CONTRACT.md section E.
 import express from 'express';
-import { z } from 'zod';
-import { v2 as cloudinary } from 'cloudinary';
 import { config } from '../../shared/config/index.js';
 import { requireAuth } from '../../shared/middleware/requireAuth.js';
 import { HttpError, readPagination } from '../../shared/utils/httpError.js';
 import { nextSerial } from '../../shared/utils/serial.js';
 import { services } from '../../shared/services/registry.js';
 import { FoundItem } from '../../shared/models/FoundItem.js';
-import { CATEGORIES, COLORS } from '../../shared/constants.js';
-import { suggestDesk, listDesks } from './desk-suggestion.js';
-
-cloudinary.config({
-  cloud_name: config.cloudinary.cloudName,
-  api_key: config.cloudinary.apiKey,
-  api_secret: config.cloudinary.apiSecret,
-});
+import { rankDesks, listDesks } from './desk-suggestion.js';
+import { createItemSchema } from './itemSchema.js';
+import imageRouter from './imageRoutes.js';
 
 const router = express.Router();
+const HOUR_MS = 60 * 60 * 1000;
 
-// Shapes the request body for creating a found item must match. zod
-// throws a readable error itself if the shape is wrong.
-const createItemSchema = z.object({
-  category: z.enum(CATEGORIES),
-  title: z.string().trim().min(1).max(80),
-  description: z.string().trim().max(500).optional(),
-  colors: z.array(z.enum(COLORS)).optional(),
-  brand: z.string().trim().max(60).optional(),
-  images: z
-    .array(
-      z.object({
-        publicUrl: z.string().url(),
-        privateId: z.string().min(1),
-        order: z.number().int().optional(),
-      })
-    )
-    .optional(),
-  location: z.object({
-    buildingId: z.string().min(1),
-    floorId: z.string().min(1),
-    areaId: z.string().optional(),
-    x: z.number().min(0).max(1).optional(),
-    y: z.number().min(0).max(1).optional(),
-  }),
-  foundAt: z.coerce.date(),
-  custody: z.object({
-    type: z.enum(['desk', 'finder']),
-    deskId: z.string().optional(),
-  }),
-  hiddenDetails: z
-    .array(
-      z.object({
-        promptKey: z.string().min(1),
-        promptText: z.string().min(1),
-        answer: z.string().trim().min(1),
-      })
-    )
-    .min(1, 'Add at least one hidden detail before posting.'),
-});
+router.use(imageRouter);
+
+// Write the first lines of the item's custody log (contract section D):
+// POSTED always, and DROPPED_AT_DESK when the finder takes it to a desk.
+async function logPosting(item, actorId) {
+  await services.appendCustody({ itemId: item._id, action: 'POSTED', actorId });
+  if (item.custody.type === 'desk') {
+    await services.appendCustody({
+      itemId: item._id,
+      action: 'DROPPED_AT_DESK',
+      actorId,
+      note: `Desk ${item.custody.deskId || ''}`.trim(),
+    });
+  }
+}
 
 // POST /api/found/items — post a newly found item.
 router.post('/items', requireAuth, async (req, res) => {
   const data = createItemSchema.parse(req.body);
   const serial = await nextSerial('found');
+  // Desk items have a deadline: after HOLD_HOURS_DESK they move to the admin office.
+  const expiresAt =
+    data.custody.type === 'desk' ? new Date(Date.now() + config.holdHoursDesk * HOUR_MS) : null;
 
-  const item = await FoundItem.create({
-    ...data,
-    serial,
-    finderId: req.user._id,
-  });
+  const item = await FoundItem.create({ ...data, serial, finderId: req.user._id, expiresAt });
 
-  // Tell the lost module to look for matching lost reports. This never
-  // throws even if matching fails internally; the stub/real function is
-  // responsible for its own error handling.
+  await logPosting(item, req.user._id);
+  // Ask the lost module to look for matching lost reports.
   await services.runMatching({ foundItemId: item._id });
 
   res.status(201).json({ item });
@@ -102,9 +71,9 @@ router.get('/items', requireAuth, async (req, res) => {
   res.json({ items, page, limit, total });
 });
 
-// GET /api/found/items/:id — read one found item. Hidden-detail answers
-// are never included here; only handler-only routes in Verify may ask
-// for them explicitly with .select('+hiddenDetails.answer').
+// GET /api/found/items/:id — read one found item. Hidden-detail answers and private
+// photo ids are never included (select: false in FoundItem.js); only handler routes
+// in Verify ask for them explicitly.
 router.get('/items/:id', requireAuth, async (req, res) => {
   const item = await FoundItem.findById(req.params.id);
   if (!item) {
@@ -113,37 +82,15 @@ router.get('/items/:id', requireAuth, async (req, res) => {
   res.json({ item });
 });
 
-// POST /api/found/images — return a signed payload for a direct browser
-// upload to Cloudinary. kind decides the folder: "public" photos are
-// shown to everyone, "private" photos (the unblurred originals) are
-// uploaded too, but their id is never sent back by any route except
-// ones a handler calls, which is how this project keeps them hidden.
-router.post('/images', requireAuth, (req, res) => {
-  const kind = req.body?.kind === 'private' ? 'private' : 'public';
-  const folder = `pict-lost-found/found-items-${kind}`;
-  const timestamp = Math.round(Date.now() / 1000);
-  const signature = cloudinary.utils.api_sign_request(
-    { timestamp, folder },
-    config.cloudinary.apiSecret
-  );
-
-  res.json({
-    timestamp,
-    folder,
-    signature,
-    apiKey: config.cloudinary.apiKey,
-    cloudName: config.cloudinary.cloudName,
-  });
-});
-
-// GET /api/found/desks/suggest — suggest the nearest desk for a location.
+// GET /api/found/desks/suggest — up to 3 desks for a location, best first.
+// `desk` is the first suggestion; `allDesks` lets the finder pick any other desk.
 router.get('/desks/suggest', requireAuth, (req, res) => {
   const { buildingId, floorId } = req.query;
   if (!buildingId || !floorId) {
     throw new HttpError(400, 'BAD_REQUEST', 'Pass buildingId and floorId to get a suggestion.');
   }
-  const desk = suggestDesk({ buildingId, floorId });
-  res.json({ desk, allDesks: listDesks() });
+  const desks = rankDesks({ buildingId, floorId }).slice(0, 3);
+  res.json({ desk: desks[0] || null, desks, allDesks: listDesks() });
 });
 
 // GET /api/found/hidden-detail-prompts?category=... — the secret

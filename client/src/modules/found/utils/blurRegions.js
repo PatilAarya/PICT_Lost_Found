@@ -32,7 +32,11 @@ function boxBlurPixels(imageData, radius) {
 
   for (let py = 0; py < height; py++) {
     for (let px = 0; px < width; px++) {
-      let rSum = 0, gSum = 0, bSum = 0, aSum = 0, count = 0;
+      let rSum = 0,
+        gSum = 0,
+        bSum = 0,
+        aSum = 0,
+        count = 0;
 
       for (let oy = -radius; oy <= radius; oy++) {
         const sy = py + oy;
