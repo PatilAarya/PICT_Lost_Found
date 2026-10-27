@@ -1,11 +1,17 @@
 // A request by someone who says a found item is theirs. Owned by Member 2 (verify module).
-// Fields follow docs/CONTRACT.md section C. The handover code is stored only as a hash
-// (select: false), so even a database leak does not reveal the 6-digit code.
+// Fields follow docs/CONTRACT.md section C, plus verify-only fields at the end.
+// The handover code is stored as an HMAC hash; the plain code is kept (hidden) only
+// until the claimant has seen it once, then deleted.
 import mongoose from 'mongoose';
 import { CLAIM_STATUS } from '../constants.js';
 
 const answerSchema = new mongoose.Schema(
   { promptKey: { type: String, required: true }, text: { type: String, default: '' } },
+  { _id: false }
+);
+
+const scoreSchema = new mongoose.Schema(
+  { promptKey: { type: String, required: true }, score: { type: Number, default: 0 } },
   { _id: false }
 );
 
@@ -24,6 +30,17 @@ const claimSchema = new mongoose.Schema(
     handoverExpiresAt: { type: Date },
     decidedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     decisionNote: { type: String, default: '' },
+
+    // Verify-only fields (added by Member 2).
+    scores: [scoreSchema],
+    lockoutCount: { type: Number, default: 0 },
+    itemStatusBefore: { type: String },
+    handoverCodePlain: { type: String, select: false },
+    handoverShownAt: { type: Date },
+    handoverUsedAt: { type: Date },
+    ownerConfirmedAt: { type: Date },
+    finderConfirmedAt: { type: Date },
+    releasedAt: { type: Date },
   },
   { timestamps: { createdAt: true, updatedAt: false } }
 );
