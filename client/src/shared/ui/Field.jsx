@@ -1,7 +1,9 @@
-// STUB form field pieces: Field { label, hint, error } wraps one input, and
+// Form field pieces: Field { label, hint, error } wraps one input, and
 // TextInput, TextArea and SelectInput are plain inputs styled the same way.
 // useId() links the label and messages to the input for screen readers.
+// An error replaces the hint and shows a pin icon, so it is not shown by colour alone.
 import { cloneElement, useId } from 'react';
+import { Icon } from './Icon.jsx';
 
 // A label above, the input, then a hint or an error below.
 export function Field({ label, hint, error, children }) {
@@ -18,7 +20,8 @@ export function Field({ label, hint, error, children }) {
       {input}
       {error ? (
         <p id={messageId} className="field-error">
-          {error}
+          <Icon name="pin" size={18} />
+          <span>{error}</span>
         </p>
       ) : null}
       {!error && hint ? (

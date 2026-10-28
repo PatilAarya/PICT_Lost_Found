@@ -1,39 +1,33 @@
 /*
-  Styles for the analytics charts, the integrity chain blocks and the flags list.
-  Chart colours follow DESIGN.md: main series --ink, highlight --berry, grid --frost.
-  In dark mode the "ink" bars become paper-coloured through the --line token.
+  Styles for the Analytics page (number cards come from shared StatCard), its charts,
+  and the flags list. Chart colours follow DESIGN.md: main series --ink, highlight
+  --berry, grid --frost. In dark mode the "ink" bars become paper through --line.
 */
-.big-numbers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-}
-
-.big-number {
-  display: grid;
-  padding: var(--space-3);
-  border: 2px solid var(--line);
-}
-
-.big-number-value {
-  font-family: var(--font-heading);
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.big-number-value small {
-  font-size: var(--text-md);
-}
-
-.big-number-label {
-  color: var(--text-soft);
-  font-size: var(--text-sm);
-}
-
 .date-range {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
   gap: var(--space-3);
+}
+
+.date-range label {
+  display: grid;
+  gap: 2px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.date-range .input {
+  width: 170px;
+}
+
+.insight {
+  max-width: none;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--berry);
+  border-radius: var(--radius);
+  background: var(--card);
 }
 
 .chart-grid-layout {
@@ -41,17 +35,14 @@
   gap: var(--space-5);
 }
 
+@media (min-width: 1100px) {
+  .chart-grid-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .chart {
-  margin: 0;
-}
-
-.chart figcaption {
-  margin-bottom: var(--space-2);
-  font-family: var(--font-heading);
-  font-weight: 700;
-}
-
-.chart svg {
+  display: block;
   width: 100%;
   height: auto;
 }
@@ -73,85 +64,21 @@
 .chart-value {
   fill: var(--text);
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
 }
 
-.integrity-summary {
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
-}
-
-/* Same look as a rubber stamp, in --berry, for a broken chain. */
-.integrity-broken {
-  padding: 2px var(--space-2);
-  border: 3px double var(--berry);
-  color: var(--berry);
-  font-family: var(--font-heading);
-  font-stretch: 75%;
-  font-weight: 700;
-  text-transform: uppercase;
-  transform: rotate(-4deg);
-}
-
-.chain-title {
-  margin: 0 0 var(--space-2);
-  font-weight: 600;
-}
-
-.chain-blocks {
-  display: flex;
-  gap: var(--space-4);
-  margin: 0;
-  padding: 0 0 var(--space-2);
-  overflow-x: auto;
-  list-style: none;
-}
-
-/* Each block is a small ticket; the ::before line links it to the block on its left. */
-.block {
-  position: relative;
-  display: grid;
-  flex: 0 0 auto;
-  min-width: 120px;
-  padding: var(--space-2);
-  border: 2px solid var(--line);
-  font-size: var(--text-xs);
-}
-
-.block + .block::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: calc(-1 * var(--space-4) - 2px);
-  width: var(--space-4);
-  border-top: 2px solid var(--line);
-}
-
-.block-broken {
-  border-color: var(--berry);
-  border-style: dashed;
-}
-
-.block-broken + .block::before,
-.block-broken::before {
-  border-top-color: var(--berry);
-}
-
-.block-seq {
-  font-family: var(--font-heading);
+.chart-value {
   font-weight: 700;
 }
 
-.block-hash {
-  color: var(--text-soft);
-}
-
+/* Flags list (FlagsPage.jsx) */
 .flag-row {
   display: grid;
   gap: var(--space-2);
-  padding: var(--space-3);
-  border: 2px solid var(--line);
+  padding: var(--space-4);
+  border: var(--card-border);
+  border-radius: var(--radius-card);
+  background: var(--card);
 }
 
 .flag-row p {
@@ -159,14 +86,6 @@
 }
 
 @media (min-width: 700px) {
-  .big-numbers {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .chart-grid-layout {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .flag-row {
     grid-template-columns: 1fr auto;
     align-items: center;

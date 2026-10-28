@@ -2,7 +2,7 @@
   "desks": [
     {
       "id": "security-main-gate",
-      "name": "Security desk, main gate (placeholder)",
+      "name": "Security desk, main gate",
       "type": "security_desk",
       "buildingId": "main",
       "floorId": "g",
@@ -11,7 +11,7 @@
     },
     {
       "id": "lab-office",
-      "name": "Lab building department office (placeholder)",
+      "name": "Lab building department office",
       "type": "department_office",
       "buildingId": "lab",
       "floorId": "1",
@@ -20,7 +20,7 @@
     },
     {
       "id": "admin-office",
-      "name": "Admin office (placeholder)",
+      "name": "Admin office",
       "type": "admin_office",
       "buildingId": "main",
       "floorId": "g",

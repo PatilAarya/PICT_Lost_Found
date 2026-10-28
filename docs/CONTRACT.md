@@ -52,6 +52,7 @@ Keep these props stable; internals may change.
 - Field { label, hint, error } with TextInput, TextArea, SelectInput, ChipSelect { options, value, onChange, multi }, ColorPicker { value, onChange, multi }
 - PropertyTag { item: { kind: lost|found, serial, category, title, status, locationLabel, timeLabel, imageUrl }, onClick, compact }
 - Stamp { status }, Pictogram { category, size }, Icon { name, size } (names: arrow-right arrow-left close camera search bell check lock clock pin upload trash plus filter user shield)
+  Added later (props of existing components unchanged): Icon names home package ticket inbox chart flag shield-check sign-out caret-down info warning refresh check-circle; StatCard { value, unit, label, hint, icon, tone }; BrandMark { size, light }.
 - Sheet { open, onClose, title }, useToast(), EmptyState { title, action, illustration }, Timeline { steps: [{ label, done, at }] }, PageHeader { title, subtitle, actions }, Spinner, Stepper { steps, current }
 - shared/location-picker: LocationPicker { value: Location, onChange, mode: "pin" | "area" }
 - Hooks: useAuth() -> { user, role, loading, requestCode, verifyCode, logout }

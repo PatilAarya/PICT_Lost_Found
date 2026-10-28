@@ -1,0 +1,155 @@
+/*
+  The History check page (IntegrityPage.jsx, ChainItem.jsx): one verdict card, a short
+  "how it works" card, and a searchable list of items that open into a timeline.
+  Red is used only for items whose history was changed.
+*/
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-left: 6px solid var(--steel);
+}
+
+.verdict .card-subtitle {
+  margin-bottom: 0;
+}
+
+.verdict-ok svg {
+  color: var(--steel);
+}
+
+.verdict-bad {
+  border-left-color: var(--berry);
+}
+
+.verdict-bad svg {
+  color: var(--berry);
+}
+
+.how-check-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-5);
+}
+
+.chain-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.chain-toolbar .input {
+  width: min(100%, 320px);
+}
+
+.chain-items {
+  display: grid;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.chain-item {
+  border-bottom: var(--divider);
+}
+
+/* The clickable row: serial, title, steps, status, arrow. */
+.chain-summary {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--space-2) var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chain-summary:hover {
+  background: var(--frost-tint);
+}
+
+.chain-serial {
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-weight: 700;
+}
+
+.chain-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chain-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: 12px;
+  background: var(--frost-tint);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.chain-status-bad {
+  background: var(--berry);
+  color: #ffffff;
+}
+
+.chain-item-broken .chain-serial {
+  color: var(--error-text);
+}
+
+.chain-detail {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-4) var(--space-5);
+}
+
+.link-button {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.hash-list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.hash-bad {
+  color: var(--error-text);
+  font-weight: 700;
+}
+
+/* On phones the row drops the step count to keep the title readable. */
+@media (max-width: 699px) {
+  .chain-summary {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .chain-summary > .muted,
+  .chain-serial {
+    display: none;
+  }
+}

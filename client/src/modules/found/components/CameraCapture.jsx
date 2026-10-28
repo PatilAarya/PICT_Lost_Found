@@ -10,6 +10,8 @@ import { Button, Icon } from '../../../shared/ui/index.js';
 import './CameraCapture.css';
 
 const MAX_PHOTOS = 4;
+// What each photo slot should show, in order (DESIGN brief: angle hints).
+const ANGLE_HINTS = ['Front', 'Back', 'Close-up', 'Any mark or sticker'];
 
 export default function CameraCapture({ photos, onPhotosChange }) {
   const { videoRef, isStreaming, error, start, stop } = useCameraStream();
@@ -100,51 +102,63 @@ export default function CameraCapture({ photos, onPhotosChange }) {
       )}
 
       {!isStreaming && (
-        <div className="camera-capture__start">
-          <Button variant="primary" size="lg" icon="camera" onClick={start} disabled={reachedLimit}>
-            Open camera
-          </Button>
-          <Button
-            variant="quiet"
-            size="lg"
-            icon="upload"
+        <div className="capture-options">
+          <button type="button" className="capture-option" onClick={start} disabled={reachedLimit}>
+            <Icon name="camera" size={32} />
+            <strong>Take photos</strong>
+            <span>Use this device's camera</span>
+          </button>
+          <button
+            type="button"
+            className="capture-option"
             onClick={() => fileInputRef.current.click()}
             disabled={reachedLimit}
           >
-            Choose photo instead
-          </Button>
+            <Icon name="upload" size={32} />
+            <strong>Upload photos</strong>
+            <span>Choose from your gallery or files</span>
+          </button>
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            capture="environment"
             multiple
             hidden
             onChange={handleFileChosen}
           />
-          {error && <p className="camera-capture__error">{error}</p>}
         </div>
       )}
+      {error && <p className="camera-capture__error">{error}</p>}
 
-      {photos.length > 0 && (
-        <ul className="camera-capture__thumbs">
-          {photos.map((photo) => (
+      {/* One slot per possible photo: filled slots show the photo, empty ones say what to shoot. */}
+      <ul className="camera-capture__thumbs">
+        {ANGLE_HINTS.map((hint, index) => {
+          const photo = photos[index];
+          if (!photo) {
+            return (
+              <li key={hint} className="camera-capture__slot">
+                <span className="tabular">{index + 1}</span>
+                <span>{hint}</span>
+              </li>
+            );
+          }
+          return (
             <li key={photo.id} className="camera-capture__thumb">
-              <img src={photo.previewUrl} alt="Photo of the found item" />
+              <img src={photo.previewUrl} alt={`Photo ${index + 1} of the found item`} />
               <button
                 type="button"
                 className="camera-capture__remove"
-                aria-label="Remove this photo"
+                aria-label={`Remove photo ${index + 1}`}
                 onClick={() => removePhoto(photo.id)}
               >
-                <Icon name="trash" size={16} />
+                <Icon name="trash" size={18} />
               </button>
             </li>
-          ))}
-        </ul>
-      )}
+          );
+        })}
+      </ul>
 
-      <p className="camera-capture__count">
+      <p className="camera-capture__count tabular">
         {photos.length} of {MAX_PHOTOS} photos added
       </p>
     </div>

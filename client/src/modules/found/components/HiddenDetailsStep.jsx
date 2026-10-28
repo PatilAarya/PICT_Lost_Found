@@ -3,7 +3,7 @@
 // These answers are what a claimant will later be asked to guess during
 // the owner check, without ever seeing this item's photos.
 import { useEffect, useState } from 'react';
-import { Field, TextArea, PageHeader } from '../../../shared/ui/index.js';
+import { Field, TextArea } from '../../../shared/ui/index.js';
 import { api } from '../../../shared/api/client.js';
 
 export default function HiddenDetailsStep({ category, value, onChange }) {
@@ -35,10 +35,6 @@ export default function HiddenDetailsStep({ category, value, onChange }) {
 
   return (
     <div className="hidden-details-step">
-      <PageHeader
-        title="Add a secret detail"
-        subtitle="Answer at least two. Only the real owner should know these answers."
-      />
       {prompts.map((prompt) => {
         const current = value.find((item) => item.promptKey === prompt.promptKey);
         return (

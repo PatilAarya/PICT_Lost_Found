@@ -1,24 +1,79 @@
-// Landing page for the Found module: buttons to post a new item or see your history.
-// Buttons use navigate() instead of wrapping a <button> in a <Link>, because a button
-// inside a link is invalid HTML and confuses keyboard and screen-reader users.
+// The Found page: everything about items you found, on one screen. Numbers on top,
+// your posted items as claim tickets, and a short "how posting works" guide beside them.
+// There is exactly one "Post found item" button, in the page header.
 import { useNavigate } from 'react-router-dom';
-import { PageHeader, Button } from '../../shared/ui/index.js';
+import {
+  Button,
+  EmptyState,
+  PageHeader,
+  PropertyTag,
+  Spinner,
+  StatCard,
+} from '../../shared/ui/index.js';
+import { useMyFoundItems } from './hooks/useMyFoundItems.js';
+import { countByStage, ticketFromItem } from './utils/ticket.js';
+import './found.css';
+
+const GUIDE = [
+  'Take 2 to 4 photos: front, back and any mark.',
+  'Blur anything private, like a phone screen or an ID number.',
+  'Answer two secret questions only the owner could answer.',
+  'Drop it at the suggested desk, or keep it and arrange a meetup.',
+];
 
 export function FoundHomePage() {
   const navigate = useNavigate();
+  const { items, error } = useMyFoundItems();
+  const counts = items ? countByStage(items) : { total: '-', atDesk: '-', returned: '-' };
+
   return (
     <section className="page">
       <PageHeader
         title="Found items"
-        subtitle="Found something on campus? Post it so the owner can find it."
+        subtitle="Found something on campus? Post it so the owner can get it back."
+        actions={
+          <Button icon="plus" size="lg" onClick={() => navigate('/found/new')}>
+            Post found item
+          </Button>
+        }
       />
-      <div className="found-home__actions">
-        <Button icon="plus" onClick={() => navigate('/found/new')}>
-          Post found item
-        </Button>
-        <Button variant="quiet" onClick={() => navigate('/found/mine')}>
-          My found items
-        </Button>
+      <div className="stat-grid">
+        <StatCard icon="package" label="Posted by you" value={counts.total} />
+        <StatCard icon="inbox" label="Waiting for the owner" value={counts.atDesk} />
+        <StatCard icon="check-circle" label="Returned to owner" value={counts.returned} />
+      </div>
+      <div className="found-layout">
+        <div className="card">
+          <h2 className="card-title">Your found items</h2>
+          <p className="card-subtitle">Newest first. The stamp shows where each item is now.</p>
+          {error ? <p className="field-error">{error}</p> : null}
+          {!items && !error ? <Spinner /> : null}
+          {items && items.length === 0 ? (
+            <EmptyState
+              illustration="no-reports"
+              title="Nothing posted yet. When you find something, use Post found item at the top."
+            />
+          ) : null}
+          {items && items.length > 0 ? (
+            <div className="ticket-stack">
+              {items.map((doc) => (
+                <PropertyTag key={doc._id} item={ticketFromItem(doc)} />
+              ))}
+            </div>
+          ) : null}
+        </div>
+        <aside className="card">
+          <h2 className="card-title">How posting works</h2>
+          <p className="card-subtitle">About two minutes, on your phone or laptop.</p>
+          <ol className="guide-list">
+            {GUIDE.map((line, index) => (
+              <li key={line}>
+                <span className="guide-number tabular">{index + 1}</span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ol>
+        </aside>
       </div>
     </section>
   );

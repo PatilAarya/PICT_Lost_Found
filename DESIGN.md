@@ -24,7 +24,7 @@ Derived values (allowed, nothing else):
 - --ink-soft: color-mix(in srgb, var(--ink) 65%, var(--paper)) for secondary text and disabled states.
 - Tints of --frost and --steel for hover and pressed states.
 
-Usage ratio on a typical screen: Honeydew 60%, Deep Space 20%, Frosted 10%,
+Usage ratio on a typical screen: Honeydew and frost-tinted surfaces 65%, Deep Space 20% (text, top bar, main buttons), Frosted 8%,
 Steel 7%, Strawberry 3%. Red stays rare so it keeps its meaning.
 
 Meaning of colour (never break it):
@@ -54,13 +54,19 @@ Frost becomes the accent for links and selected states.
 - Tabular numbers for serials, counts and times.
 
 ## 5. Layout, shape, spacing
-- Mobile first, 360px minimum. Desktop max content width 1100px.
-- Mobile: bottom navigation. Desktop (900px and up): a left rail.
-- Spacing scale: 4, 8, 12, 16, 24, 32, 48. Radius: 4px for fields and buttons;
+- Mobile first, 360px minimum. Desktop max content width 1180px, left-aligned next to the menu.
+- Mobile: bottom navigation with icon and label. Desktop (900px and up): a left rail, with the
+  staff-only pages grouped under "Desk tools".
+- Page background is a light frost tint (--page); content sits in near-white cards (--card)
+  with a 1px hairline border and 10px corners. Every page is a header plus a stack of cards,
+  so no screen is a blank field. Side panels (guides, previews) fill wide screens.
+- Spacing scale: 4, 8, 12, 16, 24, 32, 48. Radius: 6px for fields and buttons, 10px for cards;
   ticket corners are square with semicircle notches.
-- Borders do the work, not shadows: 2px solid --ink for tickets and focus areas,
-  1px --frost for dividers. No blurred shadows, no glass effects, no gradients.
-  One allowed lift: `box-shadow: 0 3px 0 var(--ink)` on a pressed or hovered ticket.
+- Borders do the work, not shadows: 2px solid --ink for tickets, hairlines for cards and
+  dividers. No blurred shadows, no glass effects, no gradients.
+  One allowed lift: `box-shadow: 0 3px 0 var(--ink)` on a pressed or hovered ticket or card.
+- Buttons placed side by side always have a 12px gap (.button-row). In forms, Back sits on the
+  left and the main action on the right.
 - Touch targets at least 44px.
 
 ## 6. The PropertyTag (the signature component)
@@ -93,19 +99,31 @@ Frost becomes the accent for links and selected states.
   filled --frost, and one small detail in --berry or --steel depending on lost or found.
 - Set: id_card, phone, laptop, wallet, keys, bottle, bag, earbuds, books, other.
 - Same family for 3 empty-state illustrations (no reports, no matches, no notifications).
-- Interface icons: Phosphor, thin weight only, from this list: arrow-right, arrow-left,
-  close, camera, search, bell, check, lock, clock, pin, upload, trash, plus, filter,
-  user, shield. No other icon library, no emojis, anywhere.
+- Interface icons: Phosphor, light weight (thin was too faint at menu size), from this list:
+  arrow-right, arrow-left, close, camera, search, bell, check, lock, clock, pin, upload, trash,
+  plus, filter, user, shield, plus for the menu and status: home, package, ticket, inbox,
+  chart, flag, shield-check, sign-out, caret-down, info, warning, refresh, check-circle.
+  No other icon library, no emojis, anywhere.
+- College logo: client/public/brand/pict-logo.png when present (BrandMark), otherwise a
+  drawn "PICT" badge.
 
 ## 9. Components
-- Primary button: --berry fill, --paper text, 18px bold (passes large-text contrast).
-  Secondary: --steel fill, white text. Quiet: transparent with 2px --ink border.
-  Danger uses the primary red plus a confirm step.
+- Primary button: --ink (navy) fill, white text (frost fill with ink text in dark mode).
+  Red is not used for normal actions any more, so it keeps its meaning: lost, attention, danger.
+  Secondary: --steel fill, white text. Quiet: card fill with a hairline border.
+  Danger: --berry fill, white 18px bold text, plus a confirm step.
+  Disabled buttons turn grey, never a faded red.
+- Number cards (StatCard): icon, label, big number and one line saying what it means.
 - Fields: 2px --ink border, label above, hint below in --ink-soft, error in --berry-ink
   with a pin icon and text that says what to do next.
 - Selection chips and category tiles: pictogram on top, name below; selected = --frost fill and 2px --ink border.
 - Timeline: a dashed --frost line with punched circle stops; done stops filled --ink.
-- Sheet (bottom sheet) for details and confirmations; Toast bottom centre.
+- Sheet for details and confirmations: a bottom sheet on phones, a centred window from 700px.
+  Toast bottom centre.
+- Stepper: a segmented progress bar plus one line "Step 2 of 8, Photos, Next: Blur", so no
+  step name is ever cut off.
+- Login: split screen. Navy half with the logo, one line, a sample ticket and four steps;
+  the form in a card on the other half. Demo account cards appear only in development.
 - Floor plan: area fills --frost, walls 2px --ink, hover and selected area --berry at
   30% with a --berry outline, pin is a small --berry marker with a --paper centre.
 - Charts: hand-built SVG. Main series --ink, secondary --steel, highlight --berry, grid lines --frost.

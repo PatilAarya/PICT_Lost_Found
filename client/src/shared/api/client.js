@@ -1,6 +1,6 @@
 // The one axios instance every module uses to call the server: api.get('/meta/desks').
 // withCredentials sends the httpOnly login cookie. In development it also adds the
-// x-dev-user header chosen in the DevUserSwitcher. Frozen after Phase 0.
+// x-dev-user header for the chosen demo account (DemoAccounts.jsx, UserMenu.jsx).
 import axios from 'axios';
 import { getDevUser } from '../auth/devUser.js';
 

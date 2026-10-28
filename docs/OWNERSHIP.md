@@ -6,7 +6,9 @@ then a tiny PR by the keeper, the same day.
 **Acting keeper and acting Found owner: Member 1.** Member 2 and Member 3 are both away.
 The team agreed (28 Oct 2026) that Member 1 acts as keeper of the frozen files and also
 maintains the Found module (bug fixes and finishing) until they are back. Member 2 still
-owns the Verify module; nobody else edits `modules/verify` or `Claim.js`. Every change made
+owns the Verify module. With the team's agreement (28 Oct 2026) Member 1 also redesigned the
+Verify screens (desk, analytics, history check) to match the new look; the Verify server code was
+not changed. Every change made
 on someone else's behalf is listed in `docs/contributions/member1.md`, so they can review it.
 
 ## Who builds what

@@ -1,0 +1,59 @@
+/*
+  Styles for the hand-drawn pictograms and empty-state art (shapes.jsx, EmptyArt.jsx).
+  Colours live here, not in the SVG, so dark mode works by changing CSS variables only.
+  currentColor is the text colour, so outlines are ink on light pages and paper on dark.
+*/
+.pictogram {
+  flex: none;
+  color: var(--text);
+  /* PropertyTag overrides this: red for lost, steel for found. */
+  --pg-detail: var(--steel);
+}
+
+.pg-line,
+.pg-fill,
+.pg-perf,
+.pg-cut {
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pg-line {
+  fill: none;
+  stroke: currentColor;
+}
+
+.pg-fill {
+  fill: var(--frost);
+  stroke: currentColor;
+}
+
+.pg-dot {
+  fill: var(--pg-detail);
+}
+
+/* Dashed frost lines: perforations and placeholder text in the empty states. */
+.pg-perf {
+  fill: none;
+  stroke: var(--frost);
+  stroke-dasharray: 4 5;
+}
+
+/* A line "cut out" of a filled shape, drawn in the page colour. */
+.pg-cut {
+  fill: none;
+  stroke: var(--bg);
+}
+
+/* An outline that hides what is behind it (the magnifying glass). */
+.pg-solid {
+  fill: var(--bg);
+}
+
+.empty-art {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  --pg-detail: var(--berry);
+}

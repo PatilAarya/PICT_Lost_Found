@@ -1,0 +1,123 @@
+/*
+  Layout of the Found screens: the Found page (list beside a guide) and the post flow
+  (step card beside a live ticket preview). On phones everything stacks in one column;
+  from 1000px the side panel sits on the right so the screen is used, not left blank.
+*/
+.found-layout,
+.post-layout {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .found-layout {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+
+  .post-layout {
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+
+  /* The preview stays in view while the step card scrolls. */
+  .post-aside {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+.ticket-stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.guide-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.guide-number {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--frost);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Step card: the fields, then a footer separated by a line. */
+.step-body {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.step-body .field {
+  margin-bottom: 0;
+}
+
+.step-footer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: var(--divider);
+}
+
+.step-label {
+  margin: 0;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.post-tip {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--frost-tint);
+  font-size: var(--text-sm);
+}
+
+/* Review step: label on the left, value on the right. */
+.review-list {
+  display: grid;
+  margin: 0;
+}
+
+.review-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: var(--divider);
+}
+
+.review-row dt {
+  color: var(--text-soft);
+}
+
+.review-row dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.success-card {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 640px;
+}
+
+.success-card p {
+  margin: 0;
+}

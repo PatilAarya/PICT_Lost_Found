@@ -48,3 +48,26 @@ export function ticketOf(item, status) {
 export function percent(value) {
   return `${Math.round((value || 0) * 100)}%`;
 }
+
+// Plain words for each custody action (CUSTODY_ACTIONS in shared/constants.js).
+const ACTION_WORDS = {
+  POSTED: 'Posted by the finder',
+  DROPPED_AT_DESK: 'Dropped at the desk',
+  RECEIVED_BY_HANDLER: 'Received by the desk',
+  STORED: 'Stored on the shelf',
+  CLAIM_SUBMITTED: 'Claim sent',
+  VERIFICATION_PASSED: 'Owner check passed',
+  VERIFICATION_FAILED: 'Owner check failed',
+  LOCKED_OUT: 'Claimant locked out',
+  APPROVED: 'Claim approved',
+  REJECTED: 'Claim rejected',
+  RELEASED: 'Handed to the owner',
+  TRANSFERRED_TO_ADMIN: 'Moved to the admin office',
+  EXPIRED: 'Expired',
+  DONATED: 'Donated',
+};
+
+// "DROPPED_AT_DESK" -> "Dropped at the desk".
+export function actionWord(action) {
+  return ACTION_WORDS[action] || String(action).replaceAll('_', ' ').toLowerCase();
+}

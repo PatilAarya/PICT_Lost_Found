@@ -1,0 +1,77 @@
+/*
+  The home page (HomePage.jsx): big action cards and the "how it works" steps.
+  The coloured left edge repeats the ticket idea: red for lost, steel for found.
+*/
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.action-card {
+  --pg-detail: var(--steel);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: var(--card-border);
+  border-left: 6px solid var(--steel);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.action-lost {
+  --pg-detail: var(--berry);
+  border-left-color: var(--berry);
+}
+
+.action-desk {
+  border-left-color: var(--ink);
+}
+
+.action-card:hover {
+  border-color: var(--line);
+  box-shadow: var(--lift);
+}
+
+.action-text {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+}
+
+.action-text strong {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+
+.action-text span {
+  color: var(--text-soft);
+}
+
+.how-it-works {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.how-it-works li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.how-number {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--frost);
+  color: var(--ink);
+  font-weight: 700;
+}

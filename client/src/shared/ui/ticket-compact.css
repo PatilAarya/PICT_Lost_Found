@@ -1,0 +1,59 @@
+/*
+  The compact claim ticket for lists (PropertyTag with compact): 72px tall,
+  no big stamp and no barcode; the status shows as a small stamp-word instead.
+  Builds on ticket.css, which must load first.
+*/
+.ticket-compact {
+  min-height: 72px;
+  grid-template-columns: minmax(0, 1fr) 60px;
+}
+
+.ticket-compact .ticket-main {
+  grid-template-columns: 12px 40px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+}
+
+.ticket-compact .ticket-hole {
+  width: 12px;
+  height: 12px;
+}
+
+.ticket-compact .ticket-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ticket-compact .ticket-text {
+  align-content: center;
+}
+
+/* Status word, then the place, on one line; a long place name is cut with "...". */
+.compact-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.compact-place {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ticket-compact .ticket-stub {
+  justify-content: center;
+  gap: 0;
+}
+
+.ticket-compact .stub-letter {
+  font-size: var(--text-md);
+}
+
+.ticket-compact .stub-number {
+  writing-mode: horizontal-tb;
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}

@@ -1,0 +1,195 @@
+/*
+  The split-screen login page (LoginPage.jsx, LoginIntro.jsx, DemoAccounts.jsx).
+  Phones: the navy intro is a short block on top, the form card below. From 900px:
+  two halves side by side, each filling the full height of the window.
+*/
+.login {
+  display: grid;
+  min-height: 100vh;
+}
+
+.login-intro {
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-4);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.login-college,
+.login-app {
+  margin: 0;
+}
+
+.login-college {
+  color: var(--frost);
+  font-size: var(--text-sm);
+}
+
+.login-app {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.login-headline {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--paper);
+  font-size: var(--text-xl);
+}
+
+/* The sample ticket and the steps are extra; phones skip them to reach the form fast. */
+.login-sample,
+.login-steps {
+  display: none;
+}
+
+.login-panel {
+  display: grid;
+  place-items: start center;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+  background: var(--page);
+}
+
+.login-card {
+  width: min(100%, 440px);
+  padding: var(--space-6) var(--space-5);
+  border: var(--card-border);
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+
+.login-card h1 {
+  margin-bottom: var(--space-2);
+}
+
+.login-note {
+  margin: 0 0 var(--space-4);
+  color: var(--text-soft);
+}
+
+.login-card .btn-lg {
+  width: 100%;
+}
+
+.login-card .button-row .btn-lg {
+  width: auto;
+  flex: 1;
+}
+
+.code-field {
+  font-size: var(--text-xl);
+  letter-spacing: 0.3em;
+}
+
+/* Demo accounts (development only) */
+.demo-accounts {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: var(--divider);
+}
+
+.demo-title {
+  margin: 0 0 var(--space-3);
+  color: var(--text-soft);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.demo-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.demo-card {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-xs);
+  text-align: center;
+  cursor: pointer;
+}
+
+.demo-card strong {
+  font-size: var(--text-sm);
+}
+
+.demo-card:hover {
+  border-color: var(--line);
+  background: var(--frost-tint);
+}
+
+@media (min-width: 900px) {
+  .login {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .login-intro {
+    align-content: center;
+    gap: var(--space-6);
+    padding: var(--space-7);
+  }
+
+  .login-headline {
+    font-size: var(--text-2xl);
+  }
+
+  .login-sample {
+    --ticket-surround: var(--ink);
+    display: block;
+    max-width: 460px;
+    transform: rotate(-2deg);
+  }
+
+  .login-steps {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 460px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .login-steps li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--frost);
+  }
+
+  .login-steps strong {
+    color: var(--paper);
+  }
+
+  .login-step-number {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1.5px solid var(--frost);
+    border-radius: 50%;
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  .login-panel {
+    place-items: center;
+  }
+}

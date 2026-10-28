@@ -1,26 +1,60 @@
-/* Styling for the camera capture step of "post a found item". Uses the
-   shared design tokens (colours, spacing) defined in styles/tokens.css,
-   loaded globally by the app shell. */
-
+/*
+  The photo step of "post found item" (CameraCapture.jsx): two big choice tiles
+  (camera or upload), the live camera view, and four photo slots that show what to
+  photograph next. Uses the shared design tokens from styles/tokens.css.
+*/
 .camera-capture {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.capture-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.capture-option {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-4);
+  border: 1.5px dashed color-mix(in srgb, var(--line) 40%, transparent);
+  border-radius: var(--radius-card);
+  background: var(--frost-tint);
+  color: var(--text);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.capture-option:hover:not(:disabled) {
+  border-style: solid;
+  border-color: var(--line);
+}
+
+.capture-option span {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.capture-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .camera-capture__live {
   position: relative;
-  border: 2px solid var(--ink);
-  border-radius: 4px;
   overflow: hidden;
+  border-radius: var(--radius-card);
   background: var(--ink);
 }
 
 .camera-capture__video {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
   display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: cover;
 }
 
 .camera-capture__hidden-canvas {
@@ -29,69 +63,84 @@
 
 .camera-capture__live-actions {
   position: absolute;
-  bottom: 16px;
+  bottom: var(--space-4);
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 12px;
-}
-
-.camera-capture__start {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
+  gap: var(--space-3);
 }
 
 .camera-capture__error {
-  color: var(--berry-ink);
-  font-size: 15px;
+  margin: 0;
+  color: var(--error-text);
+  font-size: var(--text-sm);
 }
 
 .camera-capture__thumbs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  list-style: none;
-  padding: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.camera-capture__thumb,
+.camera-capture__slot {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .camera-capture__thumb {
-  position: relative;
-  aspect-ratio: 1;
-  border: 1px solid var(--frost);
-  border-radius: 4px;
-  overflow: hidden;
+  border: 1px solid var(--line);
 }
 
 .camera-capture__thumb img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+}
+
+/* An empty slot: a dashed box naming the photo that should go there. */
+.camera-capture__slot {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2px;
+  padding: var(--space-2);
+  border: 1.5px dashed var(--hairline);
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+.camera-capture__slot .tabular {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
 }
 
 .camera-capture__remove {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 28px;
-  height: 28px;
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  border-radius: 4px;
+  top: var(--space-1);
+  right: var(--space-1);
+  display: grid;
+  place-items: center;
+  width: var(--touch);
+  height: var(--touch);
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 75%, transparent);
+  color: #ffffff;
   cursor: pointer;
 }
 
 .camera-capture__count {
-  color: var(--ink-soft);
-  font-size: 13px;
   margin: 0;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
 }
