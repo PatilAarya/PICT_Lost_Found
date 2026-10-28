@@ -73,10 +73,15 @@ function TicketStub({ item, compact }) {
   );
 }
 
+// Statuses that mean the story is over: the item is back with its owner, or nobody needs it.
+// These tickets get a dark "finished" edge instead of red or steel (DESIGN.md section 2).
+const FINISHED = ['recovered', 'released', 'closed', 'donated'];
+
 export function PropertyTag({ item, onClick, compact = false }) {
   // A clickable ticket is a real <button> so it works with the keyboard; otherwise <article>.
   const Tag = onClick ? 'button' : 'article';
   const classes = ['ticket', `ticket-${item.kind}`];
+  if (FINISHED.includes(item.status)) classes.push('ticket-finished');
   if (compact) classes.push('ticket-compact');
   if (onClick) classes.push('ticket-clickable');
 

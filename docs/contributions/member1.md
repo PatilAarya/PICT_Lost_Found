@@ -86,3 +86,17 @@ Branch keeper/env-and-email:
 - Tests: tests/matching.test.js (factors, threshold, sentence) and tests/routes.test.js
   (report matching, later found items, owner-only access, private saved items).
 - Docs: docs/explain/lost.md.
+
+## Notifications (Part B) and floor-plan picker (Part A5)
+- Server: Notification model, the real services.notify (save, Socket.IO emit to
+  user:<id>, email for HANDOVER_READY and ITEM_EXPIRING), routes for list, unread count,
+  mark read and mark all read, and a seed that adds alerts for matched demo reports.
+- Client: real useNotifications (live socket updates, toast in the app shell, bell count,
+  copies kept in sync with a browser event), Alerts page with New and Earlier groups.
+- LocationPicker: building and floor buttons, tap-to-pin floor plan (pinMaths.js,
+  FloorPlan.jsx) and room buttons as a keyboard-friendly fallback. Six placeholder floor
+  plans in client/public/floorplans (ids match locations.json; drop in real plans later).
+- Match engine: items found inside the lost window now say "found while you were missing
+  it"; items found under an hour after the window say "found within an hour of losing it".
+- Tests: notifications.test.js (notify and routes), pinMaths.test.js.
+- Docs: docs/explain/notifications.md.

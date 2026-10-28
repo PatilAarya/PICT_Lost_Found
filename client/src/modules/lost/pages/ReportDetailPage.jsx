@@ -57,6 +57,17 @@ export function ReportDetailPage() {
           </Button>
         }
       />
+      {report.status === 'recovered' ? (
+        <p className="finished-note">
+          <strong>Back with you.</strong> You collected this item, so we stopped looking. This page
+          stays as your record.
+        </p>
+      ) : null}
+      {report.status === 'closed' ? (
+        <p className="finished-note">
+          <strong>Report closed.</strong> We are no longer looking for this item.
+        </p>
+      ) : null}
       <div className="lost-layout lost-layout-detail">
         <div className="card">
           <h2 className="card-title">Possible matches</h2>

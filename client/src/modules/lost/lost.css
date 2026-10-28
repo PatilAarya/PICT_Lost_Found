@@ -15,6 +15,11 @@
   }
 }
 
+.lost-column {
+  display: grid;
+  gap: var(--space-5);
+}
+
 .report-list,
 .saved-list,
 .match-list,
@@ -237,4 +242,14 @@
 .factor-points {
   text-align: right;
   color: var(--text-soft);
+}
+
+/* The note at the top of a finished report: dark edge, like a finished ticket. */
+.finished-note {
+  max-width: none;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
 }
