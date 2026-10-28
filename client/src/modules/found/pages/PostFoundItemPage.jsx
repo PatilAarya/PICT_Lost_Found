@@ -1,14 +1,13 @@
 // The "post a found item" flow. This page only keeps track of which step is open,
 // moves between steps, and posts the item at the end. Each step's fields are in
-// StepBody.jsx, the card around them in StepCard.jsx, and the step texts in utils/steps.js.
+// StepBody.jsx, the card around them in shared/ui/StepCard.jsx, the texts in utils/steps.js.
 // A side panel shows a live preview of the claim ticket being built.
 import { useState } from 'react';
-import { PageHeader, PropertyTag, Stepper, useToast } from '../../../shared/ui/index.js';
+import { PageHeader, PropertyTag, StepCard, Stepper, useToast } from '../../../shared/ui/index.js';
 import { api, errorMessage } from '../../../shared/api/client.js';
 import { useFoundItemForm } from '../hooks/useFoundItemForm.js';
 import { useFoundImages } from '../hooks/useFoundImages.js';
 import { useObjectUrl } from '../hooks/useObjectUrl.js';
-import StepCard from '../components/StepCard.jsx';
 import StepBody from '../components/StepBody.jsx';
 import PostedSuccess from '../components/PostedSuccess.jsx';
 import { STEPS, canContinue } from '../utils/steps.js';
