@@ -81,7 +81,8 @@ Frost becomes the accent for links and selected states.
                           perforation (dashed --frost line, semicircle notches)
 ```
 - Paper is --paper with a 2px --ink border. The hole is a circle cut out in the page colour.
-- Lost tickets: the left edge strip is --berry. Found tickets: --steel.
+- No coloured edge strips anywhere (they look generated). Lost or found shows in the stub
+  letter (--berry L, --steel F) and the pictogram's small detail; finished tickets use --ink.
 - Photo (when present) replaces the pictogram, with a slight rounded corner and a 1px --ink border.
 - Compact version for lists: same anatomy, 72px tall, no stamp, status as a small stamp-word.
 

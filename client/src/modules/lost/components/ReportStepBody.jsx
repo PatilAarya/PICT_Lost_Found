@@ -5,6 +5,7 @@ import {
   ChipSelect,
   ColorPicker,
   Field,
+  PhotoPicker,
   Pictogram,
   TextArea,
   TextInput,
@@ -67,6 +68,11 @@ function DetailsStep({ form, update }) {
           onChange={(event) => update({ description: event.target.value })}
         />
       </Field>
+      <div className="field">
+        <p className="step-label">Photo (optional)</p>
+        <p className="field-hint">An old photo of the item helps you recognise it among matches.</p>
+        <PhotoPicker photo={form.photo} onChange={(photo) => update({ photo })} />
+      </div>
     </>
   );
 }

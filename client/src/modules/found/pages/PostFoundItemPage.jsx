@@ -7,7 +7,7 @@ import { PageHeader, PropertyTag, StepCard, Stepper, useToast } from '../../../s
 import { api, errorMessage } from '../../../shared/api/client.js';
 import { useFoundItemForm } from '../hooks/useFoundItemForm.js';
 import { useFoundImages } from '../hooks/useFoundImages.js';
-import { useObjectUrl } from '../hooks/useObjectUrl.js';
+import { useObjectUrl } from '../../../shared/media/useObjectUrl.js';
 import StepBody from '../components/StepBody.jsx';
 import PostedSuccess from '../components/PostedSuccess.jsx';
 import { STEPS, canContinue } from '../utils/steps.js';

@@ -100,3 +100,23 @@ Branch keeper/env-and-email:
   it"; items found under an hour after the window say "found within an hour of losing it".
 - Tests: notifications.test.js (notify and routes), pinMaths.test.js.
 - Docs: docs/explain/notifications.md.
+
+## Integration (Phase 2)
+- Readable place names everywhere (shared/location-picker/places.js): tickets and desk rows
+  say "Lab building, Ground floor, Canteen" instead of ids. Loaded once in the app shell.
+- server/src/story.test.js: the whole team story through the real routes of all four
+  modules (report, post, match and alert, receive, wrong then right answers, approve, code,
+  release, recovered, custody chain intact). Passes.
+- docs/DEMO.md: the day-before checklist and a 10-minute demo script.
+
+## Final UI polish (29 Oct 2026)
+- Removed every coloured edge stripe (tickets, home cards, menu, number cards, alerts,
+  notes); lost or found now shows in the stub letter and pictogram detail. DESIGN.md updated.
+- Alerts: plain rows; new ones keep the tinted icon and the word "New".
+- Camera: clear messages for blocked permission, busy camera, no camera, insecure page;
+  the live view is now attached after the video element exists (it stayed black before).
+- Optional photo on lost reports: shared PhotoPicker (take with the camera or upload),
+  POST /api/lost/photos (Cloudinary or server/uploads/lost), shown on the owner's ticket.
+  The camera hook, image resize and object-URL hook moved to client/src/shared/media.
+- scripts/dev.js starts the client only after the server answers, so no start-up
+  ECONNREFUSED message.

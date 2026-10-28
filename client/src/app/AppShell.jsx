@@ -1,11 +1,14 @@
 // The frame around every logged-in page: a top bar (logo, alerts bell, user menu),
 // the menu and the page itself. Menu items come from every module's nav.js, filtered
 // by role; items only staff can see are grouped under "Desk tools". CSS in app.css puts
-// the menu at the bottom on phones and as a left rail from 900px wide.
+// the menu at the bottom on phones and as a left rail from 900px wide. Pages wait for
+// the place names (shared/location-picker/places.js) so tickets never show raw ids.
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../shared/auth/useAuth.js';
 import { useNotifications } from '../shared/realtime/useNotifications.js';
-import { BrandMark, Icon } from '../shared/ui/index.js';
+import { loadPlaces } from '../shared/location-picker/places.js';
+import { BrandMark, Icon, Spinner } from '../shared/ui/index.js';
 import { getNavItems } from './moduleDiscovery.js';
 import { UserMenu } from './UserMenu.jsx';
 
@@ -43,6 +46,12 @@ export function AppShell() {
   const navItems = getNavItems(role);
   const mainItems = navItems.filter((item) => !isStaffOnly(item));
   const staffItems = navItems.filter(isStaffOnly);
+  const [placesReady, setPlacesReady] = useState(false);
+
+  // Load building and room names once, so every ticket can say "Lab building, Canteen".
+  useEffect(() => {
+    loadPlaces().then(() => setPlacesReady(true));
+  }, []);
 
   return (
     <div className="shell">
@@ -75,9 +84,7 @@ export function AppShell() {
           <MenuLink key={item.path} item={item} />
         ))}
       </nav>
-      <main className="content">
-        <Outlet />
-      </main>
+      <main className="content">{placesReady ? <Outlet /> : <Spinner />}</main>
     </div>
   );
 }

@@ -67,13 +67,13 @@
   gap: var(--space-1);
   padding: var(--space-4) var(--space-5);
   border: var(--card-border);
-  border-left: 4px solid var(--steel);
   border-radius: var(--radius-card);
   background: var(--card);
 }
 
-.stat-attention {
-  border-left-color: var(--berry);
+/* A number that needs action is written in dark red (the label still says what it is). */
+.stat-attention .stat-value {
+  color: var(--error-text);
 }
 
 .stat-top {

@@ -8,6 +8,7 @@ export function ReportSummary({ form, update }) {
     ['Name', form.title],
     ['Colours', form.colors.length > 0 ? form.colors.join(', ') : 'Not given'],
     ['Brand', form.brand || 'Not given'],
+    ['Photo', form.photo ? 'Added' : 'None'],
     ['Last seen', placeLabel(form.lastSeen)],
     ['Lost between', `${formatDateTime(form.lostFrom)} and ${formatDateTime(form.lostTo)}`],
   ];

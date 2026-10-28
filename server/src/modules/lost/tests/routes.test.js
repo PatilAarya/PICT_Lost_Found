@@ -125,3 +125,26 @@ describe('saved items', () => {
     expect(theirs.body.items).toHaveLength(0);
   });
 });
+
+describe('lost photos', () => {
+  it('stores an uploaded photo and serves it back', async () => {
+    await User.create({ name: 'Owner', email: 'owner@pict.edu', role: 'student' });
+    // A tiny fake JPEG: the route stores bytes as they are, the browser already resized them.
+    const bytes = Buffer.from([0xff, 0xd8, 0xff, 0xd9]);
+    const uploaded = await request(app)
+      .post('/api/lost/photos')
+      .set(as('owner@pict.edu'))
+      .attach('file', bytes, 'photo.jpg');
+    expect(uploaded.status).toBe(201);
+    expect(uploaded.body.url).toMatch(/^\/api\/lost\/photos\/files\/.+\.jpg$/);
+    const served = await request(app).get(uploaded.body.url);
+    expect(served.status).toBe(200);
+  });
+
+  it('needs a login to upload', async () => {
+    const res = await request(app)
+      .post('/api/lost/photos')
+      .attach('file', Buffer.from([1, 2, 3]), 'photo.jpg');
+    expect(res.status).toBe(401);
+  });
+});

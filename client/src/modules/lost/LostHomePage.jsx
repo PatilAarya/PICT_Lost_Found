@@ -1,6 +1,6 @@
 // The Lost page: numbers on top, then only the things you are STILL looking for, as
-// red-edged claim tickets (tap one to see its matches). Items you got back, or reports you
-// closed, move to a separate "Back with you" history with a dark "finished" edge, so a
+// claim tickets (tap one to see its matches). Items you got back, or reports you
+// closed, move to a separate "Back with you" history with a dark "finished" stub, so a
 // recovered item is never mistaken for a lost one. Saved items sit beside the list.
 import { useNavigate } from 'react-router-dom';
 import {

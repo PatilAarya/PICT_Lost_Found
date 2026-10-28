@@ -18,4 +18,5 @@ export { ToastProvider, useToast } from './Toast.jsx';
 export { PageHeader, EmptyState, Spinner, Timeline, Stepper } from './Layout.jsx';
 export { StatCard } from './StatCard.jsx';
 export { StepCard } from './StepCard.jsx';
+export { PhotoPicker } from './PhotoPicker.jsx';
 export { BrandMark } from './BrandMark.jsx';

@@ -7,7 +7,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  border-left: 6px solid var(--steel);
 }
 
 .verdict .card-subtitle {
@@ -16,10 +15,6 @@
 
 .verdict-ok svg {
   color: var(--steel);
-}
-
-.verdict-bad {
-  border-left-color: var(--berry);
 }
 
 .verdict-bad svg {

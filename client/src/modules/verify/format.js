@@ -1,6 +1,7 @@
 // Small formatting helpers shared by the verify screens: dates, countdowns,
 // places, and turning a public item into the props PropertyTag expects.
 // Intl.DateTimeFormat is the browser's own date formatter, so no library is needed.
+import { placeName } from '../../shared/location-picker/places.js';
 
 const dateTime = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
 
@@ -21,13 +22,10 @@ export function formatCountdown(ms) {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
-// "main, floor 1, entrance" from a Location object.
+// "Lab building, Ground floor, Canteen" from a Location object, or '' when there is none.
+// The names come from locations.json through shared/location-picker/places.js.
 export function placeLabel(location) {
-  if (!location) {
-    return '';
-  }
-  const parts = [location.buildingId, `floor ${location.floorId}`, location.areaId];
-  return parts.filter(Boolean).join(', ').replaceAll('-', ' ');
+  return placeName(location);
 }
 
 // The props PropertyTag needs, from a public item (and an optional status to stamp).
