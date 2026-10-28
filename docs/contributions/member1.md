@@ -71,3 +71,18 @@ Branch keeper/env-and-email:
   number cards, a busiest-hour sentence and readable charts; "History check" page with a
   plain verdict, a how-it-works card, search, and readable timelines (hashes behind a toggle).
 - Data: "(placeholder)" removed from building and desk names.
+
+## Lost module (Part C)
+- Server: match engine (services/matching.js, textSimilarity.js), "why this match" sentence
+  (explain.js), runMatching in both directions (runMatching.js, registered as the
+  runMatching service), Match and SavedItem models, routes for reports, matches and saved
+  items, zod schemas, and seed data (8 reports, 4 saved items) that produces real matches.
+- Rules: different category or found-before-lost rejects a pair; 45 out of 100 to keep it.
+- Client: Lost page (numbers, reports with match badges, saved items), 5-step report form
+  with saved-item shortcuts and a live ticket preview, report page with timeline, ranked
+  matches, factor bars and "This is mine" (to /verify/claim/new).
+- StepCard moved from the found module to shared/ui so Lost and Found share it; the form
+  page layout (post-layout, review rows) moved to shared/ui/layout.css.
+- Tests: tests/matching.test.js (factors, threshold, sentence) and tests/routes.test.js
+  (report matching, later found items, owner-only access, private saved items).
+- Docs: docs/explain/lost.md.
