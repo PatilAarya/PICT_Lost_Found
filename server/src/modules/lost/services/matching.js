@@ -7,6 +7,8 @@ import { itemText, jaccard, sharedWords, tokenise } from './textSimilarity.js';
 
 export const MIN_TOTAL = 45;
 const HOUR_MS = 60 * 60 * 1000;
+// How far "found" may be before "lost" and still be considered (people guess times).
+const BEFORE_SLACK_HOURS = 24;
 
 // Category: 40 for the same one, 20 when one side is "other", else the pair is rejected.
 export function scoreCategory(lostCategory, foundCategory) {
@@ -55,25 +57,39 @@ export function scorePlace(lostSeen, foundAt) {
   return { key: 'place', points: 0, max: 15, detail: 'a different building' };
 }
 
-// "found 5 hours after you lost it" or "found 2 days after you lost it".
+// "found within an hour of losing it", "found 5 hours after you lost it" or "found 2 days...".
 function afterText(hours) {
-  if (hours === 0) return 'found while you were missing it';
+  if (hours === 0) return 'found within an hour of losing it';
   if (hours < 48) return `found ${hours} ${hours === 1 ? 'hour' : 'hours'} after you lost it`;
   return `found ${Math.round(hours / 24)} days after you lost it`;
 }
 
 // Time: full 10 points within 24 hours after the lost window, falling to 0 at 72 hours.
-// An item found before the person lost theirs cannot be it, so the pair is rejected.
+// People guess times, so an item "found" a little before the loss still counts (0 time
+// points). Only an item found more than a day before the person lost theirs is rejected.
 export function scoreTime(lostFrom, lostTo, foundAt) {
   if (!lostFrom || !foundAt) {
     return { key: 'time', points: 0, max: 10, detail: 'no time to compare' };
   }
   const found = new Date(foundAt).getTime();
-  if (found < new Date(lostFrom).getTime()) {
-    return { key: 'time', points: 0, max: 10, detail: 'found before you lost it', rejected: true };
+  const lostStart = new Date(lostFrom).getTime();
+  if (found < lostStart - BEFORE_SLACK_HOURS * HOUR_MS) {
+    return {
+      key: 'time',
+      points: 0,
+      max: 10,
+      detail: 'found a day before you lost it',
+      rejected: true,
+    };
+  }
+  if (found < lostStart) {
+    return { key: 'time', points: 0, max: 10, detail: 'times overlap, check them' };
   }
   const windowEnd = new Date(lostTo || lostFrom).getTime();
-  const hours = Math.max(0, Math.round((found - windowEnd) / HOUR_MS));
+  if (found <= windowEnd) {
+    return { key: 'time', points: 10, max: 10, detail: 'found while you were missing it' };
+  }
+  const hours = Math.round((found - windowEnd) / HOUR_MS);
   let points = 0;
   if (hours <= 24) points = 10;
   else if (hours < 72) points = Math.round((10 * (72 - hours)) / 48);

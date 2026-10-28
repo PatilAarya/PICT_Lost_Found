@@ -38,7 +38,8 @@ function MenuLink({ item }) {
 
 export function AppShell() {
   const { role } = useAuth();
-  const { unread } = useNotifications();
+  // announce: true makes this one copy of the hook show a toast for each new alert.
+  const { unread } = useNotifications({ announce: true });
   const navItems = getNavItems(role);
   const mainItems = navItems.filter((item) => !isStaffOnly(item));
   const staffItems = navItems.filter(isStaffOnly);

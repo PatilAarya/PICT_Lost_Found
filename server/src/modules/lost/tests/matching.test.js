@@ -60,9 +60,13 @@ describe('factors', () => {
     expect(scoreTime(lostFrom, lostTo, after(5)).points).toBe(10);
     expect(scoreTime(lostFrom, lostTo, after(48)).points).toBe(5);
     expect(scoreTime(lostFrom, lostTo, after(80)).points).toBe(0);
-    const before = scoreTime(lostFrom, lostTo, new Date(lostFrom.getTime() - HOUR));
-    expect(before.points).toBe(0);
-    expect(before.rejected).toBe(true);
+    // A few hours "before" is probably a guessed time: no time points, but not rejected.
+    const slightlyBefore = scoreTime(lostFrom, lostTo, new Date(lostFrom.getTime() - 3 * HOUR));
+    expect(slightlyBefore.points).toBe(0);
+    expect(slightlyBefore.rejected).toBeUndefined();
+    // More than a day before cannot be the same item.
+    const dayBefore = scoreTime(lostFrom, lostTo, new Date(lostFrom.getTime() - 30 * HOUR));
+    expect(dayBefore.rejected).toBe(true);
   });
 
   it('text: Jaccard over words, ignoring filler words', () => {

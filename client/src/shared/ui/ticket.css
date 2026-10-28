@@ -27,6 +27,12 @@
   --pg-detail: var(--steel);
 }
 
+/* Finished (recovered, released, closed): the dark "done" colour, so it never reads as lost. */
+.ticket-finished {
+  --tag-edge: var(--line);
+  --pg-detail: var(--line);
+}
+
 .ticket-clickable {
   cursor: pointer;
 }
