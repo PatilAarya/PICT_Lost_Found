@@ -72,7 +72,8 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
   // parent step, which uploads it as the public copy of this photo.
   function confirmPhoto() {
     canvasRef.current.toBlob(
-      (blurredBlob) => onConfirm({ id: photo.id, publicBlob: blurredBlob, privateBlob: photo.blob }),
+      (blurredBlob) =>
+        onConfirm({ id: photo.id, publicBlob: blurredBlob, privateBlob: photo.blob }),
       'image/jpeg',
       0.9
     );

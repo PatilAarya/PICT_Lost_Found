@@ -4,8 +4,9 @@
 
 1. The user types their college email on the login page.
 2. The client sends `POST /api/auth/request-code { email }`.
-3. The server checks the domain (pict.edu) and that fewer than 5 codes were sent this hour.
-4. It makes a random 6-digit code, saves only its SHA-256 hash with a 10-minute expiry, and emails the code.
+3. The server checks the domain (ms.pict.edu or pict.edu) and that fewer than 5 codes were sent this hour.
+4. It makes a random 6-digit code, saves only its SHA-256 hash with a 10-minute expiry, and emails the code
+   through a free SMTP account (Brevo or Gmail) as a ticket-styled HTML email (`codeEmail.js`).
 5. The user types the code; the client sends `POST /api/auth/verify-code { email, code }`.
 6. The server hashes the typed code and compares; 5 wrong tries kill the code.
 7. On success it creates the user on first login (role student).
@@ -21,7 +22,7 @@
 | `checkLoginCode(email, code)` | server/modules/auth/loginCodes.js       | Finds the latest live code, compares hashes, marks used |
 | `setLoginCookie(res, userId)` | server/modules/auth/routes.js           | Signs the JWT and sets the httpOnly cookie              |
 | `requireAuth(req, res, next)` | server/shared/middleware/requireAuth.js | Turns the cookie (or dev header) into `req.user`        |
-| `requireRole(...roles)`       | server/shared/middleware/requireRole.js | Blocks users whose role is not in the list              |
+| `buildCodeEmail(code, mins)`  | server/modules/auth/codeEmail.js        | Makes the subject, plain text and HTML of the email     |
 | `AuthProvider` / `useAuth()`  | client/shared/auth/                     | Keeps the user in React state for every page            |
 
 ## 10 questions a teacher might ask
@@ -34,6 +35,9 @@
 4. **What stops someone guessing codes?** 1 in a million per guess, only 5 wrong tries per code,
    10-minute expiry, and an IP rate limit on the route.
 5. **What stops email spam?** Max 5 codes per email per hour, plus the IP rate limit.
+   **How is the email really sent for free?** nodemailer talks SMTP to a free account (Brevo or
+   Gmail). The login details live only in `.env`; if they are missing, the code is printed in
+   the server console instead, and tests never send email.
 6. **What is in the JWT?** Only the user id, signed with JWT_SECRET so it cannot be edited.
 7. **How does the client know who is logged in after a refresh?** AuthProvider calls
    `GET /api/auth/me` on load; the cookie is sent automatically.
@@ -46,7 +50,8 @@
 ## 2-minute demo script
 
 1. Run `npm run dev`. Open http://localhost:5173.
-2. Type `aarav.sharma@pict.edu`, press Send code. Show the code printed in the server terminal.
+2. Type your own `@ms.pict.edu` address, press Send code. Open your inbox on the phone and show
+   the ticket-styled email with the code (check spam the first time).
 3. Type the code, press Log in. The menu shows Lost, Found, My claims and Alerts.
 4. Open DevTools > Application > Cookies: show the `token` cookie is HttpOnly.
 5. Use the "Act as" dropdown to become Suresh Pawar (handler): the Desk item appears.

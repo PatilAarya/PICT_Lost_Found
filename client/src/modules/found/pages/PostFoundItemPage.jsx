@@ -4,11 +4,18 @@
 // current and holds the shared form state from useFoundItemForm.
 import { useState } from 'react';
 import {
-  Stepper, Button, Field, TextInput, TextArea, ChipSelect,
-  PropertyTag, PageHeader, useToast,
+  Stepper,
+  Button,
+  Field,
+  TextInput,
+  TextArea,
+  ChipSelect,
+  PropertyTag,
+  PageHeader,
+  Pictogram,
+  useToast,
 } from '../../../shared/ui/index.js';
 import { LocationPicker } from '../../../shared/location-picker/LocationPicker.jsx';
-import { Pictogram } from '../../../shared/ui/index.js';
 import { CATEGORIES } from '../../../shared/constants.js';
 import { api, errorMessage } from '../../../shared/api/client.js';
 import { useFoundItemForm } from '../hooks/useFoundItemForm.js';
@@ -18,10 +25,26 @@ import PhotoBlurStep from '../components/PhotoBlurStep.jsx';
 import ColorSuggestion from '../components/ColorSuggestion.jsx';
 import HiddenDetailsStep from '../components/HiddenDetailsStep.jsx';
 import DeskStep from '../components/DeskStep.jsx';
+import { answeredCount, formatDateTime, placeLabel } from '../utils/format.js';
 
-const STEPS = ['Category', 'Photos', 'Check photos', 'Describe', 'Secret detail', 'Place', 'Desk', 'Review'];
+const STEPS = [
+  'Category',
+  'Photos',
+  'Check photos',
+  'Describe',
+  'Secret detail',
+  'Place',
+  'Desk',
+  'Review',
+];
 
-const CATEGORY_OPTIONS = CATEGORIES.map((category) => ({ value: category, label: category.replace('_', ' ') }));
+// `category` on each option makes ChipSelect draw a tile with the pictogram.
+const CATEGORY_OPTIONS = CATEGORIES.map((category) => ({
+  value: category,
+  label: category.replace('_', ' '),
+  category,
+}));
+const MIN_ANSWERS = 2;
 
 export default function PostFoundItemPage() {
   const { form, update, reset } = useFoundItemForm();
@@ -44,7 +67,7 @@ export default function PostFoundItemPage() {
     next();
   }
 
-    // Uploads every photo, then sends the finished item to the server.
+  // Uploads every photo, then sends the finished item to the server.
   async function handleSubmit() {
     setSubmitting(true);
     try {
@@ -59,12 +82,14 @@ export default function PostFoundItemPage() {
         location: form.location,
         foundAt: new Date(form.foundAt).toISOString(),
         custody: form.custody,
-        hiddenDetails: form.hiddenDetails,
+        // Blank answers are left out; the server needs at least two real ones.
+        hiddenDetails: form.hiddenDetails.filter((detail) => detail.answer.trim() !== ''),
+        aiSuggestion: form.aiSuggestion || undefined,
       });
       setPostedItem(response.data.item);
-      toast.show('Found item posted.');
+      toast('Found item posted.');
     } catch (error) {
-      toast.show(errorMessage(error));
+      toast(errorMessage(error));
     } finally {
       setSubmitting(false);
     }
@@ -81,12 +106,20 @@ export default function PostFoundItemPage() {
             category: postedItem.category,
             title: postedItem.title,
             status: postedItem.status,
-            locationLabel: `${form.location?.buildingId}, ${form.location?.floorId}`,
-            timeLabel: new Date(postedItem.foundAt).toLocaleString(),
+            locationLabel: placeLabel(postedItem.location),
+            timeLabel: formatDateTime(postedItem.foundAt),
             imageUrl: postedItem.images?.[0]?.publicUrl,
           }}
         />
-        <Button variant="primary" size="lg" onClick={() => { reset(); setPostedItem(null); setStepIndex(0); }}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => {
+            reset();
+            setPostedItem(null);
+            setStepIndex(0);
+          }}
+        >
           Post another item
         </Button>
       </div>
@@ -106,7 +139,13 @@ export default function PostFoundItemPage() {
             onChange={(category) => update({ category })}
           />
           {form.category && <Pictogram category={form.category} size={48} />}
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next} disabled={!form.category}>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="arrow-right"
+            onClick={next}
+            disabled={!form.category}
+          >
             Next
           </Button>
         </div>
@@ -115,8 +154,16 @@ export default function PostFoundItemPage() {
       {stepIndex === 1 && (
         <div className="post-found-item__step">
           <CameraCapture photos={form.photos} onPhotosChange={(photos) => update({ photos })} />
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next} disabled={form.photos.length === 0}>
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="arrow-right"
+            onClick={next}
+            disabled={form.photos.length === 0}
+          >
             Next
           </Button>
         </div>
@@ -129,13 +176,22 @@ export default function PostFoundItemPage() {
       {stepIndex === 3 && (
         <div className="post-found-item__step">
           <Field label="Title">
-            <TextInput value={form.title} onChange={(event) => update({ title: event.target.value })} />
+            <TextInput
+              value={form.title}
+              onChange={(event) => update({ title: event.target.value })}
+            />
           </Field>
           <Field label="Description" hint="Optional">
-            <TextArea value={form.description} onChange={(event) => update({ description: event.target.value })} />
+            <TextArea
+              value={form.description}
+              onChange={(event) => update({ description: event.target.value })}
+            />
           </Field>
           <Field label="Brand" hint="Optional">
-            <TextInput value={form.brand} onChange={(event) => update({ brand: event.target.value })} />
+            <TextInput
+              value={form.brand}
+              onChange={(event) => update({ brand: event.target.value })}
+            />
           </Field>
           <ColorSuggestion
             firstPhotoBlob={form.photos[0]?.blob}
@@ -143,8 +199,16 @@ export default function PostFoundItemPage() {
             onChange={(colors) => update({ colors })}
             onSuggestionReady={(aiSuggestion) => update({ aiSuggestion })}
           />
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next} disabled={!form.title}>
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="arrow-right"
+            onClick={next}
+            disabled={!form.title}
+          >
             Next
           </Button>
         </div>
@@ -157,8 +221,16 @@ export default function PostFoundItemPage() {
             value={form.hiddenDetails}
             onChange={(hiddenDetails) => update({ hiddenDetails })}
           />
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next} disabled={form.hiddenDetails.length === 0}>
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="arrow-right"
+            onClick={next}
+            disabled={answeredCount(form.hiddenDetails) < MIN_ANSWERS}
+          >
             Next
           </Button>
         </div>
@@ -167,7 +239,11 @@ export default function PostFoundItemPage() {
       {stepIndex === 5 && (
         <div className="post-found-item__step">
           <PageHeader title="Where did you find it?" />
-          <LocationPicker value={form.location} onChange={(location) => update({ location })} mode="pin" />
+          <LocationPicker
+            value={form.location}
+            onChange={(location) => update({ location })}
+            mode="pin"
+          />
           <Field label="When did you find it?">
             <TextInput
               type="datetime-local"
@@ -175,8 +251,16 @@ export default function PostFoundItemPage() {
               onChange={(event) => update({ foundAt: event.target.value })}
             />
           </Field>
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next} disabled={!form.location}>
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="arrow-right"
+            onClick={next}
+            disabled={!form.location}
+          >
             Next
           </Button>
         </div>
@@ -184,9 +268,17 @@ export default function PostFoundItemPage() {
 
       {stepIndex === 6 && (
         <div className="post-found-item__step">
-          <DeskStep location={form.location} value={form.custody} onChange={(custody) => update({ custody })} />
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="arrow-right" onClick={next}>Next</Button>
+          <DeskStep
+            location={form.location}
+            value={form.custody}
+            onChange={(custody) => update({ custody })}
+          />
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button variant="primary" size="lg" icon="arrow-right" onClick={next}>
+            Next
+          </Button>
         </div>
       )}
 
@@ -196,17 +288,27 @@ export default function PostFoundItemPage() {
           <PropertyTag
             item={{
               kind: 'found',
-              serial: '— not yet posted —',
+              serial: '',
               category: form.category,
               title: form.title,
               status: 'posted',
-              locationLabel: `${form.location?.buildingId || ''}, ${form.location?.floorId || ''}`,
-              timeLabel: form.foundAt,
-              imageUrl: form.confirmedPhotos[0] ? URL.createObjectURL(form.confirmedPhotos[0].publicBlob) : undefined,
+              locationLabel: placeLabel(form.location),
+              timeLabel: formatDateTime(form.foundAt),
+              imageUrl: form.confirmedPhotos[0]
+                ? URL.createObjectURL(form.confirmedPhotos[0].publicBlob)
+                : undefined,
             }}
           />
-          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>Back</Button>
-          <Button variant="primary" size="lg" icon="check" loading={submitting || uploading} onClick={handleSubmit}>
+          <Button variant="quiet" size="md" icon="arrow-left" onClick={back}>
+            Back
+          </Button>
+          <Button
+            variant="primary"
+            size="lg"
+            icon="check"
+            loading={submitting || uploading}
+            onClick={handleSubmit}
+          >
             Post found item
           </Button>
         </div>

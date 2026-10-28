@@ -147,3 +147,6 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Photos saved locally by the found module when Cloudinary is not set up
+server/uploads/

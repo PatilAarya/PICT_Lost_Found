@@ -3,5 +3,10 @@
 
 export default [
   { label: 'Found', path: '/found', roles: ['student', 'staff', 'handler', 'admin'], order: 20 },
-  { label: 'Post found item', path: '/found/new', roles: ['student', 'staff', 'handler', 'admin'], order: 21 },
+  {
+    label: 'Post found item',
+    path: '/found/new',
+    roles: ['student', 'staff', 'handler', 'admin'],
+    order: 21,
+  },
 ];

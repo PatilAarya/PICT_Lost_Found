@@ -7,7 +7,10 @@
 
 const PROMPTS_BY_CATEGORY = {
   id_card: [
-    { promptKey: 'name_spelling', promptText: 'How is the name on the card spelt, first and last?' },
+    {
+      promptKey: 'name_spelling',
+      promptText: 'How is the name on the card spelt, first and last?',
+    },
     { promptKey: 'photo_detail', promptText: 'Describe one detail of the photo on the card.' },
   ],
   phone: [
@@ -21,7 +24,10 @@ const PROMPTS_BY_CATEGORY = {
     { promptKey: 'case', promptText: 'Describe the laptop bag or sleeve, if there is one.' },
   ],
   wallet: [
-    { promptKey: 'contents', promptText: 'Name one card or item inside, without stating an exact number.' },
+    {
+      promptKey: 'contents',
+      promptText: 'Name one card or item inside, without stating an exact number.',
+    },
     { promptKey: 'material', promptText: 'Describe the wallet material and colour in detail.' },
   ],
   keys: [
@@ -34,10 +40,16 @@ const PROMPTS_BY_CATEGORY = {
   ],
   bag: [
     { promptKey: 'tag', promptText: 'Describe any sticker, tag or keychain attached to the bag.' },
-    { promptKey: 'contents', promptText: 'Name one item inside the bag, without naming anything valuable in detail.' },
+    {
+      promptKey: 'contents',
+      promptText: 'Name one item inside the bag, without naming anything valuable in detail.',
+    },
   ],
   earbuds: [
-    { promptKey: 'case_mark', promptText: 'Describe any mark, sticker or scratch on the charging case.' },
+    {
+      promptKey: 'case_mark',
+      promptText: 'Describe any mark, sticker or scratch on the charging case.',
+    },
     { promptKey: 'brand', promptText: 'What brand or model are they, if known?' },
   ],
   books: [

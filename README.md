@@ -16,7 +16,11 @@ npm run dev
 ```
 
 Open http://localhost:5173. In development, use the "Act as" dropdown to log in as a seeded
-student, handler or admin, or log in by email: the code is printed in the server terminal.
+student, handler or admin, or log in with your college email (`@ms.pict.edu`).
+
+Login codes are real emails once you fill in the free SMTP settings in `.env` (Brevo or Gmail;
+the comments in `.env.example` show how). Without them, the code is printed in the server
+terminal instead.
 
 Edit `.env` if your MongoDB address is different. Never commit `.env`.
 

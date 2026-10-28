@@ -26,7 +26,13 @@ describe('module discovery', () => {
 
   it('shows admin pages only to admins, in order', () => {
     const studentLabels = getNavItems('student').map((item) => item.label);
-    expect(studentLabels).toEqual(['Lost', 'Found', 'My claims', 'Alerts']);
+    // Modules may add their own menu items, so check the main ones are there in this
+    // order (sorted by `order`), rather than an exact list that breaks on every new item.
+    const mainLabels = ['Lost', 'Found', 'My claims', 'Alerts'];
+    const positions = mainLabels.map((label) => studentLabels.indexOf(label));
+    expect(positions.every((position) => position >= 0)).toBe(true);
+    expect([...positions].sort((first, second) => first - second)).toEqual(positions);
+    expect(studentLabels).not.toContain('Analytics');
     expect(getNavItems('admin').map((item) => item.label)).toContain('Analytics');
   });
 });

@@ -47,7 +47,10 @@ export function LoginPage() {
       <h1>PICT Lost and Found</h1>
       {codeSent ? (
         <form onSubmit={handleCode} noValidate>
-          <p>We sent a 6-digit code to {email}. It works for 10 minutes.</p>
+          <p>
+            We sent a 6-digit code to {email}. It works for 10 minutes. Not in your inbox? Check the
+            spam folder.
+          </p>
           <Field label="Code" error={error}>
             <TextInput
               value={code}
@@ -65,7 +68,7 @@ export function LoginPage() {
         </form>
       ) : (
         <form onSubmit={handleEmail} noValidate>
-          <Field label="College email" hint="For example aarav.sharma@pict.edu" error={error}>
+          <Field label="College email" hint="For example yourname@ms.pict.edu" error={error}>
             <TextInput
               type="email"
               value={email}

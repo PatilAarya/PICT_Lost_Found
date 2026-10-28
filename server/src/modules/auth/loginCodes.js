@@ -6,7 +6,7 @@ import { config } from '../../shared/config/index.js';
 import { HttpError } from '../../shared/utils/httpError.js';
 import { LoginCode } from './LoginCode.js';
 
-const CODE_MINUTES = 10;
+export const CODE_MINUTES = 10;
 const MAX_CODES_PER_HOUR = 5;
 const MAX_WRONG_TRIES = 5;
 

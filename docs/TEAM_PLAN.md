@@ -5,17 +5,18 @@ Who owns what is in docs/OWNERSHIP.md. The prompts each member runs are in docs/
 ## Who builds what
 | | Member 1 (Claude Code) | Member 2 (Claude Code) | Member 3 (Arena) |
 |---|---|---|---|
-| Foundation | Design system, location picker, app shell | Phase 0: skeleton, login, shared contract | None, starts with the module |
-| Module | Lost + Notifications (live updates) | Verify and Handover | Found + photo pipeline |
-| Branch | feat/lost | phase0/foundation, then feat/verify | feat/found |
+| Foundation | Design system, location picker, app shell, acting keeper of frozen files | Phase 0 (done): skeleton, login, shared contract | None, starts with the module |
+| Module | Lost + Notifications (live updates); maintains Found while Member 3 is away | Verify and Handover (done, merged) | Found + photo pipeline (merged; away) |
+| Branch | feat/lost, plus keeper/* for frozen-file fixes | phase0/foundation, then feat/verify | feat/found |
 | Special data | locations.json, floor plan images | none | desks.json |
 | Prompt | prompts/member1-lost.md | prompts/phase0-member2.md, prompts/member2-verify.md | prompts/member3-found.md |
 
 ## Rules that prevent merge conflicts
 - Each person edits only their own folders (docs/OWNERSHIP.md).
 - Shared files are frozen after Phase 0: package.json, the lockfile, .env.example, the server and
-  client loaders, the constants, User.js. If you need a change, open a GitHub Issue. Member 2
-  (keeper) makes a tiny PR the same day.
+  client loaders, the constants, User.js. If you need a change, open a GitHub Issue. The keeper
+  makes a tiny PR the same day. While Member 2 is away, Member 1 is the acting keeper
+  (agreed by the team on 28 Oct 2026; see docs/OWNERSHIP.md).
 - All dependencies are installed in Phase 0, so nobody touches package.json.
 - Modules load themselves. The server scans modules/* and the client scans modules/*/routes.jsx.
   Adding a module never means editing a shared router.
@@ -32,7 +33,7 @@ Who owns what is in docs/OWNERSHIP.md. The prompts each member runs are in docs/
 ## Timeline
 | Phase | What happens |
 |---|---|
-| 0: Skeleton | Member 2 runs prompts/phase0-member2.md. Meanwhile Member 1 collects PICT floor plans and the building list, and Member 3 collects the desk list, reads the brief and sets up the Arena chat. |
+| 0: Skeleton (done) | Member 2 ran prompts/phase0-member2.md and merged it with the Verify module (PR #1). |
 | 1: Parallel build | Everyone builds on their own branch. Member 1 merges the design system early so everyone gets real styling. |
 | 2: Integration | Run the full story (lost, found, match, claim, verify, release) and fix the seams. |
 | 3: Polish | Seed realistic demo data, test on real phones, prepare the demo and slides. |
@@ -64,6 +65,29 @@ Paths to add:
 - Member 2: client/src/modules/verify server/src/modules/verify server/src/shared/models/Claim.js docs/explain/verify.md docs/contributions/member2.md
 - Member 3: client/src/modules/found server/src/modules/found server/src/shared/data/desks.json server/src/shared/models/FoundItem.js docs/explain/found.md docs/contributions/member3.md
 
+## Keeping merges safe while Member 1 is acting keeper
+- Keeper fixes live on their own `keeper/<name>` branch and their own PR, never mixed with
+  module work. Module branches then pull main to get them.
+- Before every push: `git pull --rebase origin main`, then `npm run lint` and `npm test`.
+  If a rebase stops on a conflict, do not guess: paste `git status` and the conflicting file
+  into Claude Code and it will explain which side to keep.
+- Member 3 is away, so Member 1 fixes and finishes the Found module on a `fix/found-*` branch.
+  If Member 3 comes back, they pull main first and read the Found entries in
+  docs/contributions/member1.md before changing anything.
+- If Member 2 comes back with unpushed changes to frozen files, they pull main first and
+  keep the keeper changes; the list of every keeper change is in docs/contributions/member1.md.
+- Never commit `.env`, `server/.env` or your own `package-lock.json` changes from `npm install`.
+  Check `git status` before `git add`.
+
+## Email login setup (free)
+Login codes are sent as real emails through any free SMTP account; nothing is printed in the
+terminal once SMTP is set. Each person who runs the server puts their own SMTP details in
+their own `.env` (never in code, never committed). See the comments in `.env.example`.
+- Brevo free plan: 300 emails a day to anyone, no domain needed (verify your sender email once).
+- Gmail with an app password: free, about 500 a day, codes come from that Gmail address.
+- Allowed login domains are set by `ALLOWED_EMAIL_DOMAINS` (ms.pict.edu and pict.edu).
+- For the teacher demo set `ALLOW_ANY_EMAIL=false` and `DEV_AUTH=false` in `.env`.
+
 ## Commit tables
 
 ### Phase 0: Member 2 (branch phase0/foundation)
@@ -85,6 +109,12 @@ Paths to add:
 | C1 to C2 | feat(lost): add lost report flow and saved items |
 | C3 to C5 | feat(lost): add match engine and plain-language explanation |
 | C6 to C8 | feat(lost): add lost screens, seed data and explain notes |
+
+### Member 1 as acting keeper (branch keeper/env-and-email)
+| Commit after | Message |
+|---|---|
+| Ownership docs | docs: make Member 1 acting keeper while Member 2 is away |
+| Env and email | fix(auth): load root .env and send login codes as real emails |
 
 ### Member 2: Verify and Handover (branch feat/verify, after Phase 0 is merged)
 ```
