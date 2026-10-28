@@ -1,9 +1,4 @@
-/*
-  The claim ticket (PropertyTag.jsx). Two columns: the main part and the stub.
-  Lost or found shows in the stub letter (red L, steel F) and the pictogram's small detail.
-  The perforation is a dashed frost border on the stub, with half-circle notches.
-  Hard borders only; the one allowed lift is a 3px ink shadow on hover or press.
-*/
+/* Styles for the claim ticket card. */
 .ticket {
   --tag-ink: var(--berry);
   --pg-detail: var(--berry);
@@ -25,8 +20,6 @@
   --tag-ink: var(--steel);
   --pg-detail: var(--steel);
 }
-
-/* Finished (recovered, released, closed): the stub letter turns dark, so it never reads as lost. */
 .ticket-finished {
   --tag-ink: var(--line);
   --pg-detail: var(--line);
@@ -48,8 +41,6 @@
   column-gap: var(--space-3);
   padding: var(--space-4) var(--space-3);
 }
-
-/* The punched hole: a ring showing the page colour through the paper. */
 .ticket-hole {
   grid-row: 1 / span 2;
   align-self: center;
@@ -95,8 +86,6 @@
   align-self: end;
   margin-top: var(--space-3);
 }
-
-/* The stub, behind a dashed perforation line. */
 .ticket-stub {
   position: relative;
   display: flex;
@@ -108,10 +97,6 @@
   font-family: var(--font-heading);
   font-stretch: 75%;
 }
-
-/* Notches: a circle in the page colour sits on the ticket edge and hides it.
-   Only two of its four border sides are coloured; rotating by 45 degrees turns those
-   two quarter-arcs into the half of the circle that lies inside the ticket. */
 .ticket-stub::before,
 .ticket-stub::after {
   content: '';
@@ -149,8 +134,6 @@
   line-height: 1;
   color: var(--tag-ink);
 }
-
-/* The number runs down the stub, like the rotated text on a real ticket. */
 .stub-number {
   writing-mode: vertical-rl;
   font-size: var(--text-sm);

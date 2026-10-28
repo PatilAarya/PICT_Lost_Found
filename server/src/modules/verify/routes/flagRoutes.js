@@ -1,7 +1,4 @@
-// Admin review of flagged accounts.
-// GET   /flags       every flag, open ones first, with the user's name
-// PATCH /flags/:id   { action: dismiss | warn | suspend }
-// Warn notifies the user; suspend blocks the account (User.status = suspended).
+// Routes for reviewing flagged accounts.
 import express from 'express';
 import { z } from 'zod';
 import { requireRole } from '../../../shared/middleware/requireRole.js';
@@ -16,7 +13,6 @@ const router = express.Router();
 const actionSchema = z.object({ action: z.enum(['dismiss', 'warn', 'suspend']) });
 const NEW_STATUS = { dismiss: 'dismissed', warn: 'warned', suspend: 'suspended' };
 
-// After a review, the user stays "flagged" only while another flag is still open.
 async function refreshFlaggedMark(userId) {
   const stillOpen = await Flag.exists({ userId, status: 'open' });
   await User.updateOne({ _id: userId }, { $set: { flagged: Boolean(stillOpen) } });

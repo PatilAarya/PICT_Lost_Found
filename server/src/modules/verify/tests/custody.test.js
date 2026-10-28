@@ -1,6 +1,4 @@
-// Tests for the custody hash chain: entries link to each other, two writes at the
-// same moment both succeed with different seq numbers, and a direct database edit
-// is caught by the integrity check.
+// Tests for the custody hash chain.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import mongoose from 'mongoose';
 import { clearTestDb, startTestDb, stopTestDb } from '../../../shared/testing/testDb.js';

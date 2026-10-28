@@ -1,8 +1,6 @@
-// Turns found-item data into the plain shape PropertyTag expects, and counts items
-// by status for the number cards on the Found page. Pure functions, easy to test.
+// Turns found items into ticket data and counts them by status.
 import { formatDateTime, placeLabel } from './format.js';
 
-// A saved FoundItem from the server, as a ticket.
 export function ticketFromItem(doc) {
   return {
     kind: 'found',
@@ -16,7 +14,6 @@ export function ticketFromItem(doc) {
   };
 }
 
-// The form while posting, as a preview ticket (no serial yet).
 export function ticketFromForm(form, imageUrl) {
   return {
     kind: 'found',
@@ -30,7 +27,6 @@ export function ticketFromForm(form, imageUrl) {
   };
 }
 
-// How many of my items are waiting at a desk and how many went back to their owner.
 export function countByStage(items) {
   const atDesk = items.filter((item) =>
     ['posted', 'in_custody', 'claim_pending', 'verified'].includes(item.status)

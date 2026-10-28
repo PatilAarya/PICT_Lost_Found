@@ -1,6 +1,4 @@
-// A "saved item": something a student carries every day (their bottle, their ID card),
-// described once so that reporting it lost later takes one tap. The report form copies
-// these fields in. Owned by the lost module; only the owner can see their saved items.
+// Model for an everyday item a student saves once.
 import mongoose from 'mongoose';
 import { CATEGORIES, COLORS } from '../../../shared/constants.js';
 
@@ -12,7 +10,6 @@ const savedItemSchema = new mongoose.Schema(
     colors: [{ type: String, enum: COLORS }],
     brand: { type: String, default: '' },
     description: { type: String, default: '' },
-    // Stickers or marks that make it recognisable, for example "NASA sticker on the lid".
     stickers: { type: String, default: '' },
   },
   { timestamps: { createdAt: true, updatedAt: false } }

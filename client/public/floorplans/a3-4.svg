@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" role="img" aria-label="A3 building, Fourth floor plan">
-  <!-- Plan for A3 building, Fourth floor. Each clickable room is a
-       class="area" element whose id matches the area id in locations.json. -->
+  <!-- Rooms with class "area" can be tapped; their ids match locations.json. -->
   <rect class="wall" x="10" y="10" width="580" height="280" fill="none" stroke="#1d3557" stroke-width="4"/>
   <g class="room-decor-group">
     <rect class="room-decor" x="20" y="110" width="560" height="80" rx="8" fill="#f1faee" stroke="#1d3557" stroke-width="2"/>

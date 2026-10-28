@@ -1,7 +1,4 @@
-/*
-  The security desk (DeskPage.jsx and components/desk/): tabs with icons, the list of
-  waiting claims, the score meter, and the claim review window with answers side by side.
-*/
+/* Styles for the security desk page. */
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -32,8 +29,6 @@
   background: var(--action);
   color: var(--action-text);
 }
-
-/* Waiting claims: ticket, who, score, button. Stacks on phones, one row on wide screens. */
 .queue-list {
   display: grid;
   gap: var(--space-3);
@@ -65,8 +60,6 @@
     grid-template-columns: minmax(0, 1fr) auto;
   }
 }
-
-/* Score meter: number, a bar filled to the score, and the word Strong or Weak. */
 .score-meter {
   display: grid;
   gap: 2px;
@@ -85,8 +78,6 @@
   background: var(--frost);
   overflow: hidden;
 }
-
-/* --score is set inline (0 to 1), so the fill is that share of the track. */
 .score-fill {
   display: block;
   width: calc(var(--score) * 100%);
@@ -103,8 +94,6 @@
   font-size: var(--text-xs);
   font-weight: 600;
 }
-
-/* Claim review window */
 .claim-review {
   display: grid;
   gap: var(--space-4);

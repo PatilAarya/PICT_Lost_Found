@@ -1,7 +1,4 @@
-// The Lost page: numbers on top, then only the things you are STILL looking for, as
-// claim tickets (tap one to see its matches). Items you got back, or reports you
-// closed, move to a separate "Back with you" history with a dark "finished" stub, so a
-// recovered item is never mistaken for a lost one. Saved items sit beside the list.
+// Lost page: your open reports, counts and saved items.
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -17,10 +14,8 @@ import { ticketFromReport } from './utils/format.js';
 import { SavedItemsCard } from './components/SavedItemsCard.jsx';
 import './lost.css';
 
-// A report is "active" while we are still looking or a claim is under way.
 const ACTIVE = ['open', 'matched', 'claim_in_progress'];
 
-// Split my reports into still-looking and finished, and count what the cards show.
 function sortReports(reports) {
   const active = reports.filter((report) => ACTIVE.includes(report.status));
   const finished = reports.filter((report) => !ACTIVE.includes(report.status));
@@ -29,7 +24,6 @@ function sortReports(reports) {
   return { active, finished, matches, recovered };
 }
 
-// A list of report tickets; each opens its report page. Active ones show a match badge.
 function ReportList({ reports, compact }) {
   const navigate = useNavigate();
   return (

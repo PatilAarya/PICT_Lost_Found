@@ -1,7 +1,4 @@
-// Handover routes.
-// GET  /claims/:id/code    the claimant sees the 6-digit code ONCE, then it is deleted
-// POST /handover           a handler releases a desk item with the code (ID checked)
-// POST /handover/confirm   owner or finder confirms a finder-kept handover
+// Routes for the handover code and confirming handover.
 import express from 'express';
 import { z } from 'zod';
 import { requireRole } from '../../../shared/middleware/requireRole.js';
@@ -16,7 +13,6 @@ const router = express.Router();
 const releaseSchema = z.object({
   claimId: z.string(),
   code: z.string(),
-  // literal(true): the handler must tick "college ID checked" before releasing.
   idChecked: z.literal(true),
 });
 const confirmSchema = z.object({ claimId: z.string() });

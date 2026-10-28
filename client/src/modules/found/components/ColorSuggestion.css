@@ -1,5 +1,4 @@
-/* Styling for the colour-guess hint shown above the colour picker. */
-
+/* Styles for the colour suggestion hint. */
 .color-suggestion {
   display: flex;
   flex-direction: column;

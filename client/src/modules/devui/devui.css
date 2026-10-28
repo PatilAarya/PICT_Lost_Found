@@ -1,7 +1,4 @@
-/*
-  Layout of the dev-only gallery page (DevUiPage.jsx). Only arranges the samples;
-  the components bring their own styles from shared/ui.
-*/
+/* Layout of the dev gallery page. */
 .devui-section {
   display: grid;
   gap: var(--space-4);

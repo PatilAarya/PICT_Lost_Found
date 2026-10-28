@@ -1,5 +1,4 @@
-// Tests for the hourly lifecycle rules (with a fake "now"), the abuse flags with
-// admin review, and the analytics numbers.
+// Tests for lifecycle rules, flags and analytics.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { User } from '../../../shared/models/User.js';
@@ -60,7 +59,6 @@ describe('abuse flags', () => {
     expect((await admin.get('/api/verify/flags')).body.flags).toHaveLength(1);
     await admin.patch(`/api/verify/flags/${flag._id}`, { action: 'suspend' });
     expect((await User.findById(people.other._id)).status).toBe('suspended');
-    // A suspended account can no longer use the app.
     expect((await other.get('/api/verify/claims/mine')).status).toBe(403);
   });
 });

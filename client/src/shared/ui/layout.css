@@ -1,7 +1,4 @@
-/*
-  Styles for Layout.jsx (page header, empty state, spinner), StatCard.jsx and
-  BrandMark.jsx. The timeline and stepper styles are in progress.css.
-*/
+/* Styles for page header, empty state, spinner and stat cards. */
 .page-header {
   display: flex;
   flex-wrap: wrap;
@@ -54,8 +51,6 @@
     transform: rotate(360deg);
   }
 }
-
-/* Number cards (StatCard.jsx) */
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -70,8 +65,6 @@
   border-radius: var(--radius-card);
   background: var(--card);
 }
-
-/* A number that needs action is written in dark red (the label still says what it is). */
 .stat-attention .stat-value {
   color: var(--error-text);
 }
@@ -109,8 +102,6 @@
   color: var(--text-soft);
   font-size: var(--text-sm);
 }
-
-/* College logo (BrandMark.jsx): the real image, or a drawn badge when it is missing. */
 .brand-logo {
   flex: none;
   object-fit: contain;
@@ -134,8 +125,6 @@
 .brand-badge-light {
   border-color: var(--paper);
 }
-
-/* StepCard.jsx: the fields, then a footer separated by a line. */
 .step-body {
   display: grid;
   gap: var(--space-4);
@@ -157,9 +146,6 @@
   color: var(--text-soft);
   font-weight: 600;
 }
-
-/* Form pages (post found item, report lost item): the step card, with a side panel on the
-   right from 1000px showing a live ticket preview and a tip. */
 .post-layout {
   display: grid;
   gap: var(--space-5);
@@ -170,8 +156,6 @@
   .post-layout {
     grid-template-columns: minmax(0, 1fr) 380px;
   }
-
-  /* The preview stays in view while the step card scrolls. */
   .post-aside {
     position: sticky;
     top: 88px;
@@ -185,8 +169,6 @@
   background: var(--frost-tint);
   font-size: var(--text-sm);
 }
-
-/* Review steps: label on the left, value on the right. */
 .review-list {
   display: grid;
   margin: 0;

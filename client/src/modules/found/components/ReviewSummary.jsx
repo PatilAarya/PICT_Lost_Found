@@ -1,6 +1,4 @@
-// The last step of "post found item": everything the finder entered, as a short list
-// of label and value pairs (a <dl>), so they can check it before posting.
-// Secret answers are counted, not shown, so nobody reads them over the finder's shoulder.
+// Summary of everything entered before posting a found item.
 import { answeredCount, formatDateTime, placeLabel } from '../utils/format.js';
 
 export default function ReviewSummary({ form }) {

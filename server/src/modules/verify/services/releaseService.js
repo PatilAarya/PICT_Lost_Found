@@ -1,6 +1,4 @@
-// Giving the item back. Two ways in: the handler types the owner's 6-digit code at
-// the desk (releaseWithCode), or, for items the finder kept, both people confirm in
-// the app (confirmHandover). Both end in finishRelease().
+// Gives the item back with a code or both confirmations.
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { LostReport } from '../../../shared/models/LostReport.js';
 import { HttpError } from '../../../shared/utils/httpError.js';
@@ -10,7 +8,6 @@ import { notifyUser } from './notifyHelpers.js';
 import { sameId } from './access.js';
 import { writeAudit } from './audit.js';
 
-// Mark claim, item and lost report as done, log RELEASED, thank the finder.
 async function finishRelease(claim, item, actor, note) {
   claim.status = 'released';
   claim.releasedAt = new Date();
@@ -35,7 +32,6 @@ async function finishRelease(claim, item, actor, note) {
   );
 }
 
-// Desk release: check the code is right, not expired and not used before.
 export async function releaseWithCode(claim, handler, code) {
   if (claim.status !== 'approved' || claim.handoverUsedAt) {
     throw new HttpError(
@@ -55,14 +51,12 @@ export async function releaseWithCode(claim, handler, code) {
     throw new HttpError(400, 'CODE_WRONG', "Wrong code. Check the digits on the owner's screen.");
   }
   claim.handoverUsedAt = new Date();
-  // Single use: the stored hash is removed so the same code can never work again.
   claim.handoverCodeHash = undefined;
   const item = await FoundItem.findById(claim.foundItemId);
   await finishRelease(claim, item, handler, 'Code and college ID checked at the desk');
   await writeAudit(handler, 'ITEM_RELEASED', 'Claim', claim._id, 'Released with handover code');
 }
 
-// Finder-kept items: record this person's confirmation; release when both confirmed.
 export async function confirmHandover(claim, user) {
   const item = await FoundItem.findById(claim.foundItemId);
   if (claim.status !== 'approved' || item.custody.type !== 'finder') {

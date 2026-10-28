@@ -1,6 +1,4 @@
-// Tests for the design system: the serial and barcode helpers, stamp words and inks
-// for every status in the contract, all 10 pictograms, and the PropertyTag anatomy.
-// Run with `npm test -w client` (Vitest with jsdom, a fake browser).
+// Tests for the shared UI components.
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 import { CATEGORIES, CLAIM_STATUS, FOUND_STATUS, LOST_STATUS } from '../constants.js';

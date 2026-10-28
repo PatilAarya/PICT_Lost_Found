@@ -1,12 +1,7 @@
-// Colour picker: ColorPicker { value, onChange, multi }.
-// It reuses ChipSelect with the contract COLORS list, so the values always match
-// what the server accepts. Each chip shows a dot in that colour plus its name,
-// so the choice never depends on seeing colour alone.
+// Colour picker built on ChipSelect.
 import { COLORS } from '../constants.js';
 import { ChipSelect } from './ChipSelect.jsx';
 
-// What each item colour looks like. These describe the item, not the app theme,
-// so they are the only hex values outside tokens.css.
 const SWATCHES = {
   black: '#1b1b1b',
   white: '#ffffff',
@@ -28,7 +23,6 @@ const SWATCHES = {
   multicolor: ['#d62828', '#f6d32d', '#2f6fd6'],
 };
 
-// "multicolor" reads better as "multicolour" for Indian English users.
 function labelFor(color) {
   return color === 'multicolor' ? 'multicolour' : color;
 }

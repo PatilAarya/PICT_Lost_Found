@@ -1,6 +1,4 @@
-// Tests for the Phase 0 skeleton: the module auto-loader, the meta routes,
-// the service registry stubs, serial numbers, and the secret hidden-detail answers.
-// If any of these break, every module is affected, so they are checked on every run.
+// Tests for the app skeleton, meta routes and serial numbers.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import mongoose from 'mongoose';
 import request from 'supertest';

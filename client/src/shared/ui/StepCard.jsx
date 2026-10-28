@@ -1,6 +1,4 @@
-// One step of a multi-step form (post found item, report lost item), drawn as a card: a title, one line of help,
-// the step's own fields, and a footer with Back on the left and the main action on the
-// right, so the two buttons are always apart and always in the same place.
+// Card for one step of a multi-step form.
 import { Button } from './Button.jsx';
 
 export function StepCard({

@@ -1,6 +1,4 @@
-// One counter per serial type (L = lost, F = found, C = claim).
-// utils/serial.js increases a counter with one atomic database update, so two
-// people posting at the same moment can never get the same serial number.
+// Model for the counters behind serial numbers.
 import mongoose from 'mongoose';
 
 const counterSchema = new mongoose.Schema({

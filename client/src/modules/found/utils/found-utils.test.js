@@ -1,11 +1,8 @@
-// Tests for the found module's small pure helpers: when the Next button may be pressed,
-// how items are counted for the number cards, and the preview ticket while posting.
-// Run with `npm test -w client`.
+// Tests for the found module helpers.
 import { describe, expect, it } from 'vitest';
 import { canContinue } from './steps.js';
 import { countByStage, ticketFromForm } from './ticket.js';
 
-// An empty form, like the one useFoundItemForm starts with.
 function emptyForm() {
   return {
     category: '',

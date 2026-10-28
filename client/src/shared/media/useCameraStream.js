@@ -1,11 +1,6 @@
-// A small custom hook that wraps getUserMedia: the browser API that asks
-// for camera permission and gives back a live video stream. Keeping this
-// logic in its own hook keeps the camera screens (Found's CameraCapture.jsx and the
-// shared PhotoPicker.jsx) focused on what to show, not how the camera works.
+// Hook that opens the camera and gives a live video stream.
 import { useRef, useState, useCallback, useEffect } from 'react';
 
-// A plain-language message for each reason the browser can refuse the camera.
-// getUserMedia rejects with a DOMException whose `name` says what went wrong.
 function cameraErrorMessage(err) {
   if (err.name === 'NotAllowedError') {
     return 'Camera permission is blocked. Click the camera icon in the address bar, allow it, then try again.';
@@ -25,11 +20,8 @@ export function useCameraStream() {
   const [error, setError] = useState(null);
   const [isStreaming, setIsStreaming] = useState(false);
 
-  // Ask the browser for the back camera. facingMode: 'environment' prefers the rear
-  // camera on a phone; a laptop simply uses its webcam.
   const start = useCallback(async () => {
     setError(null);
-    // The camera only works on https or on localhost (a "secure context").
     if (!window.isSecureContext || !navigator.mediaDevices) {
       setError('The camera needs a secure page (https or localhost). Use Upload photos instead.');
       return;
@@ -39,8 +31,6 @@ export function useCameraStream() {
         video: { facingMode: 'environment' },
         audio: false,
       });
-      // Showing the live view puts the <video> element on the page; the effect below
-      // then connects the stream to it.
       setIsStreaming(true);
     } catch (err) {
       setError(cameraErrorMessage(err));
@@ -48,22 +38,14 @@ export function useCameraStream() {
     }
   }, []);
 
-  // The <video> element only exists once isStreaming is true, so we connect the stream
-  // here, after React has drawn it. Before this fix the stream was attached too early,
-  // when there was no <video> yet, and the live view stayed black.
   useEffect(() => {
     const video = videoRef.current;
     if (isStreaming && video && streamRef.current) {
       video.srcObject = streamRef.current;
-      video.play().catch(() => {
-        // Some browsers refuse autoplay until the person taps; the video is muted so
-        // this is rare, and the Take photo button still works once a frame arrives.
-      });
+      video.play().catch(() => {});
     }
   }, [isStreaming]);
 
-  // Stop every track so the camera light turns off and the browser
-  // releases the device for other apps to use.
   const stop = useCallback(() => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -72,8 +54,6 @@ export function useCameraStream() {
     setIsStreaming(false);
   }, []);
 
-  // Safety net: stop the camera if the component unmounts while the
-  // stream is still open, for example if the user navigates away.
   useEffect(() => stop, [stop]);
 
   return { videoRef, isStreaming, error, start, stop };

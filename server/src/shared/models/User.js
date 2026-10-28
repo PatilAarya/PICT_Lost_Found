@@ -1,6 +1,4 @@
-// A person who uses the app: student, staff, handler (security desk) or admin.
-// Created by the auth module on first login, or by modules/auth/seed.js.
-// Frozen after Phase 0; only the keeper (Member 2) changes it, through a GitHub Issue.
+// Model for a user of the app.
 import mongoose from 'mongoose';
 import { ROLES } from '../constants.js';
 

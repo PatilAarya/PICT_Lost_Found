@@ -1,6 +1,4 @@
-// Shown after 3 wrong answers: a lock icon and a live countdown until the claimant
-// may try again. When the countdown reaches zero it calls onUnlock so the page
-// reloads the claim and shows the questions again.
+// Lockout message with a countdown after 3 wrong answers.
 import { useEffect } from 'react';
 import { Icon } from '../../../shared/ui/index.js';
 import { useCountdown } from '../hooks/useCountdown.js';
@@ -13,7 +11,6 @@ export function LockoutNotice({ lockedUntil, onUnlock }) {
     if (!lockedUntil || msLeft > 0) {
       return undefined;
     }
-    // Wait a moment so the server's clock has also passed the unlock time.
     const timer = setTimeout(onUnlock, 1500);
     return () => clearTimeout(timer);
   }, [lockedUntil, msLeft, onUnlock]);

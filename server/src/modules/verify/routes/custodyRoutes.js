@@ -1,7 +1,4 @@
-// Custody log routes.
-// GET /custody/verify  (admin): recompute every chain and list broken items.
-// GET /custody/:itemId (handler, admin, or the item's finder): one item's log.
-// "verify" is declared first so Express does not treat it as an itemId.
+// Routes for reading and checking custody logs.
 import express from 'express';
 import { requireRole } from '../../../shared/middleware/requireRole.js';
 import { HttpError } from '../../../shared/utils/httpError.js';
@@ -25,7 +22,6 @@ router.get('/custody/:itemId', async (req, res) => {
   }
   const entries = await CustodyEntry.find({ itemId: item._id }).sort({ seq: 1 }).lean();
   const checked = checkChain(entries);
-  // Look up names separately (not populate) so the hashed actorId stays untouched.
   const actors = await User.find({ _id: { $in: entries.map((entry) => entry.actorId) } })
     .select('name')
     .lean();

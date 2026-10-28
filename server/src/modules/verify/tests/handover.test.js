@@ -1,6 +1,4 @@
-// Tests for the desk decision and the handover code: the code is shown only once,
-// a wrong, expired or reused code is refused, a right code releases everything, and
-// finder-kept items are released once both people confirm.
+// Tests for desk decisions and the handover code.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
@@ -21,7 +19,6 @@ beforeEach(async () => {
 });
 afterAll(stopTestDb);
 
-// Claim an item, pass the owner check and get it approved. Returns the claim id.
 async function approvedClaim(item) {
   const owner = actAs(app, people.owner);
   const started = await owner.post('/api/verify/claims', { foundItemId: item._id });

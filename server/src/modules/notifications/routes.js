@@ -1,8 +1,4 @@
-// Notification routes, mounted at /api/notifications. Everyone sees only their own.
-//   GET   /               my alerts, newest first (?page&limit)
-//   GET   /unread-count   how many I have not read yet (for the bell)
-//   PATCH /:id/read       mark one as read
-//   PATCH /read-all       mark all of mine as read
+// Routes for listing alerts and marking them read.
 import express from 'express';
 import { requireAuth } from '../../shared/middleware/requireAuth.js';
 import { HttpError, readPagination } from '../../shared/utils/httpError.js';
@@ -27,7 +23,6 @@ router.get('/unread-count', async (req, res) => {
   res.json({ unread });
 });
 
-// "read-all" is declared before "/:id/read" so it is never read as an id.
 router.patch('/read-all', async (req, res) => {
   await Notification.updateMany(
     { userId: req.user._id, readAt: null },

@@ -1,6 +1,4 @@
-// "Saved items": things you carry every day, described once. Each has a "Report lost"
-// button that opens the report form already filled in (/lost/new?saved=<id>).
-// "Add saved item" opens a small form in a Sheet. Used on the Lost page.
+// List of saved items with a quick Report lost button.
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Icon, Pictogram, Sheet, useToast } from '../../../shared/ui/index.js';
@@ -9,7 +7,6 @@ import { deleteSavedItem, getSavedItems } from '../api.js';
 import { useAsync } from '../hooks/useAsync.js';
 import { SavedItemForm } from './SavedItemForm.jsx';
 
-// One saved item: pictogram, name, short description, and its two actions.
 function SavedRow({ item, onReport, onDelete }) {
   return (
     <li className="saved-row">
@@ -40,7 +37,6 @@ export function SavedItemsCard() {
   const { data: items, error, reload } = useAsync(getSavedItems);
   const [adding, setAdding] = useState(false);
 
-  // Remove one saved item after the person confirms.
   async function handleDelete(item) {
     if (!window.confirm(`Delete "${item.label}" from your saved items?`)) return;
     try {
@@ -52,7 +48,6 @@ export function SavedItemsCard() {
     }
   }
 
-  // Close the form and show the new item in the list.
   function handleAdded() {
     setAdding(false);
     toast('Saved for next time.');

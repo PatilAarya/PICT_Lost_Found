@@ -1,8 +1,4 @@
-// Saved item routes, mounted under /api/lost. Everyone sees only their own saved items.
-//   GET    /saved-items       my saved items
-//   POST   /saved-items       describe an item once, to report it lost in one tap later
-//   PATCH  /saved-items/:id   change it
-//   DELETE /saved-items/:id   remove it
+// Routes for saved items.
 import express from 'express';
 import { HttpError } from '../../../shared/utils/httpError.js';
 import { SavedItem } from '../models/SavedItem.js';
@@ -10,7 +6,6 @@ import { savedItemSchema } from '../schemas.js';
 
 const router = express.Router();
 
-// Find one of my saved items, or stop with 404 (also when it belongs to someone else).
 async function findMine(req) {
   const item = await SavedItem.findOne({ _id: req.params.id, userId: req.user._id }).catch(
     () => null

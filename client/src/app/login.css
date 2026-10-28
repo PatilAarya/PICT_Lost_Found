@@ -1,8 +1,4 @@
-/*
-  The split-screen login page (LoginPage.jsx, LoginIntro.jsx, DemoAccounts.jsx).
-  Phones: the navy intro is a short block on top, the form card below. From 900px:
-  two halves side by side, each filling the full height of the window.
-*/
+/* Styles for the split-screen login page. */
 .login {
   display: grid;
   min-height: 100vh;
@@ -45,8 +41,6 @@
   color: var(--paper);
   font-size: var(--text-xl);
 }
-
-/* The sample ticket and the steps are extra; phones skip them to reach the form fast. */
 .login-sample,
 .login-steps {
   display: none;
@@ -89,8 +83,6 @@
   font-size: var(--text-xl);
   letter-spacing: 0.3em;
 }
-
-/* Demo accounts (development only) */
 .demo-accounts {
   margin-top: var(--space-5);
   padding-top: var(--space-4);

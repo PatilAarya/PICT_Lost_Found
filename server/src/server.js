@@ -1,6 +1,4 @@
-// Start-up file: connects to MongoDB, builds the app, opens the HTTP port and Socket.IO,
-// then calls every module's init() so modules can register their services and listen
-// for socket events. Run with `npm run dev -w server` (or `npm run dev` at the root).
+// Starts the server: database, HTTP, Socket.IO and modules.
 import http from 'node:http';
 import { Server } from 'socket.io';
 import { config } from './shared/config/index.js';
@@ -9,12 +7,10 @@ import { services } from './shared/services/registry.js';
 import { setupRealtime } from './shared/realtime/socketServer.js';
 import { createApp } from './app.js';
 
-// Connect, build and start everything.
 async function start() {
   await connectDb(config.mongoUri);
   const { app, modules } = await createApp();
 
-  // Socket.IO shares the same HTTP server (and port) as Express.
   const httpServer = http.createServer(app);
   const io = new Server(httpServer, { cors: { origin: config.clientUrl, credentials: true } });
   setupRealtime(io);

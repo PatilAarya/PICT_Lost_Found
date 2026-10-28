@@ -1,6 +1,4 @@
-// The Found page: everything about items you found, on one screen. Numbers on top,
-// your posted items as claim tickets, and a short "how posting works" guide beside them.
-// There is exactly one "Post found item" button, in the page header.
+// Found page: your posted items, counts and a short guide.
 import { useNavigate } from 'react-router-dom';
 import {
   Button,

@@ -1,6 +1,4 @@
-// /verify/claim/:id - one claim from the claimant's side. What it shows depends on
-// the claim's status: the questions, a lockout timer, "waiting for the desk", the
-// handover code, the finder confirmation, or the final result. Plus a Timeline.
+// One claim from the claimant's side.
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -19,11 +17,9 @@ import { LockoutNotice } from '../components/LockoutNotice.jsx';
 import { HandoverCode } from '../components/HandoverCode.jsx';
 import { FinderConfirm } from '../components/FinderConfirm.jsx';
 
-// The main panel for the claim's current status.
 function StatusPanel({ claim, isFinder, reload, onAnswered }) {
   switch (claim.status) {
     case 'answering':
-      // A new key after each try makes React start the questions fresh from number 1.
       return <AnswerSteps key={claim.attemptsLeft} claim={claim} onDone={onAnswered} />;
     case 'locked':
       return <LockoutNotice lockedUntil={claim.lockedUntil} onUnlock={reload} />;
@@ -56,7 +52,6 @@ export function ClaimPage() {
   const load = useCallback(() => getClaim(id), [id]);
   const { data: claim, loading, error, reload } = useLoad(load);
 
-  // After answers are sent: a short message, then show the new state.
   function handleAnswered(result) {
     toast(
       result.passed

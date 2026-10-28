@@ -1,8 +1,4 @@
-/*
-  Shared styles for buttons, the bottom sheet, toasts and helpers (DESIGN.md section 9).
-  Form fields and chips are in form.css, tickets in ticket.css, stamps in stamp.css,
-  layout pieces in layout.css. Uses tokens.css only, never raw colours.
-*/
+/* Shared styles for buttons, sheets and toasts. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -28,8 +24,6 @@
   cursor: pointer;
   transition: background-color 120ms ease;
 }
-
-/* Two buttons placed side by side never touch, even outside a .button-row. */
 .btn + .btn {
   margin-left: var(--space-3);
 }
@@ -42,8 +36,6 @@
   min-height: 52px;
   padding: 0 var(--space-5);
 }
-
-/* The main action: navy with white text (DESIGN.md section 9, revised). */
 .btn-primary {
   background: var(--action);
   color: var(--action-text);
@@ -52,8 +44,6 @@
 .btn-primary:hover:not(:disabled) {
   background: var(--action-hover);
 }
-
-/* Red only for destructive actions; white on red needs bold 18px to pass contrast. */
 .btn-danger {
   background: var(--berry);
   color: #ffffff;
@@ -87,8 +77,6 @@
 .btn:active:not(:disabled) {
   box-shadow: var(--lift);
 }
-
-/* Disabled buttons turn grey instead of a faded pink, so they clearly read "not yet". */
 .btn:disabled {
   background: var(--paper-deep);
   color: var(--text-soft);
@@ -120,9 +108,6 @@
 .icon-button:hover {
   background: var(--frost-tint);
 }
-
-/* Sheet: a native <dialog>. On phones it slides up from the bottom edge; from 700px wide
-   it becomes a centred window, so the content is never pushed to the bottom of a big screen. */
 .sheet {
   width: min(100%, 760px);
   max-height: 88vh;
@@ -159,8 +144,6 @@
 .sheet-header h2 {
   margin: 0;
 }
-
-/* Toasts sit above the bottom navigation, in the centre. */
 .toasts {
   position: fixed;
   bottom: 88px;

@@ -1,15 +1,10 @@
-// The claim-ticket card, the signature component (DESIGN.md section 6):
-// PropertyTag { item, onClick, compact }, where item is
-// { kind: lost|found, serial, category, title, status, locationLabel, timeLabel, imageUrl }.
-// Anatomy: punched hole, photo or pictogram, text, rubber stamp, and a tear-off stub
-// with the serial number and barcode behind a perforated edge. Styles in ticket.css.
+// The claim ticket card used for lost and found items.
 import { Pictogram } from './Pictogram.jsx';
 import { Stamp, inkFor, stampWord } from './Stamp.jsx';
 import { barcodeBars, splitSerial } from './ticketParts.js';
 import './ticket.css';
 import './ticket-compact.css';
 
-// The photo when there is one, otherwise the category pictogram.
 function TicketMedia({ item, size }) {
   if (item.imageUrl) {
     return (
@@ -26,7 +21,6 @@ function TicketMedia({ item, size }) {
   return <Pictogram category={item.category} size={size} />;
 }
 
-// The barcode drawn as SVG rectangles, one per digit of the serial.
 function Barcode({ number }) {
   const { bars, totalWidth } = barcodeBars(number);
   return (
@@ -38,7 +32,6 @@ function Barcode({ number }) {
   );
 }
 
-// Full ticket: place and time on their own lines.
 function FullLines({ item }) {
   return (
     <>
@@ -48,7 +41,6 @@ function FullLines({ item }) {
   );
 }
 
-// Compact ticket: one line with the status word, then the place, so it fits in 72px.
 function CompactLine({ item }) {
   return (
     <span className="ticket-meta compact-line">
@@ -60,7 +52,6 @@ function CompactLine({ item }) {
   );
 }
 
-// The tear-off stub on the right: PICT, L or F, the number and the barcode.
 function TicketStub({ item, compact }) {
   const { prefix, letter, number } = splitSerial(item.serial, item.kind);
   return (
@@ -73,12 +64,9 @@ function TicketStub({ item, compact }) {
   );
 }
 
-// Statuses that mean the story is over: the item is back with its owner, or nobody needs it.
-// These tickets get a dark "finished" stub letter instead of red or steel (DESIGN.md section 2).
 const FINISHED = ['recovered', 'released', 'closed', 'donated'];
 
 export function PropertyTag({ item, onClick, compact = false }) {
-  // A clickable ticket is a real <button> so it works with the keyboard; otherwise <article>.
   const Tag = onClick ? 'button' : 'article';
   const classes = ['ticket', `ticket-${item.kind}`];
   if (FINISHED.includes(item.status)) classes.push('ticket-finished');
@@ -93,7 +81,6 @@ export function PropertyTag({ item, onClick, compact = false }) {
           <TicketMedia item={item} size={compact ? 40 : 56} />
         </span>
         <span className="ticket-text">
-          {/* Said first by screen readers, so the kind never depends on colour. */}
           <span className="visually-hidden">
             {item.kind === 'found' ? 'Found item' : 'Lost item'}
           </span>

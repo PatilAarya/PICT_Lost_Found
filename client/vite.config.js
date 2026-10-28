@@ -1,6 +1,4 @@
-// Vite settings for the React client: React support, the PWA (manifest and
-// service worker), a dev proxy so /api and /socket.io reach the Express server on
-// port 4000 from the same address (which lets the login cookie work), and tests.
+// Vite settings: React, PWA and the dev proxy to the server.
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -22,7 +20,6 @@ export default defineConfig({
         icons: [{ src: '/app-icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
       },
       workbox: {
-        // Never let the service worker answer API calls from its cache.
         navigateFallbackDenylist: [/^\/api/, /^\/socket\.io/],
       },
     }),

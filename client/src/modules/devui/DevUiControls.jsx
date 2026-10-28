@@ -1,6 +1,4 @@
-// The interactive half of the dev gallery: colour tokens, type scale, buttons,
-// form fields, category tiles and the colour picker. Split out of DevUiPage.jsx to
-// keep each file short. Dev-only, never shown in production builds.
+// Interactive part of the dev gallery: colours, buttons and form fields.
 import { useState } from 'react';
 import { CATEGORIES } from '../../shared/constants.js';
 import { Button, ChipSelect, ColorPicker, Field, TextInput } from '../../shared/ui/index.js';
@@ -8,7 +6,6 @@ import { Button, ChipSelect, ColorPicker, Field, TextInput } from '../../shared/
 const TOKENS = ['paper', 'ink', 'frost', 'steel', 'berry', 'berry-ink'];
 const TYPE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 
-// "id_card" becomes "id card" for chip labels.
 const categoryOptions = CATEGORIES.map((category) => ({
   value: category,
   label: category.replace('_', ' '),

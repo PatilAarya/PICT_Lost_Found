@@ -1,10 +1,4 @@
-// The 10 category pictograms from DESIGN.md section 8, hand-drawn on a 48x48 grid.
-// Every shape uses only three classes (styled in pictogram.css):
-//   pg-line = 2px outline in the text colour, pg-fill = the one frosted accent shape,
-//   pg-dot  = the one small detail, red for lost and steel for found.
-// Pictogram.jsx picks a shape from PICTOGRAM_SHAPES by category id.
-
-// A college ID card: photo box, three text lines and the lanyard slot.
+// The SVG drawings for each item category.
 function IdCard() {
   return (
     <>
@@ -16,7 +10,6 @@ function IdCard() {
   );
 }
 
-// A phone: body, screen, speaker slit and the home button.
 function Phone() {
   return (
     <>
@@ -28,7 +21,6 @@ function Phone() {
   );
 }
 
-// A laptop: the frosted screen sits on a base drawn as one closed path.
 function Laptop() {
   return (
     <>
@@ -39,7 +31,6 @@ function Laptop() {
   );
 }
 
-// A wallet with a card peeking out of the top and a clasp on the flap.
 function Wallet() {
   return (
     <>
@@ -51,7 +42,6 @@ function Wallet() {
   );
 }
 
-// A key ring joined to one key; the shaft runs diagonally with two teeth.
 function Keys() {
   return (
     <>
@@ -64,7 +54,6 @@ function Keys() {
   );
 }
 
-// A water bottle: cap, neck and body as one outline, with a frosted label.
 function Bottle() {
   return (
     <>
@@ -75,7 +64,6 @@ function Bottle() {
   );
 }
 
-// A backpack: top handle, rounded body, front pocket and its zip pull.
 function Bag() {
   return (
     <>
@@ -90,7 +78,6 @@ function Bag() {
   );
 }
 
-// Two earbuds above their charging case; the dot is the case light.
 function Earbuds() {
   return (
     <>
@@ -104,7 +91,6 @@ function Earbuds() {
   );
 }
 
-// Three books on a shelf, the last one leaning; the dot shape is a bookmark.
 function Books() {
   return (
     <>
@@ -117,7 +103,6 @@ function Books() {
   );
 }
 
-// "Anything else": a parcel box with a lid and a strip of tape.
 function Other() {
   return (
     <>
@@ -129,7 +114,6 @@ function Other() {
   );
 }
 
-// Category id (from constants CATEGORIES) to the function that draws it.
 export const PICTOGRAM_SHAPES = {
   id_card: IdCard,
   phone: Phone,

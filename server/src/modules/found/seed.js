@@ -1,14 +1,9 @@
-// server/src/modules/found/seed.js
-// Demo found items for development and the dev user switcher.
-// Idempotent: looks up by (finderId, title) and skips if that pair already
-// exists, so running `npm run seed` again never creates duplicates.
+// Demo found items for development.
 import { FoundItem } from '../../shared/models/FoundItem.js';
 import { User } from '../../shared/models/User.js';
 import { nextSerial } from '../../shared/utils/serial.js';
 import { getHiddenDetailPrompts } from './hidden-detail-prompts.js';
 
-// Each demo item: who found it, what it is, where, and what state it's in.
-// finderEmail must match an email from auth/seed.js's SEED_USERS list.
 const DEMO_ITEMS = [
   {
     finderEmail: 'aarav.sharma@pict.edu',
@@ -84,8 +79,6 @@ const DEMO_ITEMS = [
   },
 ];
 
-// Build one hidden detail for an item's category, using the real prompt text
-// so it looks and behaves exactly like a user-submitted one.
 function buildHiddenDetail(category) {
   const prompts = getHiddenDetailPrompts(category);
   const prompt = prompts[0];
@@ -98,17 +91,16 @@ function buildHiddenDetail(category) {
   ];
 }
 
-// Insert demo found items.
 export default async function seed() {
   for (const demo of DEMO_ITEMS) {
     const finder = await User.findOne({ email: demo.finderEmail });
     if (!finder) {
-      continue; // auth seed must run first; skip quietly if the user is missing.
+      continue;
     }
 
     const alreadyExists = await FoundItem.findOne({ finderId: finder._id, title: demo.title });
     if (alreadyExists) {
-      continue; // idempotent: don't create the same demo item twice.
+      continue;
     }
 
     const serial = await nextSerial('found');

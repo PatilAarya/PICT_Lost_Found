@@ -1,7 +1,4 @@
-// Asks the finder where the item will physically be: dropped at a desk,
-// or kept with the finder for a meetup. If "desk" is chosen, suggests
-// the nearest one based on the location already picked, and lets the
-// finder pick a different one from the full list instead.
+// Asks where the item will be kept and suggests the nearest desk.
 import { useEffect, useState } from 'react';
 import { ChipSelect } from '../../../shared/ui/index.js';
 import { api } from '../../../shared/api/client.js';
@@ -9,7 +6,6 @@ import { api } from '../../../shared/api/client.js';
 export default function DeskStep({ location, value, onChange }) {
   const [desks, setDesks] = useState([]);
 
-  // Asks the server for the best desk once a location has been chosen.
   useEffect(() => {
     if (!location?.buildingId || !location?.floorId) return;
     api
@@ -18,7 +14,6 @@ export default function DeskStep({ location, value, onChange }) {
       })
       .then((response) => {
         setDesks(response.data.allDesks);
-        // Only fill in a suggestion if the finder has not already chosen one.
         if (response.data.desk && value.type === 'desk' && !value.deskId) {
           onChange({ type: 'desk', deskId: response.data.desk.id });
         }

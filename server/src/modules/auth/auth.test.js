@@ -1,6 +1,4 @@
-// Tests for login: the full email-code flow, the role guard, the code rate limit,
-// and the dev user switcher. Uses an in-memory MongoDB (shared/testing/testDb.js)
-// and supertest, which sends HTTP requests to the app without opening a port.
+// Tests for email code login and roles.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -16,7 +14,6 @@ import seedUsers from './seed.js';
 
 let app;
 
-// Log in through the real routes and return the cookie the server set.
 async function loginAs(email) {
   const asked = await request(app).post('/api/auth/request-code').send({ email });
   const verified = await request(app)

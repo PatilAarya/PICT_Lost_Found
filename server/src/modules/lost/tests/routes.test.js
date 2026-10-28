@@ -1,6 +1,4 @@
-// Tests for the lost routes with a real in-memory database: reporting finds an existing
-// found item and notifies the owner; posting a found item later (services.runMatching)
-// matches an open report; only the owner can read a report; saved items stay private.
+// Tests for the lost routes.
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../../../app.js';
@@ -16,7 +14,6 @@ let alerts;
 const place = { buildingId: 'a1', floorId: '1', areaId: 'staff-room-1' };
 const now = Date.now();
 
-// A report body for a green bottle lost in the staff room a few hours ago.
 function reportBody() {
   return {
     category: 'bottle',
@@ -28,7 +25,6 @@ function reportBody() {
   };
 }
 
-// A found green bottle in the same room, found an hour ago.
 function makeFoundBottle(finderId) {
   return FoundItem.create({
     serial: `PICT-F-${Math.floor(Math.random() * 900000) + 100000}`,
@@ -42,7 +38,6 @@ function makeFoundBottle(finderId) {
   });
 }
 
-// Send a request as one of the test people (dev login header).
 const as = (email) => ({ 'x-dev-user': email });
 
 beforeAll(async () => {
@@ -129,7 +124,6 @@ describe('saved items', () => {
 describe('lost photos', () => {
   it('stores an uploaded photo and serves it back', async () => {
     await User.create({ name: 'Owner', email: 'owner@pict.edu', role: 'student' });
-    // A tiny fake JPEG: the route stores bytes as they are, the browser already resized them.
     const bytes = Buffer.from([0xff, 0xd8, 0xff, 0xd9]);
     const uploaded = await request(app)
       .post('/api/lost/photos')

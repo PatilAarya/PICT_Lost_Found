@@ -1,6 +1,4 @@
-// The fields of each "report lost item" step (the card around them is shared StepCard).
-// stepIndex picks which fields to show; every change goes back up through update(),
-// so all answers live in one form object in ReportLostPage.jsx.
+// Fields shown in each step of reporting a lost item.
 import {
   ChipSelect,
   ColorPicker,
@@ -14,7 +12,6 @@ import { LocationPicker } from '../../../shared/location-picker/LocationPicker.j
 import { CATEGORY_TILES } from '../utils/reportSteps.js';
 import { ReportSummary } from './ReportSummary.jsx';
 
-// Step 1: one-tap saved items (if any), then the category tiles.
 function CategoryStep({ form, update, savedItems, onUseSaved }) {
   return (
     <>
@@ -47,7 +44,6 @@ function CategoryStep({ form, update, savedItems, onUseSaved }) {
   );
 }
 
-// Step 2: name, colours and details.
 function DetailsStep({ form, update }) {
   return (
     <>
@@ -77,7 +73,6 @@ function DetailsStep({ form, update }) {
   );
 }
 
-// Step 4: the lost time window, as two datetime boxes.
 function WhenStep({ form, update }) {
   return (
     <div className="when-fields">

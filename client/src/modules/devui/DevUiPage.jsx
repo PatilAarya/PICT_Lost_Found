@@ -1,6 +1,4 @@
-// Dev-only gallery of every shared UI component, all 10 pictograms and every stamp,
-// at /devui. It lets the team check the design system in light and dark mode without
-// clicking through real flows. routes.jsx only adds this page in development builds.
+// Dev-only page that shows every shared UI component in one place.
 import { useState } from 'react';
 import { CATEGORIES } from '../../shared/constants.js';
 import {
@@ -22,7 +20,6 @@ import { ALL_STATUSES, SAMPLE_STEPS, SAMPLE_TICKETS, SAMPLE_TIMELINE } from './d
 import { DevUiControls } from './DevUiControls.jsx';
 import './devui.css';
 
-// The 16 interface icon names allowed by the contract (DESIGN.md section 8).
 const ICON_NAMES = [
   'arrow-right',
   'arrow-left',
@@ -42,7 +39,6 @@ const ICON_NAMES = [
   'shield',
 ];
 
-// One titled block of the gallery.
 function Section({ title, children }) {
   return (
     <section className="devui-section">

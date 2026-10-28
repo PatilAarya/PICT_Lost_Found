@@ -1,9 +1,6 @@
-// Every call the verify screens make to /api/verify, in one place.
-// Each function returns the useful part of the response (not the whole axios object),
-// so pages can simply write: const claim = await getClaim(id).
+// All API calls used by the verify screens.
 import { api } from '../../shared/api/client.js';
 
-// --- Claimant ---
 export const getItemPreview = (foundItemId) =>
   api.get(`/verify/items/${foundItemId}`).then((res) => res.data.item);
 export const startClaim = (foundItemId, lostReportId) =>
@@ -16,7 +13,6 @@ export const revealCode = (id) => api.get(`/verify/claims/${id}/code`).then((res
 export const confirmHandover = (claimId) =>
   api.post('/verify/handover/confirm', { claimId }).then((res) => res.data.claim);
 
-// --- Desk (handlers and admins) ---
 export const getDeskQueue = () => api.get('/verify/desk/queue').then((res) => res.data.claims);
 export const getApproved = () => api.get('/verify/desk/approved').then((res) => res.data.claims);
 export const decideClaim = (id, decision, note) =>
@@ -27,7 +23,6 @@ export const getIncoming = () => api.get('/verify/incoming').then((res) => res.d
 export const receiveItem = (itemId) =>
   api.patch(`/verify/incoming/${itemId}/receive`).then((res) => res.data.item);
 
-// --- Admin ---
 export const getAnalytics = (from, to) =>
   api
     .get('/verify/analytics', { params: { from: from || undefined, to: to || undefined } })

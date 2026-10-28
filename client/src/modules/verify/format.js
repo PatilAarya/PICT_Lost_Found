@@ -1,16 +1,12 @@
-// Small formatting helpers shared by the verify screens: dates, countdowns,
-// places, and turning a public item into the props PropertyTag expects.
-// Intl.DateTimeFormat is the browser's own date formatter, so no library is needed.
+// Formats dates, countdowns, places and tickets for the verify screens.
 import { placeName } from '../../shared/location-picker/places.js';
 
 const dateTime = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
 
-// "27 Oct 2026, 2:15 pm", or '' for no date.
 export function formatDateTime(value) {
   return value ? dateTime.format(new Date(value)) : '';
 }
 
-// 125000 ms -> "2:05" (minutes:seconds), or "1 h 05 min" when over an hour.
 export function formatCountdown(ms) {
   const totalSeconds = Math.ceil(ms / 1000);
   const hours = Math.floor(totalSeconds / 3600);
@@ -22,13 +18,10 @@ export function formatCountdown(ms) {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
-// "Lab building, Ground floor, Canteen" from a Location object, or '' when there is none.
-// The names come from locations.json through shared/location-picker/places.js.
 export function placeLabel(location) {
   return placeName(location);
 }
 
-// The props PropertyTag needs, from a public item (and an optional status to stamp).
 export function ticketOf(item, status) {
   return {
     kind: 'found',
@@ -42,12 +35,10 @@ export function ticketOf(item, status) {
   };
 }
 
-// 0.86 -> "86%".
 export function percent(value) {
   return `${Math.round((value || 0) * 100)}%`;
 }
 
-// Plain words for each custody action (CUSTODY_ACTIONS in shared/constants.js).
 const ACTION_WORDS = {
   POSTED: 'Posted by the finder',
   DROPPED_AT_DESK: 'Dropped at the desk',
@@ -65,7 +56,6 @@ const ACTION_WORDS = {
   DONATED: 'Donated',
 };
 
-// "DROPPED_AT_DESK" -> "Dropped at the desk".
 export function actionWord(action) {
   return ACTION_WORDS[action] || String(action).replaceAll('_', ' ').toLowerCase();
 }

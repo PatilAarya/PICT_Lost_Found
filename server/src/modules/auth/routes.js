@@ -1,6 +1,4 @@
-// HTTP routes for login: request a code, verify it, who am I, log out, and the
-// list of seeded users for the dev switcher. Mounted at /api/auth by index.js.
-// The JWT is kept in an httpOnly cookie so page JavaScript can never read or steal it.
+// Login routes: request code, verify code, who am I, log out.
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
@@ -22,13 +20,11 @@ const verifySchema = z.object({
 
 const router = express.Router();
 
-// Turn "aarav.sharma@pict.edu" into "Aarav Sharma" for a first-time user's name.
 function nameFromEmail(email) {
   const words = email.split('@')[0].split(/[._-]+/);
   return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
-// Put a signed 7-day login token in an httpOnly cookie.
 function setLoginCookie(res, userId) {
   const token = jwt.sign({ userId: String(userId) }, config.jwtSecret, { expiresIn: '7d' });
   res.cookie(TOKEN_COOKIE, token, {
@@ -46,12 +42,9 @@ router.post('/request-code', strictLimiter, async (req, res) => {
   try {
     await sendMail({ to: email, ...buildCodeEmail(code, CODE_MINUTES) });
   } catch (err) {
-    // The email server said no (wrong SMTP login, daily limit, no internet). Log the
-    // reason for us, and tell the user plainly what to do instead of a raw error.
     console.error('[mail] could not send the login code:', err.message);
     throw new HttpError(502, 'EMAIL_FAILED', 'We could not send the email. Try again in a minute.');
   }
-  // Tests cannot open an inbox, so only in test mode the code is returned in the response.
   res.json(config.isTest ? { ok: true, devCode: code } : { ok: true });
 });
 

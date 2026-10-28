@@ -1,8 +1,4 @@
-// Lifecycle rules, run every hour by jobs.js. Each rule is its own small function
-// so it can be tested with a fake "now":
-// 1. warn people claiming a desk item 6 hours before it moves to the admin office,
-// 2. move desk items held longer than HOLD_HOURS_DESK to the admin office,
-// 3. donate items older than DONATE_AFTER_DAYS.
+// Hourly rules for reminders and expiring items.
 import { config } from '../../../shared/config/index.js';
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
@@ -13,7 +9,6 @@ import { notifyUser } from './notifyHelpers.js';
 const HOUR_MS = 60 * 60 * 1000;
 const WARN_HOURS_BEFORE = 6;
 
-// Ids of desk items still in custody whose STORED entry falls between two times.
 async function deskItemsStoredBetween(from, to) {
   const stored = await CustodyEntry.find({
     action: 'STORED',
@@ -22,7 +17,6 @@ async function deskItemsStoredBetween(from, to) {
   return FoundItem.find({ _id: { $in: stored }, status: 'in_custody', 'custody.type': 'desk' });
 }
 
-// Rule 1: a one-hour window, so each item is warned exactly once by the hourly job.
 export async function warnBeforeTransfer(now = new Date()) {
   const windowEnd = new Date(now.getTime() - (config.holdHoursDesk - WARN_HOURS_BEFORE) * HOUR_MS);
   const windowStart = new Date(windowEnd.getTime() - HOUR_MS);
@@ -45,7 +39,6 @@ export async function warnBeforeTransfer(now = new Date()) {
   return items.length;
 }
 
-// Rule 2: desk items held too long go to the admin office.
 export async function transferOldDeskItems(now = new Date()) {
   const cutoff = new Date(now.getTime() - config.holdHoursDesk * HOUR_MS);
   const items = await deskItemsStoredBetween(new Date(0), cutoff);
@@ -68,7 +61,6 @@ export async function transferOldDeskItems(now = new Date()) {
   return items.length;
 }
 
-// Rule 3: unclaimed items older than DONATE_AFTER_DAYS are donated.
 export async function donateOldItems(now = new Date()) {
   const cutoff = new Date(now.getTime() - config.donateAfterDays * 24 * HOUR_MS);
   const items = await FoundItem.find({
@@ -87,7 +79,6 @@ export async function donateOldItems(now = new Date()) {
   return items.length;
 }
 
-// Run all rules in order and report how many items each one touched.
 export async function runLifecycle(now = new Date()) {
   const warned = await warnBeforeTransfer(now);
   const transferred = await transferOldDeskItems(now);

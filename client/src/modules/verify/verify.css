@@ -1,12 +1,6 @@
-/*
-  Styles for the verify screens only, all class names start from verify pages.
-  Uses the DESIGN.md tokens (tokens.css): red for attention, steel for found, frost for
-  in-progress. The desk is styled in desk.css, analytics and integrity in their own files.
-*/
+/* Styles for the verify screens. */
 .verify-page {
   display: grid;
-  /* minmax(0, 1fr) lets wide children (chain blocks, tables) scroll inside the
-     column instead of stretching the whole page sideways. */
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
@@ -82,8 +76,6 @@
   font-size: var(--text-2xl);
   font-weight: 700;
 }
-
-/* The handover code looks like a tear-off stub: perforated top edge, big digits. */
 .code-stub {
   display: grid;
   justify-items: center;

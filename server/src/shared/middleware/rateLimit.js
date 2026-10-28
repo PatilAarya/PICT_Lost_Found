@@ -1,10 +1,7 @@
-// Limits how often one computer (IP address) can call the API, to slow down spam
-// and guessing. Built on express-rate-limit. app.js applies apiLimiter to all of
-// /api; modules can import strictLimiter for sensitive routes such as login.
+// Limits how often one computer can call the API.
 import rateLimit from 'express-rate-limit';
 import { config } from '../config/index.js';
 
-// Build the standard "too many requests" error body.
 function tooMany(message) {
   return { error: { code: 'TOO_MANY_REQUESTS', message } };
 }

@@ -1,7 +1,4 @@
-// The verify module (Member 2): claims, owner check, handover, custody log, analytics.
-// Mounted automatically at /api/verify by app.js. Every route needs a logged-in user;
-// each routes file adds its own role checks. init() registers the real appendCustody
-// service and starts the hourly lifecycle job.
+// The verify module: claims, ownership check and handover.
 import express from 'express';
 import { requireAuth } from '../../shared/middleware/requireAuth.js';
 import { registerService } from '../../shared/services/registry.js';
@@ -26,7 +23,6 @@ router.use(analyticsRoutes);
 export default {
   name: 'verify',
   router,
-  // Called once by server.js after start-up, with Socket.IO and the service registry.
   async init() {
     registerService('appendCustody', appendCustody);
     startJobs();

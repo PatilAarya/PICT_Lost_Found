@@ -1,6 +1,4 @@
-// The fields of each "post found item" step (the card around them is StepCard.jsx).
-// stepIndex picks which fields to show; every change goes back up through update(),
-// so all answers live in one form object (hooks/useFoundItemForm.js).
+// Fields shown in each step of posting a found item.
 import { ChipSelect, Field, TextArea, TextInput } from '../../../shared/ui/index.js';
 import { LocationPicker } from '../../../shared/location-picker/LocationPicker.jsx';
 import { CATEGORIES } from '../../../shared/constants.js';
@@ -11,14 +9,12 @@ import HiddenDetailsStep from './HiddenDetailsStep.jsx';
 import DeskStep from './DeskStep.jsx';
 import ReviewSummary from './ReviewSummary.jsx';
 
-// `category` on each option makes ChipSelect draw a tile with the pictogram.
 const CATEGORY_OPTIONS = CATEGORIES.map((category) => ({
   value: category,
   label: category.replace('_', ' '),
   category,
 }));
 
-// Title, description, brand and colours (step 4).
 function DetailsFields({ form, update }) {
   return (
     <>
@@ -45,7 +41,6 @@ function DetailsFields({ form, update }) {
   );
 }
 
-// Place on campus and the time it was found (step 6).
 function PlaceFields({ form, update }) {
   return (
     <>

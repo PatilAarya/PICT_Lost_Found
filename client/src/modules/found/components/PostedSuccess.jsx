@@ -1,5 +1,4 @@
-// Shown after a found item is posted: the finished claim ticket with its real serial
-// number, what to do next, and buttons to see your items or post another one.
+// Success screen shown after a found item is posted.
 import { useNavigate } from 'react-router-dom';
 import { Button, PageHeader, PropertyTag } from '../../../shared/ui/index.js';
 import { ticketFromItem } from '../utils/ticket.js';

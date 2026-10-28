@@ -1,18 +1,12 @@
-// Reads every setting from environment variables (the .env file) in one place.
-// Other files import `config` instead of reading process.env directly, so a missing
-// or misspelled variable is easy to find. See .env.example for the full list.
+// Reads all settings from the .env file.
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 
-// The .env file sits in the repo root, four folders up from this file. We point to it
-// by path because `npm run dev -w server` runs with server/ as the working folder.
-// Tests (Vitest sets VITEST) never read .env, so they can never send real emails.
 if (!process.env.VITEST) {
   const rootEnvFile = fileURLToPath(new URL('../../../../.env', import.meta.url));
   dotenv.config({ path: rootEnvFile, quiet: true });
 }
 
-// Turn "a,b" into ['a', 'b'] and drop empty items.
 function toList(value) {
   return (value || '')
     .split(',')
@@ -52,7 +46,6 @@ export const config = {
   lockoutMinutes: Number(process.env.LOCKOUT_MINUTES || 30),
 };
 
-// The dev user switcher only works on a developer's machine, never in production.
 export function isDevSwitcherOn() {
   return config.nodeEnv === 'development' && config.devAuth;
 }

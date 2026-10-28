@@ -1,13 +1,8 @@
-// Small layout pieces from the contract: PageHeader { title, subtitle, actions },
-// EmptyState { title, action, illustration }, Spinner, Timeline { steps },
-// Stepper { steps, current }. Styles are in layout.css and progress.css.
-// EmptyState's illustration can be a name ('no-reports', 'no-matches',
-// 'no-notifications') for the built-in art, or any element you pass in.
+// Small layout pieces: page header, empty state, spinner, timeline and stepper.
 import { EmptyArt } from './pictograms/EmptyArt.jsx';
 import './layout.css';
 import './progress.css';
 
-// The title row at the top of a page.
 export function PageHeader({ title, subtitle, actions }) {
   return (
     <header className="page-header">
@@ -20,7 +15,6 @@ export function PageHeader({ title, subtitle, actions }) {
   );
 }
 
-// What to show when a list is empty, with an action to fill it.
 export function EmptyState({ title, action, illustration }) {
   const art = typeof illustration === 'string' ? <EmptyArt name={illustration} /> : illustration;
   return (
@@ -32,7 +26,6 @@ export function EmptyState({ title, action, illustration }) {
   );
 }
 
-// A loading indicator with a text label for screen readers.
 export function Spinner() {
   return (
     <div className="spinner" role="status">
@@ -41,8 +34,6 @@ export function Spinner() {
   );
 }
 
-// A vertical history: a dashed line with punched circles; done stops are filled.
-// steps: [{ label, done, at }], where `at` is already formatted text.
 export function Timeline({ steps = [] }) {
   return (
     <ol className="timeline">
@@ -58,16 +49,12 @@ export function Timeline({ steps = [] }) {
   );
 }
 
-// "done", "current" or "todo" for the step at `index`.
 function stepState(index, current) {
   if (index < current) return 'done';
   if (index === current) return 'current';
   return 'todo';
 }
 
-// Progress for multi-step forms. steps: ['Photo', 'Details', ...].
-// A row of segments shows how far along you are, and one line of text names the
-// current and next step in full, so no step name is ever cut off on a small screen.
 export function Stepper({ steps = [], current = 0 }) {
   const next = steps[current + 1];
   return (

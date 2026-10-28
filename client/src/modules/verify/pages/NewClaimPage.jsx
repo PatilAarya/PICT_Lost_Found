@@ -1,6 +1,4 @@
-// /verify/claim/new?foundItemId=...&lostReportId=... - the first step of a claim.
-// Shows the item's BLURRED public photo and ticket, then starts the claim on a
-// button press and opens /verify/claim/:id where the questions are asked.
+// First step of claiming an item.
 import { useCallback, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { errorMessage } from '../../../shared/api/client.js';
@@ -22,7 +20,6 @@ export function NewClaimPage() {
   const [startError, setStartError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Create (or reopen) the claim, then go to its page.
   async function handleStart() {
     setBusy(true);
     try {

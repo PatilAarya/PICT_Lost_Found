@@ -1,9 +1,6 @@
-// Turns database documents into the safe JSON each person may see.
-// publicItem() never includes hidden answers or private photo ids, and claimView()
-// never includes the handover code or its hash. Routes always send these views.
+// Shapes items and claims into what each person may see.
 import { attemptsLeft } from './lockout.js';
 
-// The public face of a found item: blurred photos only, no hidden answers.
 export function publicItem(item) {
   return {
     id: item._id,
@@ -20,7 +17,6 @@ export function publicItem(item) {
   };
 }
 
-// Only the questions (promptKey and promptText), never the answers.
 export function promptsOf(item) {
   return (item.hiddenDetails || []).map((detail) => ({
     promptKey: detail.promptKey,
@@ -28,7 +24,6 @@ export function promptsOf(item) {
   }));
 }
 
-// The steps shown on the claim's Timeline, with a time when each step happened.
 function timelineOf(claim) {
   const approvedOrLater = ['approved', 'released'].includes(claim.status);
   const waitingOrLater = approvedOrLater || ['awaiting_handler', 'rejected'].includes(claim.status);
@@ -43,7 +38,6 @@ function timelineOf(claim) {
   ];
 }
 
-// What a claimant (or staff, or the finder) sees about one claim.
 export function claimView(claim, item, viewer) {
   const isApproved = claim.status === 'approved';
   const custodyType = item && item.custody ? item.custody.type : 'finder';
@@ -51,7 +45,6 @@ export function claimView(claim, item, viewer) {
     id: claim._id,
     serial: claim.serial,
     status: claim.status,
-    // Tells the page to show the finder's side of a finder-kept handover.
     viewerIsFinder: Boolean(item && viewer && String(item.finderId) === String(viewer._id)),
     createdAt: claim.createdAt,
     attemptsLeft: attemptsLeft(claim),

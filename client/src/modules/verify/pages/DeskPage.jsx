@@ -1,6 +1,4 @@
-// /verify/desk - the security desk's workspace, in three tabs: decide waiting claims,
-// release items with the owner's code, and receive items dropped at the desk.
-// The tab buttons use role="tab" and aria-selected so screen readers announce them.
+// Security desk page with its three tabs.
 import { useState } from 'react';
 import { Icon, PageHeader } from '../../../shared/ui/index.js';
 import { QueueTab } from '../components/desk/QueueTab.jsx';

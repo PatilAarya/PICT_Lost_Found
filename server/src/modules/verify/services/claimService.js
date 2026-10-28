@@ -1,6 +1,4 @@
-// Starting a claim. Checks the item can be claimed, reuses the claimant's existing
-// claim for the same item (so the 3-try limit cannot be dodged by starting again),
-// and otherwise creates a new Claim with a PICT-C serial. Used by claimRoutes.js.
+// Starts a claim or reuses an existing one.
 import mongoose from 'mongoose';
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
@@ -11,7 +9,6 @@ import { checkFlags } from './flagRules.js';
 
 export const CLAIMABLE_STATUS = ['posted', 'in_custody', 'claim_pending', 'transferred_admin'];
 
-// Throw unless this user may claim this item.
 function checkCanClaim(item, user) {
   if (!CLAIMABLE_STATUS.includes(item.status)) {
     throw new HttpError(409, 'NOT_CLAIMABLE', 'This item can no longer be claimed.');
@@ -24,7 +21,6 @@ function checkCanClaim(item, user) {
   }
 }
 
-// Return the user's claim for this item, creating it if needed.
 export async function startClaim(user, foundItemId, lostReportId) {
   const item = await findOr404(FoundItem, foundItemId, 'Item');
   checkCanClaim(item, user);

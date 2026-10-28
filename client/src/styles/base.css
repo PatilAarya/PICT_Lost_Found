@@ -1,8 +1,4 @@
-/*
-  Global styles: page background, fonts, headings, links, focus ring and reduced motion.
-  Uses only the tokens in tokens.css. The app shell layout is in app/app.css and
-  component styles are in shared/ui/ui.css. Owned by Member 1 after Phase 0.
-*/
+/* Global page styles: background, fonts, headings and links. */
 *,
 *::before,
 *::after {
@@ -18,15 +14,11 @@ body {
   font-size: var(--text-md);
   line-height: 1.5;
 }
-
-/* A raised white panel on the tinted page: the basic building block of every screen.
-   Pages put their content in cards so the screen never looks empty or unstructured. */
 .card {
   padding: var(--space-5);
   border: var(--card-border);
   border-radius: var(--radius-card);
   background: var(--card);
-  /* Ticket holes and notches show the colour behind the ticket (see ticket.css). */
   --ticket-surround: var(--card);
 }
 
@@ -40,16 +32,12 @@ body {
   color: var(--text-soft);
   font-size: var(--text-sm);
 }
-
-/* A row of buttons with a real gap between them; wraps on small phones. */
 .button-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
 }
-
-/* Back on the left, the main action on the right (used at the bottom of form steps). */
 .button-row-split {
   justify-content: space-between;
 }

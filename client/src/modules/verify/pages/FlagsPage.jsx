@@ -1,6 +1,4 @@
-// /verify/flags (admin) - accounts the abuse rules flagged. Dismiss, Warn (the user
-// gets a notification) or Suspend. Suspend blocks the account, so it asks for
-// confirmation in a Sheet first.
+// Admin page for reviewing flagged accounts.
 import { useState } from 'react';
 import { errorMessage } from '../../../shared/api/client.js';
 import {
@@ -21,7 +19,6 @@ export function FlagsPage() {
   const { data: flags, loading, error, reload } = useLoad(getFlags);
   const [toSuspend, setToSuspend] = useState(null);
 
-  // Save the admin's decision and refresh the list.
   async function review(flag, action) {
     try {
       await reviewFlag(flag._id, action);

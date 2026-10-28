@@ -1,6 +1,4 @@
-// Tests for the floor-plan pin maths: a tap becomes 0..1 fractions of the plan's box,
-// taps on the edge are kept inside, and a tap finds its room only if the room belongs
-// to this floor. Run with `npm test -w client` (jsdom gives us real DOM elements).
+// Tests for the floor plan tap maths.
 import { describe, expect, it } from 'vitest';
 import { areaFromTarget, pointToFraction } from './pinMaths.js';
 

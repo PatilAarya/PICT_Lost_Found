@@ -1,6 +1,4 @@
-// Loads the logged-in person's own found items from GET /api/found/items
-// (the server returns only your items unless a handler asks for ?all=true).
-// Returns { items, error }: items is null while loading, then an array.
+// Hook that loads the found items posted by the logged-in user.
 import { useEffect, useState } from 'react';
 import { api, errorMessage } from '../../../shared/api/client.js';
 
@@ -9,7 +7,6 @@ export function useMyFoundItems() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // If the page closes before the answer arrives, ignore the answer.
     let cancelled = false;
     api
       .get('/found/items', { params: { limit: 50 } })

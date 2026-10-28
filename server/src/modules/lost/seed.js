@@ -1,7 +1,4 @@
-// Demo data for the lost module: creates the reports and saved items in seedData.js, then
-// runs the match engine on each new report so demo matches appear straight away.
-// Idempotent: a report or saved item with the same owner and title/label is never
-// created twice. Runs after found/seed.js (seeds run in alphabetical order).
+// Adds demo lost reports and saved items, then runs matching.
 import { LostReport } from '../../shared/models/LostReport.js';
 import { User } from '../../shared/models/User.js';
 import { nextSerial } from '../../shared/utils/serial.js';
@@ -11,12 +8,10 @@ import { DEMO_REPORTS, DEMO_SAVED_ITEMS } from './seedData.js';
 
 const HOUR_MS = 60 * 60 * 1000;
 
-// "hours ago" -> a real date.
 function hoursAgo(hours) {
   return new Date(Date.now() - hours * HOUR_MS);
 }
 
-// Create one demo report (if missing) and look for matches for it.
 async function seedReport(demo) {
   const owner = await User.findOne({ email: demo.ownerEmail });
   if (!owner) return;
@@ -37,7 +32,6 @@ async function seedReport(demo) {
   await matchLostReport(report);
 }
 
-// Create one demo saved item (if missing).
 async function seedSavedItem(demo) {
   const owner = await User.findOne({ email: demo.ownerEmail });
   if (!owner) return;
@@ -54,7 +48,6 @@ async function seedSavedItem(demo) {
   });
 }
 
-// Insert the demo lost reports and saved items.
 export default async function seed() {
   for (const demo of DEMO_REPORTS) {
     await seedReport(demo);

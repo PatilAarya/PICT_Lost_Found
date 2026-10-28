@@ -1,7 +1,4 @@
-// Pages of the verify module (Member 2). The app router finds this file by itself
-// (app/moduleDiscovery.js), so new pages are added here, never in a shared router.
-// Shape: [{ path, element, roles? }]. roles hides a page from everyone else
-// (the server checks the role again on every API call).
+// Pages of the verify module.
 import './verify.css';
 import './verify-charts.css';
 import './desk.css';

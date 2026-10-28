@@ -1,9 +1,4 @@
-// The 3 empty-state illustrations (DESIGN.md section 8): no reports, no matches,
-// no notifications. Same family as the pictograms: 2px outlines, one frosted shape and
-// one small detail, using the classes in pictogram.css. EmptyState in Layout.jsx
-// shows one when its `illustration` prop is one of the names below.
-
-// A blank ticket with dashed placeholder lines and a plus on the stub.
+// Illustrations for empty pages.
 function NoReports() {
   return (
     <>
@@ -17,11 +12,9 @@ function NoReports() {
   );
 }
 
-// Two tickets that do not line up, with a magnifying glass between them.
 function NoMatches() {
   return (
     <>
-      {/* rotate(angle cx cy) tilts each ticket around its own centre. */}
       <g transform="rotate(-6 46 60)">
         <rect className="pg-line" x="14" y="40" width="64" height="40" />
         <circle className="pg-line" cx="24" cy="60" r="4" />
@@ -37,7 +30,6 @@ function NoMatches() {
   );
 }
 
-// A quiet bell with an empty badge (a dash instead of a number).
 function NoNotifications() {
   return (
     <>
@@ -57,7 +49,6 @@ const ART = {
 
 export const EMPTY_ART_NAMES = Object.keys(ART);
 
-// Draw one illustration by name, or nothing if the name is unknown.
 export function EmptyArt({ name }) {
   const art = ART[name];
   if (!art) {

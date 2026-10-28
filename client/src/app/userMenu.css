@@ -1,7 +1,4 @@
-/*
-  The avatar button and its drop-down panel (UserMenu.jsx). The panel is positioned
-  under the button with position: absolute, so it floats above the page content.
-*/
+/* Styles for the avatar button and its drop-down menu. */
 .user-menu {
   position: relative;
 }
@@ -37,8 +34,6 @@
   font-weight: 700;
   font-size: var(--text-sm);
 }
-
-/* On phones the avatar alone is enough; the name shows from 700px wide. */
 .user-button-name {
   display: none;
   font-weight: 600;

@@ -1,8 +1,4 @@
-/*
-  The location picker (LocationPicker.jsx, FloorPlan.jsx). Floor plan colours follow
-  DESIGN.md section 9: rooms in frost, walls in ink, the hovered and chosen room in red
-  at 30% with a red outline, and the pin as a small red marker with a paper centre.
-*/
+/* Styles for the location picker and floor plans. */
 .location-picker {
   display: grid;
   gap: var(--space-4);
@@ -18,8 +14,6 @@
   color: var(--text-soft);
   font-weight: 600;
 }
-
-/* The pin is positioned inside this frame, so the frame is the positioning parent. */
 .plan-frame {
   position: relative;
   max-width: 640px;
@@ -38,8 +32,6 @@
   width: 100%;
   height: auto;
 }
-
-/* Rooms you can choose react to the pointer; decorative rooms (stairs) do not. */
 .plan-box .area {
   fill: var(--frost);
   cursor: pointer;
@@ -55,15 +47,10 @@
 .plan-box .room-decor {
   fill: var(--paper-deep);
 }
-
-/* Labels never catch taps, so a tap on the text still counts as a tap on its room. */
 .plan-box .room-label {
   pointer-events: none;
   font-family: var(--font-body);
 }
-
-/* The pin: a red ring with a paper centre. left/top put its top-left corner on the spot,
-   so translate(-50%, -50%) moves it back by half its size to centre it on the spot. */
 .plan-pin {
   position: absolute;
   width: 22px;

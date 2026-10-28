@@ -1,5 +1,4 @@
-// Desk tab 3: items a finder says they dropped at the desk. When the handler has
-// the item in hand, "Received" records RECEIVED_BY_HANDLER and STORED in the custody log.
+// Desk tab for items dropped off at the desk.
 import { useState } from 'react';
 import { errorMessage } from '../../../../shared/api/client.js';
 import { Button, EmptyState, PropertyTag, useToast } from '../../../../shared/ui/index.js';
@@ -12,7 +11,6 @@ export function IncomingTab() {
   const { data: items, loading, error, reload } = useLoad(getIncoming);
   const [busyId, setBusyId] = useState('');
 
-  // Mark one item as received and stored.
   async function handleReceive(item) {
     setBusyId(item.id);
     try {

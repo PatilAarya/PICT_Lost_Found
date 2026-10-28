@@ -1,6 +1,4 @@
-// Tests for readable place names: with the buildings list loaded, ids become real names;
-// without it, the ids are still shown so a ticket is never blank.
-// The API is replaced with a fake that returns a tiny locations.json.
+// Tests for readable place names.
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('../api/client.js', () => ({

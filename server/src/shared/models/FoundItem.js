@@ -1,7 +1,4 @@
-// An item someone found and posted. Owned by Member 3 (found module).
-// Fields follow docs/CONTRACT.md section C. hiddenDetails.answer has select: false,
-// so normal queries never load it; only handler routes may ask for it with
-// .select('+hiddenDetails.answer'). That keeps the owner-check answers secret.
+// Model for a found item.
 import mongoose from 'mongoose';
 import { CATEGORIES, COLORS, FOUND_STATUS } from '../constants.js';
 import { locationSchema } from './locationSchema.js';

@@ -1,6 +1,4 @@
-// STUB bottom sheet for details and confirmations: Sheet { open, onClose, title }.
-// Built on the browser's own <dialog> element: showModal() traps focus and the Esc
-// key fires "close", so we get accessibility without a library.
+// Bottom sheet dialog for details and confirmations.
 import { useEffect, useRef } from 'react';
 import { Icon } from './Icon.jsx';
 

@@ -1,7 +1,4 @@
-// A horizontal bar chart in plain SVG: one row per label, the bar's width comes from
-// linearScale(), and the number is written at the end of the bar (a direct label,
-// so no legend is needed). Colours follow DESIGN.md: main series --ink, grid --frost.
-// The card around it (in AnalyticsPage.jsx) gives the title and the explanation.
+// Horizontal bar chart drawn in SVG.
 import { linearScale, maxCount } from './scale.js';
 
 const ROW_HEIGHT = 34;
@@ -10,7 +7,6 @@ const BAR_AREA = 300;
 const NUMBER_SPACE = 44;
 const MAX_LABEL = 26;
 
-// "id_card" becomes "id card", and very long names are shortened with "...".
 function readableLabel(label) {
   const text = String(label).replaceAll('_', ' ');
   return text.length > MAX_LABEL ? `${text.slice(0, MAX_LABEL - 1)}...` : text;

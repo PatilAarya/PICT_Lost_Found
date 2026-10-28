@@ -1,7 +1,4 @@
-// /lost/new - report a lost item in five steps. This page keeps the form state, moves
-// between steps, and sends the report at the end; the fields are in ReportStepBody.jsx and
-// the step texts in utils/reportSteps.js. /lost/new?saved=<id> starts from a saved item.
-// After sending, it opens the report page, where any matches already show.
+// Page for reporting a lost item step by step.
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PageHeader, PropertyTag, StepCard, Stepper, useToast } from '../../../shared/ui/index.js';
@@ -15,7 +12,6 @@ import '../lost.css';
 
 const LAST_STEP = STEPS.length - 1;
 
-// The form as the server wants it: real dates, the photo's URL, no empty saved item id.
 function toRequestBody(form, imageUrl) {
   return {
     category: form.category,
@@ -42,7 +38,6 @@ export function ReportLostPage() {
   const [busy, setBusy] = useState(false);
   const previewUrl = useObjectUrl(form.photo);
 
-  // Load saved items once; if the link named one (?saved=id), fill the form from it.
   useEffect(() => {
     const savedId = params.get('saved');
     getSavedItems()
@@ -54,12 +49,10 @@ export function ReportLostPage() {
       .catch(() => setSavedItems([]));
   }, [params]);
 
-  // Change one or more fields, keeping the rest.
   function update(patch) {
     setForm((current) => ({ ...current, ...patch }));
   }
 
-  // Upload the photo (if there is one), send the report, then open its page.
   async function handleSubmit() {
     setBusy(true);
     try {

@@ -1,6 +1,4 @@
-// One import point for every shared UI component:
-// import { Button, Field, PropertyTag } from '../../shared/ui/index.js';
-// The names and props are fixed by docs/CONTRACT.md section G.
+// One place to import every shared UI component.
 import './ui.css';
 import './form.css';
 

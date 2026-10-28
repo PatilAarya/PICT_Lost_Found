@@ -1,6 +1,4 @@
-// Desk tab 2: release an item. The handler picks the approved claim, types the
-// owner's 6-digit code and ticks "college ID checked". The browser's own form
-// validation (required, pattern) stops an incomplete form before it is sent.
+// Desk tab for releasing an item with the owner's code.
 import { useState } from 'react';
 import { errorMessage } from '../../../../shared/api/client.js';
 import { Button, EmptyState, Field, TextInput, useToast } from '../../../../shared/ui/index.js';
@@ -17,7 +15,6 @@ export function ReleaseTab() {
   const [formError, setFormError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Send the code; on success clear the form and refresh the list.
   async function handleSubmit(event) {
     event.preventDefault();
     setBusy(true);

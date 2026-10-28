@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 710" role="img" aria-label="PICT campus map">
-  <!-- Map of the PICT campus. Each clickable room is a
-       class="area" element whose id matches the area id in locations.json. -->
+  <!-- Rooms with class "area" can be tapped; their ids match locations.json. -->
   <rect class="wall" x="10" y="10" width="1300" height="690" fill="none" stroke="#1d3557" stroke-width="4"/>
   <g class="area-group">
     <rect class="area" id="parking-1" x="25" y="22" width="165" height="428" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>

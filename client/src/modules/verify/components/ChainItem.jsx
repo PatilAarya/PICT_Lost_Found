@@ -1,11 +1,8 @@
-// One item on the History check page: a row with its serial, title, number of steps and
-// "Untouched" or "Changed". Opening it shows the item's history as a readable timeline;
-// the fingerprints (hashes) appear only after "Show technical details".
+// One item on the History check page with its timeline.
 import { useState } from 'react';
 import { Icon, Timeline } from '../../../shared/ui/index.js';
 import { actionWord, formatDateTime } from '../format.js';
 
-// The history steps as Timeline rows; a changed step says so in its label.
 function historySteps(blocks) {
   return blocks.map((block) => ({
     label: block.valid ? actionWord(block.action) : `${actionWord(block.action)} (changed!)`,

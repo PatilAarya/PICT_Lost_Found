@@ -1,7 +1,4 @@
-/*
-  The home page (HomePage.jsx): big action cards and the "how it works" steps.
-  The pictogram's small detail is red on "lost" and steel on "found".
-*/
+/* Styles for the home page cards and steps. */
 .action-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

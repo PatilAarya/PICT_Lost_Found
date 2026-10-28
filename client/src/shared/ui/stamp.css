@@ -1,9 +1,4 @@
-/*
-  The rubber stamp (Stamp.jsx): a double-bordered box in narrow Archivo capitals,
-  tilted -4 degrees and blended with multiply so it looks pressed into the paper.
-  The drop-in animation is the app's one decorative motion (DESIGN.md section 7);
-  base.css switches all animation off for people who ask for reduced motion.
-*/
+/* Styles for the rubber stamp. */
 .stamp {
   display: inline-block;
   padding: 2px var(--space-2);
@@ -36,8 +31,6 @@
 .stamp-drop {
   animation: stamp-drop 250ms ease-out;
 }
-
-/* Starts big and faint above the paper, then lands at normal size and angle. */
 @keyframes stamp-drop {
   from {
     opacity: 0;
@@ -48,8 +41,6 @@
     transform: scale(1) rotate(-4deg);
   }
 }
-
-/* The small stamp-word used on compact tickets: same ink, no box. */
 .stamp-word {
   font-family: var(--font-heading);
   font-stretch: 75%;
@@ -60,8 +51,6 @@
   white-space: nowrap;
   color: var(--stamp-color);
 }
-
-/* Plain red fails contrast as small text, so small lost words use the darker red. */
 .stamp-word.stamp-lost {
   --stamp-color: var(--stamp-lost-small);
 }

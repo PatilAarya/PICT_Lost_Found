@@ -1,11 +1,7 @@
-// Demo alerts: one MATCH_FOUND alert for every lost report that already has a match.
-// The lost seed runs before this one (alphabetical order) but without the real notify,
-// so this fills the Alerts page with the alerts those matches would have sent.
-// Idempotent: an alert for the same person and report link is never created twice.
+// Demo alerts for development.
 import { LostReport } from '../../shared/models/LostReport.js';
 import { Notification } from './Notification.js';
 
-// Insert the demo alerts.
 export default async function seed() {
   const matched = await LostReport.find({ status: 'matched' });
   for (const report of matched) {

@@ -1,8 +1,4 @@
-// Lets a finder take several photos of an item with the phone's camera,
-// or choose files instead if the camera is not available. Each captured
-// frame is drawn onto a hidden canvas (to turn live video into a still
-// image) and then shrunk by resizeImage before being handed back to the
-// parent form. The parent decides what happens next (blur step, upload).
+// Takes photos with the camera or picks files from the device.
 import { useRef, useState } from 'react';
 import { useCameraStream } from '../../../shared/media/useCameraStream.js';
 import { resizeImage } from '../../../shared/media/resizeImage.js';
@@ -10,7 +6,6 @@ import { Button, Icon } from '../../../shared/ui/index.js';
 import './CameraCapture.css';
 
 const MAX_PHOTOS = 4;
-// What each photo slot should show, in order (DESIGN brief: angle hints).
 const ANGLE_HINTS = ['Front', 'Back', 'Close-up', 'Any mark or sticker'];
 
 export default function CameraCapture({ photos, onPhotosChange }) {
@@ -19,17 +14,12 @@ export default function CameraCapture({ photos, onPhotosChange }) {
   const fileInputRef = useRef(null);
   const [busy, setBusy] = useState(false);
 
-  // Grabs the current video frame, shrinks it, and adds it to the list.
   async function capturePhoto() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    // videoWidth stays 0 until the first picture arrives from the camera.
     if (!video || !canvas || video.videoWidth === 0) return;
 
     setBusy(true);
-    // Draw at the video's real resolution first; resizeImage shrinks it
-    // afterwards. Drawing straight from <video> onto <canvas> is how the
-    // browser turns a moving stream into one still picture.
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
@@ -45,14 +35,11 @@ export default function CameraCapture({ photos, onPhotosChange }) {
     );
   }
 
-  // Shared by both the camera and the file-picker fallback, so a photo
-  // looks the same to the rest of the app no matter how it was taken.
   function addPhoto(blob) {
     const photo = { id: crypto.randomUUID(), blob, previewUrl: URL.createObjectURL(blob) };
     onPhotosChange([...photos, photo]);
   }
 
-  // Handles the <input type="file"> fallback for browsers without a camera.
   async function handleFileChosen(event) {
     const files = Array.from(event.target.files).slice(0, MAX_PHOTOS - photos.length);
     for (const file of files) {
@@ -62,8 +49,6 @@ export default function CameraCapture({ photos, onPhotosChange }) {
     event.target.value = '';
   }
 
-  // Removes one photo and frees its preview URL so the browser can
-  // release the memory it was using to show the thumbnail.
   function removePhoto(id) {
     const photo = photos.find((item) => item.id === id);
     if (photo) URL.revokeObjectURL(photo.previewUrl);
@@ -131,7 +116,6 @@ export default function CameraCapture({ photos, onPhotosChange }) {
       )}
       {error && <p className="camera-capture__error">{error}</p>}
 
-      {/* One slot per possible photo: filled slots show the photo, empty ones say what to shoot. */}
       <ul className="camera-capture__thumbs">
         {ANGLE_HINTS.map((hint, index) => {
           const photo = photos[index];

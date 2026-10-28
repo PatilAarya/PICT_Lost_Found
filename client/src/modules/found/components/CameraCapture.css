@@ -1,8 +1,4 @@
-/*
-  The photo step of "post found item" (CameraCapture.jsx): two big choice tiles
-  (camera or upload), the live camera view, and four photo slots that show what to
-  photograph next. Uses the shared design tokens from styles/tokens.css.
-*/
+/* Styles for the photo step of posting a found item. */
 .camera-capture {
   display: grid;
   gap: var(--space-4);
@@ -104,8 +100,6 @@
   height: 100%;
   object-fit: cover;
 }
-
-/* An empty slot: a dashed box naming the photo that should go there. */
 .camera-capture__slot {
   display: grid;
   place-content: center;

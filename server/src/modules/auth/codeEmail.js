@@ -1,19 +1,13 @@
-// Builds the login-code email: a subject, a plain-text version and an HTML version
-// that looks like a claim-ticket stub (DESIGN.md). routes.js sends it with sendMail().
-// Email apps ignore <style> blocks and CSS variables, so the HTML uses inline styles
-// and a <table> layout, with the DESIGN.md hex values written out by hand.
-
+// Builds the login code email.
 const INK = '#1d3557';
 const PAPER = '#f1faee';
 const FROST = '#a8dadc';
 const BERRY = '#e63946';
 
-// "123456" becomes "123 456" so the code is easier to read and type.
 export function spacedCode(code) {
   return `${code.slice(0, 3)} ${code.slice(3)}`;
 }
 
-// The ticket-shaped HTML body: red edge strip, the code in large digits, a dashed perforation.
 function codeHtml(code, minutes) {
   return `<!doctype html>
 <html><body style="margin:0;padding:24px;background:${PAPER};font-family:Arial,sans-serif;color:${INK}">
@@ -31,7 +25,6 @@ function codeHtml(code, minutes) {
 </body></html>`;
 }
 
-// Everything sendMail needs for one login code, apart from the address.
 export function buildCodeEmail(code, minutes) {
   return {
     subject: `Your PICT Lost and Found code: ${code}`,

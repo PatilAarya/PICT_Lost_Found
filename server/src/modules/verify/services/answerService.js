@@ -1,6 +1,4 @@
-// Checking a claimant's answers. Loads the secret answers (select '+hiddenDetails.answer'),
-// scores them, then either moves the claim to the desk (pass) or counts a failure and
-// maybe starts a lockout (fail). A failure never says which answer was wrong.
+// Checks a claimant's answers and records the attempt.
 import { config } from '../../../shared/config/index.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { LostReport } from '../../../shared/models/LostReport.js';
@@ -12,7 +10,6 @@ import { recordFailure, unlockIfExpired } from './lockout.js';
 import { notifyHandlers } from './notifyHelpers.js';
 import { scoreAnswers } from './scoring.js';
 
-// Save one attempt in the history (used by the abuse rules and analytics).
 async function recordAttempt(claim, item, user, passed, score, lock) {
   await ClaimAttempt.create({
     claimId: claim._id,
@@ -25,7 +22,6 @@ async function recordAttempt(claim, item, user, passed, score, lock) {
   });
 }
 
-// Pass: send the claim to the desk, mark the item and lost report, log it, tell handlers.
 async function handlePass(claim, item, user) {
   claim.status = 'awaiting_handler';
   if (item.status !== 'claim_pending') {
@@ -51,7 +47,6 @@ async function handlePass(claim, item, user) {
   return { passed: true };
 }
 
-// Fail: count the try, maybe lock the claimant out, log it, check the abuse rules.
 async function handleFail(claim, item, user, score) {
   const result = recordFailure(claim);
   await claim.save();
@@ -69,7 +64,6 @@ async function handleFail(claim, item, user, score) {
   return { passed: false, attemptsLeft: result.attemptsLeft, lockedUntil: result.lockedUntil };
 }
 
-// Score the answers and apply the result. answers: [{ promptKey, text }].
 export async function submitAnswers(claim, user, answers) {
   unlockIfExpired(claim);
   if (claim.status === 'locked') {

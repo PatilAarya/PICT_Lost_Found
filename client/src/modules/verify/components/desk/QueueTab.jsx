@@ -1,6 +1,4 @@
-// Desk tab 1: claims waiting for a decision. Each row shows the item, who is claiming
-// it and how well their answers matched, with a Review button. Review opens
-// ClaimReview in a Sheet (a centred window on a laptop, a bottom sheet on a phone).
+// Desk tab for claims waiting for a decision.
 import { useState } from 'react';
 import { Button, EmptyState, PropertyTag, Sheet, useToast } from '../../../../shared/ui/index.js';
 import { getDeskQueue } from '../../api.js';
@@ -9,7 +7,6 @@ import { formatDateTime, percent, ticketOf } from '../../format.js';
 import { ClaimReview } from './ClaimReview.jsx';
 import { ScoreMeter } from './ScoreMeter.jsx';
 
-// One waiting claim: compact ticket, claimant, score and the Review button.
 function QueueRow({ claim, onOpen }) {
   return (
     <li className="queue-row">
@@ -31,7 +28,6 @@ export function QueueTab() {
   const { data: claims, loading, error, reload } = useLoad(getDeskQueue);
   const [openClaim, setOpenClaim] = useState(null);
 
-  // Close the window, say what happened, refresh the queue.
   function handleDecided(decision) {
     setOpenClaim(null);
     toast(

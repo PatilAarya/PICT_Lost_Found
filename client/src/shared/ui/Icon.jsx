@@ -1,8 +1,4 @@
-// Small interface icons: Icon { name, size }. Only the names below are allowed, all
-// from Phosphor (DESIGN.md section 8). The first 16 are the contract's control icons;
-// the rest were added for the menu, the user menu and status cards.
-// We use the "light" weight: thin was too faint to read at 20px on the menu.
-// Icons are decorative (aria-hidden), so always put a text label next to them.
+// Small interface icons used across the app.
 import {
   ArrowLeft,
   ArrowRight,
@@ -36,7 +32,6 @@ import {
 } from '@phosphor-icons/react';
 
 const ICONS = {
-  // Contract control icons
   'arrow-right': ArrowRight,
   'arrow-left': ArrowLeft,
   close: X,
@@ -53,7 +48,6 @@ const ICONS = {
   filter: Funnel,
   user: User,
   shield: Shield,
-  // Menu, user menu and status icons
   home: House,
   package: Package,
   ticket: Ticket,

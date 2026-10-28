@@ -1,5 +1,4 @@
-// Tests for the owner check: scoring rules, the 3-try limit, the 30-minute lockout
-// and the 24-hour second lockout, and that answers are never sent to claimants.
+// Tests for answering questions and lockouts.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { Claim } from '../../../shared/models/Claim.js';
 import { clearTestDb, startTestDb, stopTestDb } from '../../../shared/testing/testDb.js';
@@ -29,7 +28,6 @@ beforeEach(async () => {
 });
 afterAll(stopTestDb);
 
-// Start a claim as the owner and return its id.
 async function startClaim() {
   const res = await actAs(app, people.owner).post('/api/verify/claims', { foundItemId: item._id });
   return res.body.claim.id;
@@ -102,7 +100,6 @@ describe('claims', () => {
     expect(minutes).toBeLessThanOrEqual(30);
     expect((await owner.post(url, { answers: RIGHT_ANSWERS })).status).toBe(423);
 
-    // Pretend the 30 minutes are over.
     await Claim.updateOne({ _id: id }, { $set: { lockedUntil: new Date(Date.now() - 1000) } });
     for (let i = 0; i < 2; i++) {
       await owner.post(url, { answers: WRONG_ANSWERS });
