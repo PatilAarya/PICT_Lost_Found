@@ -1,7 +1,4 @@
-// One 6-digit login code sent to an email address.
-// We store only a hash of the code (never the code itself), when it expires,
-// how many wrong tries were made, and whether it has been used.
-// loginCodes.js creates and checks these documents.
+// Model for a one-time login code (only its hash is stored).
 import mongoose from 'mongoose';
 
 const loginCodeSchema = new mongoose.Schema(

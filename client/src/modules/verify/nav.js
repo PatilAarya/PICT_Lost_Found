@@ -1,6 +1,4 @@
-// Menu items of the verify module (Member 2), collected by app/moduleDiscovery.js.
-// Shape: [{ label, path, roles, order }]. Lower order numbers appear first.
-
+// Menu items for the verify pages.
 export default [
   {
     label: 'My claims',

@@ -1,9 +1,4 @@
-// Claimant routes.
-// GET  /items/:foundItemId     public preview of an item before claiming
-// POST /claims                 start (or reuse) a claim, returns the questions only
-// GET  /claims/mine            my claims, plus handovers I must confirm as a finder
-// GET  /claims/:id             one claim (claimant, finder or staff)
-// POST /claims/:id/answer      check my answers
+// Routes for starting a claim and answering questions.
 import express from 'express';
 import { z } from 'zod';
 import { Claim } from '../../../shared/models/Claim.js';
@@ -57,7 +52,6 @@ router.get('/claims/:id', async (req, res) => {
   if (!allowed) {
     throw new HttpError(403, 'FORBIDDEN', 'This is not your claim.');
   }
-  // A lockout that has ended is cleared here, so the page shows the questions again.
   unlockIfExpired(claim);
   if (claim.isModified()) {
     await claim.save();

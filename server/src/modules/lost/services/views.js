@@ -1,9 +1,6 @@
-// What the lost routes send back. A match is shown with the found item's PUBLIC view only:
-// the blurred photo URL, never the private original or the secret answers.
-// Also builds the status timeline for a report. Used by routes/reportRoutes.js.
+// Shapes lost reports and matches before sending them.
 import { whyThisMatch } from './explain.js';
 
-// The public view of a found item, safe to show the person who lost something.
 export function publicFoundItem(item) {
   return {
     id: item._id,
@@ -20,7 +17,6 @@ export function publicFoundItem(item) {
   };
 }
 
-// One match with its found item and the plain-language reason.
 export function matchView(match, item) {
   return {
     id: match._id,
@@ -33,7 +29,6 @@ export function matchView(match, item) {
   };
 }
 
-// The steps a report goes through, marked done up to its current status.
 export function reportTimeline(report) {
   const order = ['open', 'matched', 'claim_in_progress', 'recovered'];
   const reached = order.indexOf(report.status);

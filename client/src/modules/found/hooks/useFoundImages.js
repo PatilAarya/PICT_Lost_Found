@@ -1,14 +1,10 @@
-// Takes the finder's confirmed photos (each with a public blurred blob
-// and a private original blob) and uploads both copies of every photo,
-// returning the final images[] array in the shape FoundItem expects.
+// Hook that uploads the blurred and original copies of each photo.
 import { useState } from 'react';
 import { uploadImage } from '../utils/uploadImage.js';
 
 export function useFoundImages() {
   const [uploading, setUploading] = useState(false);
 
-  // Uploads every photo's two copies in order and builds the images
-  // array the server's createItemSchema expects: publicUrl + privateId.
   async function uploadAll(confirmedPhotos) {
     setUploading(true);
     try {

@@ -1,6 +1,4 @@
-// One try at answering the owner-check questions. Every attempt is recorded, pass
-// or fail, so the 3-try rule, the lockouts and the abuse flags (services/flagRules.js)
-// can be counted from real history.
+// Model for one try at answering the ownership questions.
 import mongoose from 'mongoose';
 
 const claimAttemptSchema = new mongoose.Schema(

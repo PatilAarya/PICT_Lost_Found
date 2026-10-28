@@ -1,8 +1,4 @@
-// The whole app in one test: the integration story from docs/TEAM_PLAN.md, through the real
-// HTTP routes of all four modules, with an in-memory database.
-// Lost report -> found item posted -> automatic match and alert -> desk receives the item ->
-// owner claims, answers wrongly once, then correctly -> desk approves -> owner sees a one-time
-// code -> desk releases with the code -> report recovered -> custody chain still intact.
+// End-to-end test of the whole lost and found story.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from './app.js';
@@ -25,7 +21,6 @@ const people = {
   admin: 'admin@pict.edu',
 };
 
-// A request as one of the people above (dev login header), e.g. as('owner').get(url).
 function as(who) {
   const agent = request(app);
   const header = { 'x-dev-user': people[who] };
@@ -45,7 +40,6 @@ beforeAll(async () => {
   config.nodeEnv = 'development';
   config.devAuth = true;
   app = (await createApp()).app;
-  // What each module's init() does in server.js (without Socket.IO or the hourly job).
   registerService('notify', createNotify(null));
   registerService('runMatching', matchFoundItem);
   registerService('appendCustody', appendCustody);
@@ -61,7 +55,6 @@ afterAll(stopTestDb);
 
 describe('the full story', () => {
   it('takes a lost bottle all the way back to its owner', async () => {
-    // 1. The owner reports a green bottle lost in the staff room.
     const reported = await as('owner').post('/api/lost/reports', {
       category: 'bottle',
       title: 'Green steel bottle',
@@ -73,7 +66,6 @@ describe('the full story', () => {
     expect(reported.status).toBe(201);
     const reportId = reported.body.report._id;
 
-    // 2. Someone finds it and posts it, choosing the desk.
     const posted = await as('finder').post('/api/found/items', {
       category: 'bottle',
       title: 'Steel water bottle',
@@ -89,17 +81,14 @@ describe('the full story', () => {
     expect(posted.status).toBe(201);
     const itemId = posted.body.item._id;
 
-    // 3. The match is found automatically and the owner is told why.
     const report = await as('owner').get(`/api/lost/reports/${reportId}`);
     expect(report.body.matches).toHaveLength(1);
     expect(report.body.matches[0].why).toMatch(/^Same category, found in the same spot/);
     const alerts = await as('owner').get('/api/notifications');
     expect(alerts.body.items[0].type).toBe('MATCH_FOUND');
 
-    // 4. The desk receives the item.
     expect((await as('handler').patch(`/api/verify/incoming/${itemId}/receive`)).status).toBe(200);
 
-    // 5. The owner claims it: one wrong try, then the right answers.
     const claimed = await as('owner').post('/api/verify/claims', {
       foundItemId: itemId,
       lostReportId: reportId,
@@ -120,13 +109,11 @@ describe('the full story', () => {
     });
     expect(right.body.passed).toBe(true);
 
-    // 6. The desk approves; the owner sees the one-time code, once.
     await as('handler').patch(`/api/verify/claims/${claimId}/decision`, { decision: 'approve' });
     const code = await as('owner').get(`/api/verify/claims/${claimId}/code`);
     expect(code.body.code).toMatch(/^\d{6}$/);
     expect((await as('owner').get(`/api/verify/claims/${claimId}/code`)).status).toBe(410);
 
-    // 7. The desk releases it with the code and the owner's college ID.
     const released = await as('handler').post('/api/verify/handover', {
       claimId,
       code: code.body.code,
@@ -134,7 +121,6 @@ describe('the full story', () => {
     });
     expect(released.status).toBe(200);
 
-    // 8. Everything shows the happy ending, and the custody chain is untouched.
     const after = await as('owner').get(`/api/lost/reports/${reportId}`);
     expect(after.body.report.status).toBe('recovered');
     const item = await as('finder').get(`/api/found/items/${itemId}`);

@@ -1,6 +1,4 @@
-// Turns a Blob (a photo in memory) into a temporary URL an <img> can show.
-// URL.createObjectURL keeps the blob in memory until revokeObjectURL is called, so the
-// cleanup function frees it when the blob changes or the page closes.
+// Hook that turns a photo blob into a URL an image can show.
 import { useEffect, useState } from 'react';
 
 export function useObjectUrl(blob) {

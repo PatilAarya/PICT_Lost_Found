@@ -1,7 +1,4 @@
-// Steps the finder through blurring each captured photo, one at a time,
-// and collects the result: a public (possibly blurred) blob and the
-// untouched private original, for every photo. Hands the full list to
-// the parent form once every photo has been confirmed.
+// Goes through each photo so the finder can blur it.
 import { useState } from 'react';
 import PhotoBlurEditor from './PhotoBlurEditor.jsx';
 
@@ -9,7 +6,6 @@ export default function PhotoBlurStep({ photos, onAllConfirmed }) {
   const [confirmedById, setConfirmedById] = useState({});
   const currentPhoto = photos.find((photo) => !confirmedById[photo.id]);
 
-  // Saves one photo's result and checks whether every photo is now done.
   function handleConfirm(result) {
     const next = { ...confirmedById, [result.id]: result };
     setConfirmedById(next);

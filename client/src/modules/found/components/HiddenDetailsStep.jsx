@@ -1,7 +1,4 @@
-// Shows the category-specific secret questions (from the found module's
-// own prompt list on the server) and collects the finder's answers.
-// These answers are what a claimant will later be asked to guess during
-// the owner check, without ever seeing this item's photos.
+// Collects the finder's answers to the secret questions.
 import { useEffect, useState } from 'react';
 import { Field, TextArea } from '../../../shared/ui/index.js';
 import { api } from '../../../shared/api/client.js';
@@ -10,7 +7,6 @@ export default function HiddenDetailsStep({ category, value, onChange }) {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Loads the question list for this category once, when the step opens.
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -25,7 +21,6 @@ export default function HiddenDetailsStep({ category, value, onChange }) {
     };
   }, [category]);
 
-  // Updates one answer by its promptKey, keeping the others unchanged.
   function setAnswer(promptKey, promptText, answer) {
     const others = value.filter((item) => item.promptKey !== promptKey);
     onChange([...others, { promptKey, promptText, answer }]);
@@ -38,7 +33,6 @@ export default function HiddenDetailsStep({ category, value, onChange }) {
       {prompts.map((prompt) => {
         const current = value.find((item) => item.promptKey === prompt.promptKey);
         return (
-          // Field shows the question as a label tied to the box, so it is read aloud too.
           <Field key={prompt.promptKey} label={prompt.promptText}>
             <TextArea
               rows={2}

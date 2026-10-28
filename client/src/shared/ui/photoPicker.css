@@ -1,7 +1,4 @@
-/*
-  PhotoPicker.jsx: two choice tiles (camera or upload), the live camera view, and the
-  chosen photo with a Remove button. Uses the shared design tokens only.
-*/
+/* Styles for the photo picker. */
 .photo-picker {
   display: grid;
   gap: var(--space-2);

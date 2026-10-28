@@ -1,6 +1,4 @@
-// A report from someone who lost an item. Owned by Member 1 (lost module).
-// Fields follow docs/CONTRACT.md section C. Other modules may read it but only
-// the owner adds fields, and announces them in the group chat.
+// Model for a lost item report.
 import mongoose from 'mongoose';
 import { CATEGORIES, COLORS, LOST_STATUS } from '../constants.js';
 import { locationSchema } from './locationSchema.js';

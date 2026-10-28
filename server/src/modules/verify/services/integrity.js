@@ -1,11 +1,8 @@
-// Runs the custody chain check over every item, for the admin integrity page.
-// Groups all entries by item, calls checkChain() on each group, and reports the
-// first broken entry of each broken item. Used by routes/custodyRoutes.js.
+// Checks every item's custody chain for changes.
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { CustodyEntry } from '../models/CustodyEntry.js';
 import { checkChain } from './custodyChain.js';
 
-// Put entries into one list per item id, keeping their seq order.
 function groupByItem(entries) {
   const groups = new Map();
   for (const entry of entries) {
@@ -18,7 +15,6 @@ function groupByItem(entries) {
   return groups;
 }
 
-// A short view of one checked entry for the linked-blocks picture.
 function blockView(result) {
   return {
     seq: result.entry.seq,
@@ -29,7 +25,6 @@ function blockView(result) {
   };
 }
 
-// Check every chain. Returns { ok, brokenItems: [{ itemId, seq }], chains }.
 export async function verifyAllChains() {
   const entries = await CustodyEntry.find().sort({ itemId: 1, seq: 1 }).lean();
   const groups = groupByItem(entries);

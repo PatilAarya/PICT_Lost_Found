@@ -1,6 +1,4 @@
-// The root component: wraps the app in the router, toasts and auth, then decides
-// what to show. Not logged in: the login page. Logged in: the app shell with the
-// home page plus every module route found by moduleDiscovery.js. Frozen after Phase 0.
+// Root component: shows the login page or the app depending on who is logged in.
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '../shared/auth/AuthProvider.jsx';
 import { useAuth } from '../shared/auth/useAuth.js';
@@ -14,7 +12,6 @@ import './app.css';
 
 const moduleRoutes = getModuleRoutes();
 
-// Choose between the login page and the logged-in app.
 function AppRoutes() {
   const { user, loading } = useAuth();
   if (loading) {

@@ -1,20 +1,16 @@
-// Shared set-up for the verify tests: an app with the dev user switcher turned on,
-// people with each role, and a found item that has hidden-detail answers.
-// Requests act as a person by sending the x-dev-user header.
+// Shared setup for the verify tests.
 import request from 'supertest';
 import { createApp } from '../../../app.js';
 import { config } from '../../../shared/config/index.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { User } from '../../../shared/models/User.js';
 
-// Build the app and switch on dev login for the tests in this file.
 export async function makeTestApp() {
   config.nodeEnv = 'development';
   config.devAuth = true;
   return (await createApp()).app;
 }
 
-// Create the cast: a finder, an owner, another student, a handler and an admin.
 export async function makePeople() {
   const people = {};
   const cast = [
@@ -30,7 +26,6 @@ export async function makePeople() {
   return people;
 }
 
-// A wallet found by `finderId`, with two secret answers.
 export function makeItem(finderId, custodyType = 'desk', status = 'in_custody') {
   return FoundItem.create({
     serial: `PICT-F-${String(Math.floor(Math.random() * 900000) + 100000)}`,
@@ -60,7 +55,6 @@ export const WRONG_ANSWERS = [
   { promptKey: 'mark', text: 'none' },
 ];
 
-// Return a helper that sends requests as one person.
 export function actAs(app, person) {
   return {
     get: (url) => request(app).get(url).set('x-dev-user', person.email),

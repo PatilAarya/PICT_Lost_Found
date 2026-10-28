@@ -1,6 +1,4 @@
-// /lost/:id - one lost report: its ticket and status timeline on the side, and the
-// possible matches, best first, each explained in plain words. "This is mine" starts a
-// claim; "I found it myself" closes the report so it stops matching.
+// One lost report with its status and possible matches.
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -19,7 +17,6 @@ import { formatDateTime, ticketFromReport } from '../utils/format.js';
 import { MatchCard } from '../components/MatchCard.jsx';
 import '../lost.css';
 
-// Reports that still want matches; the others are finished.
 const SEARCHING = ['open', 'matched'];
 
 export function ReportDetailPage() {
@@ -29,7 +26,6 @@ export function ReportDetailPage() {
   const load = useCallback(() => getReport(id), [id]);
   const { data, error, reload } = useAsync(load);
 
-  // Stop matching this report, after the person confirms.
   async function handleClose() {
     if (!window.confirm('Close this report? We will stop looking for matches.')) return;
     try {

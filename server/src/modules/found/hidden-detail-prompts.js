@@ -1,10 +1,4 @@
-// The secret questions asked about a found item, grouped by category.
-// A finder answers these when posting; later a claimant answers them
-// blind (without seeing the photos) during the owner check in Verify.
-// getHiddenDetailPrompts is registered as a shared service in index.js,
-// so Verify can call services.getHiddenDetailPrompts(category) without
-// importing this file directly.
-
+// Secret questions for each item category.
 const PROMPTS_BY_CATEGORY = {
   id_card: [
     {
@@ -62,8 +56,6 @@ const PROMPTS_BY_CATEGORY = {
   ],
 };
 
-// Returns the question list for a category, or the generic list if the
-// category is not recognised, so this function never returns nothing.
 export function getHiddenDetailPrompts(category) {
   return PROMPTS_BY_CATEGORY[category] || PROMPTS_BY_CATEGORY.other;
 }

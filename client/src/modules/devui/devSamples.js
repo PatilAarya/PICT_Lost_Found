@@ -1,14 +1,10 @@
-// Realistic sample data for the dev-only component gallery (DevUiPage.jsx).
-// Nothing here is used by real pages; it only lets us see every component and
-// every stamp at once, with PICT-like places and serials instead of lorem ipsum.
+// Sample data used only by the dev gallery.
 import { CLAIM_STATUS, FOUND_STATUS, LOST_STATUS } from '../../shared/constants.js';
 
-// Every status value once, in the order the contract lists them.
 export const ALL_STATUSES = [
   ...new Set([...FOUND_STATUS, ...LOST_STATUS, ...CLAIM_STATUS, 'warned', 'suspended']),
 ];
 
-// A small generated photo (an SVG drawn as text), so the gallery works offline.
 const samplePhoto =
   'data:image/svg+xml,' +
   encodeURIComponent(

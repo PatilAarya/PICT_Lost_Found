@@ -1,8 +1,4 @@
-// Demo data for the lost module: 8 lost reports and 4 saved items for the seeded students.
-// Several reports describe items that really appear in the found module's demo data
-// (found/seed.js), at the same place and a few hours earlier, so the match engine finds
-// genuine matches when the seed runs. Times are "hours ago", so the data never goes stale.
-
+// Demo lost reports and saved items.
 export const DEMO_REPORTS = [
   {
     ownerEmail: 'sneha.patil@pict.edu',

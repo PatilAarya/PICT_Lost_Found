@@ -1,6 +1,4 @@
-// A warning sign about an account, raised automatically by services/flagRules.js
-// (for example many failed owner checks). An admin reviews it on /verify/flags and
-// dismisses it, warns the user, or suspends the account.
+// Model for a warning about a suspicious account.
 import mongoose from 'mongoose';
 
 export const FLAG_STATUS = ['open', 'dismissed', 'warned', 'suspended'];

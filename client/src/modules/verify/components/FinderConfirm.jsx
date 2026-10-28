@@ -1,6 +1,4 @@
-// For items the finder kept (not at a desk): the owner and the finder meet, then
-// each presses "I handed it over" / "I got my item". The item is released once both
-// have confirmed. Shows a tick for each side that has already confirmed.
+// Lets the owner and finder both confirm a handover.
 import { useState } from 'react';
 import { errorMessage } from '../../../shared/api/client.js';
 import { Button, Icon } from '../../../shared/ui/index.js';
@@ -11,7 +9,6 @@ export function FinderConfirm({ claim, isFinder, onConfirmed }) {
   const [busy, setBusy] = useState(false);
   const mine = isFinder ? claim.handover.finderConfirmedAt : claim.handover.ownerConfirmedAt;
 
-  // Record this person's confirmation.
   async function handleConfirm() {
     setBusy(true);
     try {

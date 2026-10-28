@@ -1,6 +1,4 @@
-// The handler's view of one claim, inside a Sheet: who is claiming, the clear photos,
-// each secret question with the claimant's answer beside the finder's answer and a
-// score, then Reject or Approve with a note. Calls onDecided after the decision is saved.
+// Handler's view of one claim with answers side by side.
 import { useState } from 'react';
 import { errorMessage } from '../../../../shared/api/client.js';
 import { Button, Field, TextArea } from '../../../../shared/ui/index.js';
@@ -8,7 +6,6 @@ import { decideClaim } from '../../api.js';
 import { percent } from '../../format.js';
 import { ScoreMeter } from './ScoreMeter.jsx';
 
-// One question: both answers side by side and how closely they match.
 function AnswerCard({ row }) {
   return (
     <li className="answer-card">
@@ -28,7 +25,6 @@ function AnswerCard({ row }) {
   );
 }
 
-// The claimant's name, department and year, with a warning if the account is flagged.
 function ClaimantLine({ claimant }) {
   if (!claimant) return null;
   return (
@@ -47,7 +43,6 @@ export function ClaimReview({ claim, onDecided }) {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState('');
 
-  // Save "approve" or "reject" with the note.
   async function decide(decision) {
     setBusy(decision);
     try {

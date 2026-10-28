@@ -1,5 +1,4 @@
-// Checks the demo seed: 40 items and 10 claims, every custody chain valid, and
-// running it a second time adds nothing (idempotent).
+// Tests for the verify demo seed.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';

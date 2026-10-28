@@ -1,7 +1,4 @@
-// Tests for the found module: desk ranking, secret questions, and the item routes.
-// Posting must log POSTED and DROPPED_AT_DESK in the custody log, set the desk deadline,
-// ask for matching, and refuse fewer than two secret answers. Reading an item must
-// never return the secret answers or the private photo id.
+// Tests for the found module.
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../../../app.js';
@@ -15,7 +12,6 @@ import { getHiddenDetailPrompts } from '../hidden-detail-prompts.js';
 let app;
 let calls;
 
-// A valid "post found item" body; tests change one field at a time.
 function itemBody(changes = {}) {
   return {
     category: 'wallet',
@@ -41,7 +37,6 @@ beforeAll(async () => {
 beforeEach(async () => {
   await clearTestDb();
   await User.create({ name: 'Finder', email: 'finder@pict.edu', role: 'student' });
-  // Record calls to the services instead of running the real modules.
   calls = [];
   registerService('appendCustody', async (entry) => calls.push(entry.action));
   registerService('runMatching', async () => calls.push('MATCHING'));

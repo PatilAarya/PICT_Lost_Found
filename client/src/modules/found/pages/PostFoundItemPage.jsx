@@ -1,7 +1,4 @@
-// The "post a found item" flow. This page only keeps track of which step is open,
-// moves between steps, and posts the item at the end. Each step's fields are in
-// StepBody.jsx, the card around them in shared/ui/StepCard.jsx, the texts in utils/steps.js.
-// A side panel shows a live preview of the claim ticket being built.
+// Page for posting a found item step by step.
 import { useState } from 'react';
 import { PageHeader, PropertyTag, StepCard, Stepper, useToast } from '../../../shared/ui/index.js';
 import { api, errorMessage } from '../../../shared/api/client.js';
@@ -24,10 +21,8 @@ export default function PostFoundItemPage() {
   const [submitting, setSubmitting] = useState(false);
   const [postedItem, setPostedItem] = useState(null);
   const toast = useToast();
-  // The preview shows the blurred copy once it exists, otherwise the first raw photo.
   const previewUrl = useObjectUrl(form.confirmedPhotos[0]?.publicBlob || form.photos[0]?.blob);
 
-  // Move one step forward or back, staying inside the list.
   function next() {
     setStepIndex((index) => Math.min(index + 1, LAST_STEP));
   }
@@ -35,13 +30,11 @@ export default function PostFoundItemPage() {
     setStepIndex((index) => Math.max(index - 1, 0));
   }
 
-  // The blur step ends by itself once every photo is confirmed.
   function handlePhotosConfirmed(confirmedPhotos) {
     update({ confirmedPhotos });
     next();
   }
 
-  // Upload the photos, then send the finished item to the server.
   async function handleSubmit() {
     setSubmitting(true);
     try {
@@ -56,7 +49,6 @@ export default function PostFoundItemPage() {
         location: form.location,
         foundAt: new Date(form.foundAt).toISOString(),
         custody: form.custody,
-        // Blank answers are left out; the server needs at least two real ones.
         hiddenDetails: form.hiddenDetails.filter((detail) => detail.answer.trim() !== ''),
         aiSuggestion: form.aiSuggestion || undefined,
       });
@@ -69,7 +61,6 @@ export default function PostFoundItemPage() {
     }
   }
 
-  // Start again with an empty form after posting.
   function postAnother() {
     reset();
     setPostedItem(null);

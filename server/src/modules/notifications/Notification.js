@@ -1,7 +1,4 @@
-// One alert for one person, for example "Possible match for your bottle".
-// type is one of NOTIFICATION_TYPES (shared/constants.js); link is the page to open;
-// readAt stays empty until the person reads it, which is how "unread" is counted.
-// Owned by the notifications module.
+// Model for one alert for one person.
 import mongoose from 'mongoose';
 import { NOTIFICATION_TYPES } from '../../shared/constants.js';
 
@@ -18,7 +15,6 @@ const notificationSchema = new mongoose.Schema(
   { timestamps: { createdAt: true, updatedAt: false } }
 );
 
-// Most screens ask for "my newest alerts" and "my unread count", so index on both.
 notificationSchema.index({ userId: 1, createdAt: -1 });
 notificationSchema.index({ userId: 1, readAt: 1 });
 

@@ -1,12 +1,10 @@
-// /verify - the claims I made, newest first, plus items I found and kept that are
-// waiting for me to confirm the handover. Each ticket opens the claim page.
+// List of the claims I made.
 import { useNavigate } from 'react-router-dom';
 import { EmptyState, PageHeader, PropertyTag, Spinner } from '../../../shared/ui/index.js';
 import { getMyClaims } from '../api.js';
 import { useLoad } from '../hooks/useLoad.js';
 import { ticketOf } from '../format.js';
 
-// A list of claim tickets that open the claim page when tapped.
 function ClaimTickets({ claims, navigate }) {
   return (
     <ul className="ticket-list">

@@ -1,7 +1,4 @@
-// A number card: StatCard { value, unit, label, hint, icon, tone }.
-// Used on the home page, Found and Analytics so a page opens with real numbers
-// instead of empty space. `hint` is one short sentence saying what the number means,
-// so nobody has to guess. tone "attention" draws a red edge for numbers that need action.
+// Card that shows one number with a label.
 import { Icon } from './Icon.jsx';
 
 export function StatCard({ value, unit, label, hint, icon, tone = 'normal' }) {

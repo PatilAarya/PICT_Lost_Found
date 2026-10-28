@@ -1,10 +1,7 @@
-// The five steps of "report lost item": the name in the progress bar, the card title and
-// help line, and a tip for the side panel. Also the empty form, how a saved item fills it,
-// and canContinue(), which says whether Next may be pressed. Pure data and functions.
+// The steps of reporting a lost item and the empty form.
 import { CATEGORIES } from '../../../shared/constants.js';
 import { toLocalInput } from './format.js';
 
-// `category` on each option makes ChipSelect draw a tile with the pictogram.
 export const CATEGORY_TILES = CATEGORIES.map((category) => ({
   value: category,
   label: category.replace('_', ' '),
@@ -44,7 +41,6 @@ export const STEPS = [
   },
 ];
 
-// A new, empty report: lost "from 3 hours ago to now" as a sensible start.
 export function emptyReport() {
   const now = new Date();
   return {
@@ -53,7 +49,7 @@ export function emptyReport() {
     description: '',
     colors: [],
     brand: '',
-    photo: null, // optional Blob from PhotoPicker, uploaded when the report is sent
+    photo: null,
     lastSeen: null,
     lostFrom: toLocalInput(new Date(now.getTime() - 3 * 60 * 60 * 1000)),
     lostTo: toLocalInput(now),
@@ -62,7 +58,6 @@ export function emptyReport() {
   };
 }
 
-// Fill a report from a saved item (the person described it once before).
 export function reportFromSaved(saved) {
   const details = [saved.description, saved.stickers].filter(Boolean).join('. ');
   return {
@@ -76,7 +71,6 @@ export function reportFromSaved(saved) {
   };
 }
 
-// May the person move on from this step yet?
 export function canContinue(stepIndex, form) {
   if (stepIndex === 0) return Boolean(form.category);
   if (stepIndex === 1) return form.title.trim() !== '';

@@ -1,7 +1,4 @@
-// Fixed lists shared with the server, copied exactly from docs/CONTRACT.md section A.
-// server/src/shared/constants.js holds the same values; a test checks they match.
-// Use these for dropdowns, chips and status labels instead of typing strings by hand.
-
+// Fixed lists shared with the server, like categories and statuses.
 export const ROLES = ['student', 'staff', 'handler', 'admin'];
 
 export const CATEGORIES = [

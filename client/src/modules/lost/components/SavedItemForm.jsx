@@ -1,6 +1,4 @@
-// The form inside "Add a saved item": a name, the category tiles, colours and a few
-// details. On save it calls POST /api/lost/saved-items and then onSaved().
-// Browser form validation (required) stops an empty name before anything is sent.
+// Form for adding a saved item.
 import { useState } from 'react';
 import {
   Button,
@@ -21,12 +19,10 @@ export function SavedItemForm({ onSaved }) {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Change one or more fields, keeping the rest.
   function update(patch) {
     setForm((current) => ({ ...current, ...patch }));
   }
 
-  // Send the saved item to the server.
   async function handleSubmit(event) {
     event.preventDefault();
     if (!form.category) {

@@ -1,8 +1,4 @@
-/*
-  The Alerts page (NotificationsPage.jsx). Each alert is a row: icon, text, Open button.
-  Every row looks the same; a new alert only has a tinted round icon and the word "New",
-  so the difference never depends on colour alone.
-*/
+/* Styles for the Alerts page. */
 .alert-list {
   display: grid;
   margin: 0;

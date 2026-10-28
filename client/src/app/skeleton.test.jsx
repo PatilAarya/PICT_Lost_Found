@@ -1,6 +1,4 @@
-// Tests for the client skeleton: constants match the server exactly, the menu is
-// built from every module's nav.js and filtered by role, and a shared UI stub renders.
-// Run with `npm test -w client` (Vitest with jsdom, a fake browser).
+// Tests for shared constants, the menu and the basic UI.
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 import * as clientConstants from '../shared/constants.js';
@@ -26,8 +24,6 @@ describe('module discovery', () => {
 
   it('shows admin pages only to admins, in order', () => {
     const studentLabels = getNavItems('student').map((item) => item.label);
-    // Modules may add their own menu items, so check the main ones are there in this
-    // order (sorted by `order`), rather than an exact list that breaks on every new item.
     const mainLabels = ['Lost', 'Found', 'My claims', 'Alerts'];
     const positions = mainLabels.map((label) => studentLabels.indexOf(label));
     expect(positions.every((position) => position >= 0)).toBe(true);

@@ -1,7 +1,4 @@
-// A histogram of items found per hour of the day (0 to 23), in plain SVG.
-// Each column's height comes from linearScale(); SVG's y axis points down, so a
-// column of height h starts at y = chartHeight - h. The busiest hour is in --berry.
-// Every third hour is labelled in words ("9 am") so the axis is easy to read.
+// Chart of items found per hour of the day.
 import { linearScale, maxCount } from './scale.js';
 
 const COLUMN = 18;
@@ -9,7 +6,6 @@ const GAP = 6;
 const CHART_HEIGHT = 140;
 const AXIS = 24;
 
-// 0 becomes "12 am", 13 becomes "1 pm", 12 becomes "noon".
 export function hourLabel(hour) {
   if (hour === 0) return '12 am';
   if (hour === 12) return 'noon';

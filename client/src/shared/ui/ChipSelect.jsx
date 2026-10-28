@@ -1,11 +1,6 @@
-// Chip picker: ChipSelect { options, value, onChange, multi }.
-// options: [{ value, label, category?, swatch? }]. With multi, value is an array;
-// otherwise one value. An option with `category` becomes a tile with the pictogram
-// on top (category tiles); one with `swatch` shows a colour dot (used by ColorPicker).
-// Selected chips use aria-pressed so screen readers announce the state.
+// Row of chips to pick one or more options.
 import { Pictogram } from './Pictogram.jsx';
 
-// Work out the new value after a chip is tapped.
 function toggleValue(current, clicked, multi) {
   if (!multi) {
     return clicked;
@@ -14,7 +9,6 @@ function toggleValue(current, clicked, multi) {
   return list.includes(clicked) ? list.filter((item) => item !== clicked) : [...list, clicked];
 }
 
-// The small colour dot. "multicolor" has no single colour, so it shows three stripes.
 function Swatch({ swatch }) {
   if (Array.isArray(swatch)) {
     return (
@@ -29,7 +23,6 @@ function Swatch({ swatch }) {
 }
 
 export function ChipSelect({ options = [], value, onChange, multi = false }) {
-  // Is this option currently chosen?
   function isSelected(optionValue) {
     return multi ? (value || []).includes(optionValue) : value === optionValue;
   }

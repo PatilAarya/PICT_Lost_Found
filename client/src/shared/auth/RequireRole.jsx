@@ -1,6 +1,4 @@
-// Shows its children only to users with one of the allowed roles, for example
-// <RequireRole roles={['handler', 'admin']}>. The router wraps a page in it when the
-// module's routes.jsx gives that page a roles list. The server checks roles again.
+// Shows its children only to users with an allowed role.
 import { useAuth } from './useAuth.js';
 
 export function RequireRole({ roles, children }) {

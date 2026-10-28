@@ -1,7 +1,4 @@
-// Login in two steps: type your college email, then the 6-digit code sent to it.
-// Split screen: the left panel shows what the app is (logo, a sample claim ticket,
-// how it works); the right panel holds the form. On phones the left panel shrinks to a
-// short header. In development, demo account cards let you log in with one click.
+// Login page: enter your college email, then the code sent to it.
 import { useState } from 'react';
 import { useAuth } from '../shared/auth/useAuth.js';
 import { DemoAccounts } from '../shared/auth/DemoAccounts.jsx';
@@ -18,7 +15,6 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Run one login step, showing the server's message if it fails.
   async function runStep(event, step) {
     event.preventDefault();
     setError('');
@@ -32,7 +28,6 @@ export function LoginPage() {
     }
   }
 
-  // Step 1: ask for a code, then show the code field.
   function handleEmail(event) {
     runStep(event, async () => {
       await requestCode(email);
@@ -40,7 +35,6 @@ export function LoginPage() {
     });
   }
 
-  // Step 2: send the code; on success AuthProvider stores the user and the app opens.
   function handleCode(event) {
     runStep(event, () => verifyCode(email, code));
   }

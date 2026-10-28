@@ -1,13 +1,10 @@
-// /notifications - the Alerts page. New (unread) alerts on top, earlier ones below.
-// Each alert has an icon for its type, the time, and an Open button that marks it read
-// and goes to the page it is about. New alerts appear here live (useNotifications).
+// Alerts page listing new and earlier notifications.
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../shared/realtime/useNotifications.js';
 import { Button, EmptyState, Icon, PageHeader } from '../../shared/ui/index.js';
 import { timeAgo } from './timeAgo.js';
 import './notifications.css';
 
-// One icon per NOTIFICATION_TYPES value (shared/constants.js).
 const TYPE_ICONS = {
   MATCH_FOUND: 'search',
   ITEM_STATUS: 'package',
@@ -17,7 +14,6 @@ const TYPE_ICONS = {
   ACCOUNT_FLAGGED: 'flag',
 };
 
-// One alert row.
 function AlertRow({ alert, onOpen }) {
   const isNew = !alert.readAt;
   return (
@@ -42,7 +38,6 @@ function AlertRow({ alert, onOpen }) {
   );
 }
 
-// A titled group of alerts, or nothing when the group is empty.
 function AlertGroup({ title, alerts, onOpen }) {
   if (alerts.length === 0) return null;
   return (
@@ -61,7 +56,6 @@ export function NotificationsPage() {
   const navigate = useNavigate();
   const { items, unread, markRead, markAllRead } = useNotifications();
 
-  // Mark the alert read (if needed) and go to the page it is about.
   async function handleOpen(alert) {
     if (!alert.readAt) await markRead(alert._id);
     navigate(alert.link);

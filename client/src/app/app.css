@@ -1,8 +1,4 @@
-/*
-  Layout of the app shell (AppShell.jsx, UserMenu.jsx). Mobile first: the menu is a bar
-  fixed to the bottom of the screen; from 900px wide it becomes a left rail with a
-  "Desk tools" group (DESIGN.md section 5). The login page has its own login.css.
-*/
+/* Layout of the app shell: top bar, side menu and page area. */
 .shell {
   min-height: 100vh;
   padding-bottom: 76px;
@@ -80,8 +76,6 @@
   line-height: 18px;
   text-align: center;
 }
-
-/* Menu: phones first, a scrolling bar of icon-and-label links at the bottom. */
 .mainnav {
   position: fixed;
   bottom: 0;
@@ -128,8 +122,6 @@
   max-width: var(--content-max);
   padding: var(--space-5) var(--space-4) var(--space-7);
 }
-
-/* Every page starts with its header, then a vertical stack of cards. */
 .page {
   display: grid;
   gap: var(--space-5);
@@ -191,8 +183,6 @@
     padding: var(--space-6) var(--space-6) var(--space-7);
   }
 }
-
-/* Phones: keep the app name on one line and drop the second line under it. */
 @media (max-width: 599px) {
   .brand-text strong {
     font-size: var(--text-sm);

@@ -1,6 +1,4 @@
-// The left half of the login page: the college logo, one line about the app, a sample
-// claim ticket (the app's signature look) and the four steps of how it works.
-// It is static, so a first-time visitor understands the app before logging in.
+// Left side of the login page: logo, sample ticket and the four steps.
 import { BrandMark, PropertyTag } from '../shared/ui/index.js';
 
 const SAMPLE_TICKET = {

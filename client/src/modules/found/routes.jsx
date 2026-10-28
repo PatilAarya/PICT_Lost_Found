@@ -1,6 +1,4 @@
-// Pages of the found module. The app router finds this file by itself
-// (app/moduleDiscovery.js). /found/mine is kept for old links and sends people to
-// /found, which now shows "your found items" itself.
+// Pages of the found module.
 import { Navigate } from 'react-router-dom';
 import { FoundHomePage } from './FoundHomePage.jsx';
 import PostFoundItemPage from './pages/PostFoundItemPage.jsx';

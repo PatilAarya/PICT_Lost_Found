@@ -1,13 +1,10 @@
-// Builds what the handler sees at the desk: each waiting claim with the claimant,
-// the claimant's answers next to the finder's stored answers, a score per question,
-// and short-lived links to the clear photos. Staff only (checked in deskRoutes.js).
+// Builds the list of claims waiting at the desk.
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { User } from '../../../shared/models/User.js';
 import { privatePhotos } from './privatePhotos.js';
 import { publicItem } from './views.js';
 
-// Put each question, the given answer, the stored answer and the score side by side.
 function compareAnswers(claim, item) {
   return item.hiddenDetails.map((detail) => {
     const given = claim.answers.find((answer) => answer.promptKey === detail.promptKey);
@@ -22,7 +19,6 @@ function compareAnswers(claim, item) {
   });
 }
 
-// One queue entry for the desk.
 function deskEntry(claim, item, claimant) {
   return {
     id: claim._id,
@@ -44,7 +40,6 @@ function deskEntry(claim, item, claimant) {
   };
 }
 
-// All claims waiting for a decision, oldest first.
 export async function buildDeskQueue() {
   const claims = await Claim.find({ status: 'awaiting_handler' }).sort({ createdAt: 1 });
   const items = await FoundItem.find({
@@ -62,7 +57,6 @@ export async function buildDeskQueue() {
   );
 }
 
-// Approved desk claims whose code has not been used yet (for the release screen).
 export async function buildReleaseList() {
   const claims = await Claim.find({ status: 'approved', handoverUsedAt: null }).sort({
     createdAt: 1,

@@ -1,7 +1,4 @@
-// PhotoPicker { photo, onChange }: one optional photo, taken with the camera or chosen from
-// the device. photo is a Blob (or null); onChange gets the new Blob, or null after Remove.
-// The camera part uses shared/media/useCameraStream.js (getUserMedia), and every photo is
-// shrunk with shared/media/resizeImage.js (Canvas) before it is handed back.
+// Picks one photo from the camera or the device.
 import { useEffect, useRef, useState } from 'react';
 import { useCameraStream } from '../media/useCameraStream.js';
 import { resizeImage } from '../media/resizeImage.js';
@@ -15,7 +12,6 @@ export function PhotoPicker({ photo, onChange }) {
   const fileRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  // Show the chosen photo: make a temporary URL for it and free it again later.
   useEffect(() => {
     if (!photo) {
       setPreviewUrl(null);
@@ -26,7 +22,6 @@ export function PhotoPicker({ photo, onChange }) {
     return () => URL.revokeObjectURL(url);
   }, [photo]);
 
-  // Turn the current camera frame into a still photo (video -> canvas -> Blob).
   function takePhoto() {
     const video = videoRef.current;
     if (!video || video.videoWidth === 0) return;
@@ -44,7 +39,6 @@ export function PhotoPicker({ photo, onChange }) {
     );
   }
 
-  // A photo chosen from the device's files or gallery.
   async function handleFile(event) {
     const file = event.target.files[0];
     event.target.value = '';

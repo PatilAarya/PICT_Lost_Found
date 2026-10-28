@@ -1,7 +1,4 @@
-// /verify/analytics - how the lost property office is doing, in plain words.
-// Four number cards (each says what it means), one sentence about the busiest hour,
-// then hand-built SVG charts, each in a card with a line saying what it shows.
-// Optional from/to dates reload everything for that period.
+// Analytics page with numbers and charts for the office.
 import { useCallback, useState } from 'react';
 import { Button, PageHeader, Spinner, StatCard, TextInput } from '../../../shared/ui/index.js';
 import { getAnalytics } from '../api.js';
@@ -10,7 +7,6 @@ import { BarChart } from '../charts/BarChart.jsx';
 import { HourHistogram, hourLabel } from '../charts/HourHistogram.jsx';
 import { maxCount } from '../charts/scale.js';
 
-// One chart inside a card, with its title and a line explaining it.
 function ChartCard({ title, text, children }) {
   return (
     <div className="card chart-card">
@@ -21,7 +17,6 @@ function ChartCard({ title, text, children }) {
   );
 }
 
-// "Most items are found around 1 pm." from the per-hour counts.
 function busiestHourSentence(hours) {
   const busiest = maxCount(hours);
   if (busiest === 0) return 'No items in this period yet.';
@@ -29,9 +24,7 @@ function busiestHourSentence(hours) {
   return `Most items are found around ${hourLabel(slot.hour)}. Keep the desk staffed then.`;
 }
 
-// The from/to date boxes and a Clear button, shown in the page header.
 function DateRange({ from, to, setFrom, setTo }) {
-  // Empty both dates, which shows every date again.
   function clearDates() {
     setFrom('');
     setTo('');

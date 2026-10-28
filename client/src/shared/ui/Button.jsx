@@ -1,7 +1,4 @@
-// Button { variant, size, icon, loading } (DESIGN.md section 9).
-// primary = red fill (the main action), secondary = steel fill, quiet = outline only,
-// danger = red like primary; the page that uses it must add a confirm step first.
-// While loading, the button is disabled and shows a small spinner and "Please wait".
+// Button component with its style variants.
 import { Icon } from './Icon.jsx';
 
 export function Button({

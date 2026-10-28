@@ -1,6 +1,4 @@
-// Demo users for development and the dev user switcher:
-// 6 students, 1 staff member, 2 handlers (security desk) and 1 admin.
-// Upsert by email means running it twice updates the same people, never duplicates them.
+// Demo users for development.
 import { User } from '../../shared/models/User.js';
 
 export const SEED_USERS = [
@@ -57,7 +55,6 @@ export const SEED_USERS = [
   { name: 'Vikram Rao', email: 'vikram.rao@pict.edu', role: 'admin', department: 'Admin office' },
 ];
 
-// Create or update each demo user.
 export default async function seed() {
   for (const person of SEED_USERS) {
     await User.updateOne({ email: person.email }, { $set: person }, { upsert: true });

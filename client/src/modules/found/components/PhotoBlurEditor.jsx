@@ -1,7 +1,4 @@
-// Lets the finder drag a rectangle over a sensitive part of one photo
-// (a phone screen, an ID number) and blurs it permanently into the
-// image before it is posted publicly. Uses Pointer Events directly,
-// which work the same for a mouse and a finger on a touchscreen.
+// Lets the finder drag a box over a photo to blur private details.
 import { useEffect, useRef, useState } from 'react';
 import { blurRegion, getCanvasPoint } from '../utils/blurRegions.js';
 import { Button } from '../../../shared/ui/index.js';
@@ -14,8 +11,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
   const [dragRect, setDragRect] = useState(null);
   const [hasBlur, setHasBlur] = useState(false);
 
-  // Draw the original photo onto the canvas once, at its full captured
-  // size, the first time this photo is edited.
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -29,8 +24,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     image.src = photo.previewUrl;
   }, [photo.previewUrl]);
 
-  // Starts tracking a drag. pointerId lets us ignore a second finger if
-  // someone touches the screen with two fingers at once.
   function handlePointerDown(event) {
     event.target.setPointerCapture(event.pointerId);
     const point = getCanvasPoint(canvasRef.current, event.clientX, event.clientY);
@@ -38,7 +31,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     setDragRect({ x: point.x, y: point.y, width: 0, height: 0 });
   }
 
-  // Updates the live selection rectangle while the finder drags.
   function handlePointerMove(event) {
     if (!dragStart) return;
     const point = getCanvasPoint(canvasRef.current, event.clientX, event.clientY);
@@ -50,7 +42,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     });
   }
 
-  // On release, bake the blur permanently into the canvas pixels.
   function handlePointerUp() {
     if (dragRect && dragRect.width > 4 && dragRect.height > 4) {
       blurRegion(canvasRef.current.getContext('2d'), dragRect, 12);
@@ -60,7 +51,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     setDragRect(null);
   }
 
-  // Redraws the original photo, wiping out every blur applied so far.
   function startOver() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -68,8 +58,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     setHasBlur(false);
   }
 
-  // Reads the finished canvas back out as a file and hands it to the
-  // parent step, which uploads it as the public copy of this photo.
   function confirmPhoto() {
     canvasRef.current.toBlob(
       (blurredBlob) =>
@@ -79,8 +67,6 @@ export default function PhotoBlurEditor({ photo, onConfirm }) {
     );
   }
 
-  // Scales the live drag rectangle from canvas pixels back to on-screen
-  // CSS pixels, so the dashed preview box lines up with the display size.
   function overlayStyle() {
     if (!dragRect) return { display: 'none' };
     const canvas = canvasRef.current;

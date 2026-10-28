@@ -1,7 +1,4 @@
-// /verify/integrity (admin) - "History check". Every item's history is a chain: each
-// step stores a fingerprint (SHA-256 hash) of the step before it, so editing an old step
-// in the database breaks every fingerprint after it. This page runs the check when it
-// opens, shows one plain answer on top, and lists the items, broken ones first.
+// Admin page that checks no item's history was changed.
 import { useState } from 'react';
 import { Button, Icon, PageHeader, Spinner, TextInput } from '../../../shared/ui/index.js';
 import { runIntegrityCheck } from '../api.js';
@@ -11,18 +8,15 @@ import { ChainItem } from '../components/ChainItem.jsx';
 
 const PAGE_SIZE = 12;
 
-// Run the check and remember when it ran (defined outside the component so it never changes).
 async function checkAllChains() {
   const result = await runIntegrityCheck();
   return { ...result, checkedAt: new Date() };
 }
 
-// True when at least one step of this item's history was changed.
 function isBroken(chain) {
   return chain.blocks.some((block) => !block.valid);
 }
 
-// The big answer card: everything is fine, or how many items were changed.
 function Verdict({ result, checkedAt }) {
   const brokenCount = result.brokenItems.length;
   return (
@@ -50,7 +44,6 @@ export function IntegrityPage() {
   const [search, setSearch] = useState('');
   const [shown, setShown] = useState(PAGE_SIZE);
 
-  // Broken chains first, then keep only the ones matching the search box.
   const query = search.trim().toLowerCase();
   const chains = result
     ? [...result.chains]

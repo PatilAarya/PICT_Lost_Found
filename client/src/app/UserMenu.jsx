@@ -1,6 +1,4 @@
-// The round avatar at the top right. Clicking it opens a small menu with the person's
-// name and role, a list of demo accounts to switch to (development only), and Log out.
-// It closes when you click outside it or press Escape. Replaces the "Act as" dropdown.
+// Avatar menu at the top right with the user's name and Log out.
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../shared/auth/useAuth.js';
 import { useDemoAccounts } from '../shared/auth/useDemoAccounts.js';
@@ -16,7 +14,6 @@ const ROLE_NAMES = {
   admin: 'Admin',
 };
 
-// "Vikram Rao" becomes "VR".
 function initialsOf(name) {
   const words = String(name || '?')
     .split(' ')
@@ -33,7 +30,6 @@ export function UserMenu() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
-  // While open, close on a click outside the menu or on the Escape key.
   useEffect(() => {
     if (!open) return undefined;
     function handleClick(event) {
@@ -50,13 +46,11 @@ export function UserMenu() {
     };
   }, [open]);
 
-  // Switch account and close the menu.
   function choose(email) {
     setOpen(false);
     switchTo(email);
   }
 
-  // Forget the demo account too, otherwise its header would log us straight back in.
   async function handleLogout() {
     setOpen(false);
     setDevUser('');

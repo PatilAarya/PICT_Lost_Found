@@ -1,7 +1,4 @@
-// Demo data for the verify module: 40 historic found items with custody chains,
-// 10 claims across the last 30 days (released, waiting, approved, rejected) and one
-// flagged account, so the desk, analytics and integrity pages look real.
-// Idempotent: items and claims are found by serial and skipped if they exist.
+// Adds demo items, claims and custody logs.
 import { FoundItem } from '../../shared/models/FoundItem.js';
 import { Claim } from '../../shared/models/Claim.js';
 import { User } from '../../shared/models/User.js';
@@ -18,14 +15,12 @@ const CLAIM_STATUS_BY_STORY = {
   rejected: 'rejected',
 };
 
-// Load the seeded people (modules/auth/seed.js runs first, alphabetically).
 async function loadPeople() {
   const students = await User.find({ role: 'student' }).sort({ email: 1 });
   const handler = await User.findOne({ role: 'handler' }).sort({ email: 1 });
   return { students, handler };
 }
 
-// Add one custody entry, `hours` after the item was posted.
 function addStep(plan, action, hours, actor) {
   const ts = new Date(plan.createdAt.getTime() + hours * HOUR_MS);
   return appendEntry({
@@ -37,7 +32,6 @@ function addStep(plan, action, hours, actor) {
   });
 }
 
-// Create the item, back-date it, and write its custody chain.
 async function seedItem(plan, finder, handler) {
   const item = await FoundItem.create({
     serial: plan.serial,
@@ -53,7 +47,6 @@ async function seedItem(plan, finder, handler) {
     hiddenDetails: plan.hiddenDetails,
     status: STATUS_BY_STORY[plan.story],
   });
-  // timestamps always set createdAt to "now", so we back-date it with a raw update.
   await FoundItem.collection.updateOne({ _id: item._id }, { $set: { createdAt: plan.createdAt } });
   plan.itemId = item._id;
   for (const [action, hours] of custodySteps(plan.story)) {
@@ -62,7 +55,6 @@ async function seedItem(plan, finder, handler) {
   }
 }
 
-// Create the claim for items 1 to 10 and add its custody steps.
 async function seedClaim(plan, claimant, handler) {
   const status = CLAIM_STATUS_BY_STORY[plan.story];
   const serial = `PICT-C-${String(900000 + plan.index)}`;
@@ -108,7 +100,6 @@ async function seedClaim(plan, claimant, handler) {
   if (status === 'released') await addStep(plan, 'RELEASED', 30, handler);
 }
 
-// Raise one open flag so the admin flags page has something to review.
 async function seedFlag(student) {
   if (!(await Flag.exists({ userId: student._id }))) {
     await Flag.create({
@@ -120,7 +111,6 @@ async function seedFlag(student) {
   }
 }
 
-// Insert demo items, claims and a flag (skipping anything already there).
 export default async function seed() {
   const { students, handler } = await loadPeople();
   if (students.length < 3 || !handler) return;

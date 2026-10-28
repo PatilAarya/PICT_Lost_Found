@@ -1,8 +1,4 @@
-/*
-  Styles for the Analytics page (number cards come from shared StatCard), its charts,
-  and the flags list. Chart colours follow DESIGN.md: main series --ink, highlight
-  --berry, grid --frost. In dark mode the "ink" bars become paper through --line.
-*/
+/* Styles for the analytics charts and flags list. */
 .date-range {
   display: flex;
   flex-wrap: wrap;
@@ -70,8 +66,6 @@
 .chart-value {
   font-weight: 700;
 }
-
-/* Flags list (FlagsPage.jsx) */
 .flag-row {
   display: grid;
   gap: var(--space-2);

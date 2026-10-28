@@ -1,6 +1,4 @@
-/* The blur editor: a canvas showing one photo, with a dashed live
-   selection box drawn on top while the finder drags. */
-
+/* Styles for the photo blur editor. */
 .photo-blur-editor {
   display: flex;
   flex-direction: column;
@@ -18,7 +16,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
-  touch-action: none; /* stops the page from scrolling while dragging on the photo */
+  touch-action: none;
 }
 
 .photo-blur-editor__canvas {

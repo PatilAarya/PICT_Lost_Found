@@ -1,5 +1,4 @@
-// Tests for the verify client helpers: the chart scale maths, the countdown text,
-// and that a bar chart draws one bar per row with its number as a direct label.
+// Tests for the verify charts and helpers.
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 import { linearScale, maxCount } from './charts/scale.js';

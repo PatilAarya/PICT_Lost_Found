@@ -1,6 +1,4 @@
-// The eight steps of "post found item": the name shown in the progress bar, the title
-// and help line of each step card, and a tip for the side panel. canContinue() says
-// whether the Next button may be pressed yet. Pure data and one pure function.
+// The steps of posting a found item and when each can continue.
 import { answeredCount } from './format.js';
 
 export const MIN_ANSWERS = 2;
@@ -56,7 +54,6 @@ export const STEPS = [
   },
 ];
 
-// May the finder move on from this step yet?
 export function canContinue(stepIndex, form) {
   if (stepIndex === 0) return Boolean(form.category);
   if (stepIndex === 1) return form.photos.length > 0;

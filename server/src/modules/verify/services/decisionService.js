@@ -1,7 +1,4 @@
-// The handler's final decision on a claim that passed the owner check.
-// Approve: make a handover code (desk items) or ask both people to confirm (finder
-// items), log APPROVED, tell the claimant. Reject: log REJECTED, tell the claimant,
-// and give the item back its earlier status if nobody else is claiming it.
+// Approves or rejects a claim.
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
 import { HttpError } from '../../../shared/utils/httpError.js';
@@ -10,7 +7,6 @@ import { codeExpiry, generateCode, hashCode } from './handoverCode.js';
 import { notifyUser } from './notifyHelpers.js';
 import { writeAudit } from './audit.js';
 
-// Approve the claim and prepare the handover.
 export async function approveClaim(claim, item, handler, note) {
   claim.status = 'approved';
   claim.decidedBy = handler._id;
@@ -18,7 +14,6 @@ export async function approveClaim(claim, item, handler, note) {
   if (item.custody.type === 'desk') {
     const code = generateCode();
     claim.handoverCodeHash = hashCode(code);
-    // Kept hidden (select: false) only until the claimant opens it once.
     claim.handoverCodePlain = code;
     claim.handoverExpiresAt = codeExpiry();
   }
@@ -45,7 +40,6 @@ export async function approveClaim(claim, item, handler, note) {
   );
 }
 
-// Reject the claim and free the item if no other claim is in progress.
 export async function rejectClaim(claim, item, handler, note) {
   claim.status = 'rejected';
   claim.decidedBy = handler._id;
@@ -79,7 +73,6 @@ export async function rejectClaim(claim, item, handler, note) {
   );
 }
 
-// Apply "approve" or "reject" to a claim that is waiting for the desk.
 export async function decideClaim(claim, handler, decision, note) {
   if (claim.status !== 'awaiting_handler') {
     throw new HttpError(409, 'NOT_WAITING', 'This claim is not waiting for a decision.');

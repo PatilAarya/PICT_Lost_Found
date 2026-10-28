@@ -1,8 +1,4 @@
-/*
-  The History check page (IntegrityPage.jsx, ChainItem.jsx): one verdict card, a short
-  "how it works" card, and a searchable list of items that open into a timeline.
-  Red is used only for items whose history was changed.
-*/
+/* Styles for the History check page. */
 .verdict {
   display: flex;
   align-items: center;
@@ -51,8 +47,6 @@
 .chain-item {
   border-bottom: var(--divider);
 }
-
-/* The clickable row: serial, title, steps, status, arrow. */
 .chain-summary {
   display: grid;
   grid-template-columns: 130px minmax(0, 1fr) auto auto auto;
@@ -136,8 +130,6 @@
   color: var(--error-text);
   font-weight: 700;
 }
-
-/* On phones the row drops the step count to keep the title readable. */
 @media (max-width: 699px) {
   .chain-summary {
     grid-template-columns: minmax(0, 1fr) auto auto;

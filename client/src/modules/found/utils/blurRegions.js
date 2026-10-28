@@ -1,12 +1,4 @@
-// A hand-written box blur: for each pixel, replace it with the average
-// of every pixel in a square around it. This is not Instagram-quality
-// blur, but it is simple enough to explain line by line, which matters
-// more for this course than using a built-in CSS filter would.
-// CSS "filter: blur()" was deliberately avoided because it blurs only
-// what is drawn on screen, not the actual pixel data saved in the file.
-
-// Blurs one rectangle of a canvas in place. rect is in canvas pixel
-// coordinates, not CSS display coordinates (see getCanvasPoint below).
+// Simple box blur that blurs a chosen area of a photo.
 export function blurRegion(context, rect, radius = 10) {
   const canvas = context.canvas;
   const x = Math.max(0, Math.round(rect.x));
@@ -20,12 +12,6 @@ export function blurRegion(context, rect, radius = 10) {
   context.putImageData(blurred, x, y);
 }
 
-// The actual maths: for every pixel, average the red, green, blue and
-// alpha values of every pixel within "radius" pixels of it.
-// Cost is roughly width * height * radius^2, so this is kept to small,
-// user-chosen rectangles rather than whole photos. A faster version
-// (a "sliding window" sum reused between neighbouring pixels) exists,
-// but this direct version is easier to read and explain.
 function boxBlurPixels(imageData, radius) {
   const { data, width, height } = imageData;
   const output = new Uint8ClampedArray(data.length);
@@ -64,10 +50,6 @@ function boxBlurPixels(imageData, radius) {
   return new ImageData(output, width, height);
 }
 
-// Converts a pointer event's screen position into canvas pixel
-// coordinates. This matters because the canvas is often displayed
-// smaller on screen than its real pixel size, so a direct
-// clientX/clientY would point at the wrong pixel without this scaling.
 export function getCanvasPoint(canvas, clientX, clientY) {
   const bounds = canvas.getBoundingClientRect();
   const scaleX = canvas.width / bounds.width;

@@ -1,8 +1,4 @@
-// Lost report routes, mounted under /api/lost:
-//   POST  /reports            report a lost item (then match it against found items)
-//   GET   /reports/mine       my reports, newest first, with how many matches each has
-//   GET   /reports/:id        one report with its timeline and its matches, best first
-//   PATCH /reports/:id/close  I found it myself or gave up: stop matching it
+// Routes for lost reports and their matches.
 import express from 'express';
 import { HttpError } from '../../../shared/utils/httpError.js';
 import { nextSerial } from '../../../shared/utils/serial.js';
@@ -16,7 +12,6 @@ import { matchView, reportTimeline } from '../services/views.js';
 
 const router = express.Router();
 
-// Find a report that belongs to this user (staff may look at any), or stop with 404/403.
 async function findOwnReport(req) {
   const report = await LostReport.findById(req.params.id).catch(() => null);
   if (!report) throw new HttpError(404, 'NOT_FOUND', 'This lost report does not exist.');
@@ -44,7 +39,6 @@ router.post('/reports', async (req, res) => {
 
 router.get('/reports/mine', async (req, res) => {
   const reports = await LostReport.find({ ownerId: req.user._id }).sort({ createdAt: -1 });
-  // Count matches per report in one query: [{ _id: reportId, count }].
   const counts = await Match.aggregate([
     { $match: { lostReportId: { $in: reports.map((report) => report._id) } } },
     { $group: { _id: '$lostReportId', count: { $sum: 1 } } },
@@ -66,7 +60,6 @@ router.get('/reports/:id', async (req, res) => {
   const views = matches
     .filter((match) => itemById.has(String(match.foundItemId)))
     .map((match) => matchView(match, itemById.get(String(match.foundItemId))));
-  // The owner has now seen every match on this report.
   if (String(report.ownerId) === String(req.user._id)) {
     await Match.updateMany({ lostReportId: report._id, seen: false }, { $set: { seen: true } });
   }

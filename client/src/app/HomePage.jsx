@@ -1,6 +1,4 @@
-// The first page after login: a greeting, the two things people come here to do
-// (report a lost item, post a found one) as big cards, and how the process works.
-// Desk staff also get a card that takes them straight to the desk.
+// Home page after login with the main actions and how the app works.
 import { Link } from 'react-router-dom';
 import { useAuth } from '../shared/auth/useAuth.js';
 import { Icon, PageHeader, Pictogram } from '../shared/ui/index.js';
@@ -13,7 +11,6 @@ const STEPS = [
   { title: 'Collect', text: 'Show your one-time code at the security desk.' },
 ];
 
-// One big clickable card with a pictogram, a title and a short line.
 function ActionCard({ to, category, kind, title, text }) {
   return (
     <Link to={to} className={`action-card action-${kind}`}>

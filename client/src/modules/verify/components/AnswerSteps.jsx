@@ -1,6 +1,4 @@
-// Asks the owner-check questions one at a time, with a Stepper showing progress.
-// Answers are kept in state until the last question, then sent together.
-// The server never says which answer was wrong; we only show the tries left.
+// Asks the ownership questions one at a time.
 import { useState } from 'react';
 import { errorMessage } from '../../../shared/api/client.js';
 import { Button, Field, Stepper, TextInput } from '../../../shared/ui/index.js';
@@ -14,12 +12,10 @@ export function AnswerSteps({ claim, onDone }) {
   const prompt = claim.prompts[step];
   const isLast = step === claim.prompts.length - 1;
 
-  // Store what is typed for the current question.
   function handleChange(event) {
     setTexts({ ...texts, [prompt.promptKey]: event.target.value });
   }
 
-  // Go to the next question, or send everything on the last one.
   async function handleSubmit(event) {
     event.preventDefault();
     if (!(texts[prompt.promptKey] || '').trim()) {

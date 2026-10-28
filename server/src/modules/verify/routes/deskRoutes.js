@@ -1,9 +1,4 @@
-// Security desk routes (handlers and admins only).
-// GET   /desk/queue                 claims waiting for a decision, with answers and photos
-// GET   /desk/approved              approved claims waiting for the owner to collect
-// PATCH /claims/:id/decision        approve or reject a claim
-// GET   /incoming                   items a finder says were dropped at a desk
-// PATCH /incoming/:itemId/receive   the handler has the item on the shelf
+// Routes for the security desk.
 import express from 'express';
 import { z } from 'zod';
 import { requireRole } from '../../../shared/middleware/requireRole.js';

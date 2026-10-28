@@ -1,11 +1,8 @@
-// One possible match on a lost report: the found item's ticket (blurred public photo
-// only), the score out of 100, the "why this match" sentence, a small bar per factor,
-// and "This is mine", which starts a claim in the verify module.
+// One possible match for a lost report with its score.
 import { useNavigate } from 'react-router-dom';
 import { Button, PropertyTag } from '../../../shared/ui/index.js';
 import { ticketFromFoundItem } from '../utils/format.js';
 
-// Readable names for the five factors of a score.
 const FACTOR_NAMES = {
   category: 'Category',
   place: 'Place',
@@ -14,12 +11,10 @@ const FACTOR_NAMES = {
   time: 'Time',
 };
 
-// One factor: its name, a bar filled to points / max, and "12 / 15".
 function FactorBar({ factor }) {
   return (
     <li className="factor">
       <span className="factor-name">{FACTOR_NAMES[factor.key] || factor.key}</span>
-      {/* --share (0 to 1) sets how much of the bar is filled, in lost.css. */}
       <span className="factor-track" aria-hidden="true">
         <span className="factor-fill" style={{ '--share': factor.points / factor.max }} />
       </span>

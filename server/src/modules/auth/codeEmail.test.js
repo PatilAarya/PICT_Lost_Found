@@ -1,5 +1,4 @@
-// Tests for the login-code email and the college domain rule.
-// They check the email content only; tests never send real emails (see config/index.js).
+// Tests for the login code email.
 import { describe, expect, it } from 'vitest';
 import { buildCodeEmail, spacedCode } from './codeEmail.js';
 import { checkEmailDomain } from './loginCodes.js';

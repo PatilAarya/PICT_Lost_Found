@@ -1,6 +1,4 @@
-// Numbers for the analytics dashboard, using simple MongoDB aggregations:
-// $match picks the documents, $group counts them per key, $sort orders the result.
-// Every function takes the same date filter so the dashboard can show any period.
+// Counts used by the analytics dashboard.
 import fs from 'node:fs';
 import { Claim } from '../../../shared/models/Claim.js';
 import { FoundItem } from '../../../shared/models/FoundItem.js';
@@ -10,7 +8,6 @@ const locations = JSON.parse(
 );
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Build a $match on createdAt from optional ?from and ?to dates.
 export function dateMatch(from, to) {
   const range = {};
   if (from) range.$gte = new Date(from);
@@ -18,7 +15,6 @@ export function dateMatch(from, to) {
   return Object.keys(range).length ? { createdAt: range } : {};
 }
 
-// Count found items per value of one field, biggest first: [{ key, count }].
 async function countBy(match, field) {
   const rows = await FoundItem.aggregate([
     { $match: match },
@@ -28,13 +24,11 @@ async function countBy(match, field) {
   return rows.map((row) => ({ key: row._id || 'unknown', count: row.count }));
 }
 
-// Turn building ids into names using locations.json.
 function buildingName(id) {
   const building = locations.buildings.find((entry) => entry.id === id);
   return building ? building.name : id;
 }
 
-// Items per building and per floor (label like "Main building, 1").
 export async function byPlace(match) {
   const buildings = await countBy(match, 'location.buildingId');
   const floors = await FoundItem.aggregate([
@@ -56,7 +50,6 @@ export async function byPlace(match) {
   };
 }
 
-// Items per hour of day (0 to 23, Indian time), with empty hours filled with 0.
 export async function byHour(match) {
   const rows = await FoundItem.aggregate([
     { $match: match },
@@ -74,7 +67,6 @@ export async function byHour(match) {
   return hours;
 }
 
-// Average hours from posting an item to giving it back, over released claims.
 export async function averageReturnHours(match) {
   const claims = await Claim.find({ status: 'released', releasedAt: { $ne: null } }).select(
     'foundItemId releasedAt'
@@ -91,7 +83,6 @@ export async function averageReturnHours(match) {
   return Number((hours.reduce((sum, value) => sum + value, 0) / hours.length).toFixed(1));
 }
 
-// Everything the dashboard needs in one object.
 export async function buildDashboard(from, to) {
   const match = dateMatch(from, to);
   const place = await byPlace(match);

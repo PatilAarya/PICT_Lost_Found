@@ -1,7 +1,4 @@
-// Fixed lists shared by every module, copied exactly from docs/CONTRACT.md section A.
-// client/src/shared/constants.js holds the same values; a test checks they match.
-// Models use these lists to reject unknown values (for example a made-up status).
-
+// Fixed lists shared by every module, like categories and statuses.
 export const ROLES = ['student', 'staff', 'handler', 'admin'];
 
 export const CATEGORIES = [

@@ -1,9 +1,4 @@
-/*
-  Progress pieces from Layout.jsx. Timeline (DESIGN.md section 9): a dashed frost
-  line with punched circle stops, done stops filled with ink. Stepper: a segmented
-  progress bar plus one line naming the current and the next step in full.
-*/
-/* Timeline */
+/* Styles for the timeline and the step progress bar. */
 .timeline {
   margin: 0;
   padding: 0;
@@ -18,8 +13,6 @@
   align-items: center;
   min-height: 44px;
 }
-
-/* The dashed line: drawn from each stop down to the next one. */
 .timeline li:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -55,13 +48,9 @@
   color: var(--text-soft);
   font-size: var(--text-sm);
 }
-
-/* Stepper */
 .stepper {
   margin: 0 0 var(--space-5);
 }
-
-/* One segment per step: ink when done, steel for the current one, frost still to do. */
 .stepper-bar {
   display: flex;
   gap: var(--space-1);

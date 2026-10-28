@@ -1,6 +1,4 @@
-// The 6-digit handover code, printed large on a ticket stub. The server shows it
-// only ONCE, so we ask the claimant to open it at the desk, by pressing a button
-// (not automatically on page load, which could waste the single view).
+// Shows the 6-digit handover code once.
 import { useState } from 'react';
 import { errorMessage } from '../../../shared/api/client.js';
 import { Button } from '../../../shared/ui/index.js';
@@ -12,7 +10,6 @@ export function HandoverCode({ claim }) {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Ask the server for the code (works one time only).
   async function handleReveal() {
     setBusy(true);
     try {

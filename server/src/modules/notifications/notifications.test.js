@@ -1,6 +1,4 @@
-// Tests for the notifications module: notify() saves the alert and emits it to the
-// person's Socket.IO room; the routes list only my alerts, count unread ones and mark
-// them read. Socket.IO is replaced by a tiny fake that records what was emitted.
+// Tests for the notifications module.
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../../app.js';
@@ -13,7 +11,6 @@ let app;
 let owner;
 let other;
 
-// A fake Socket.IO: io.to(room).emit(event, data) just remembers the call.
 function fakeIo() {
   const sent = [];
   return {

@@ -1,7 +1,4 @@
-// A request by someone who says a found item is theirs. Owned by Member 2 (verify module).
-// Fields follow docs/CONTRACT.md section C, plus verify-only fields at the end.
-// The handover code is stored as an HMAC hash; the plain code is kept (hidden) only
-// until the claimant has seen it once, then deleted.
+// Model for a claim that a found item is someone's.
 import mongoose from 'mongoose';
 import { CLAIM_STATUS } from '../constants.js';
 
@@ -31,7 +28,6 @@ const claimSchema = new mongoose.Schema(
     decidedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     decisionNote: { type: String, default: '' },
 
-    // Verify-only fields (added by Member 2).
     scores: [scoreSchema],
     lockoutCount: { type: Number, default: 0 },
     itemStatusBefore: { type: String },

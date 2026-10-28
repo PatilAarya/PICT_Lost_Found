@@ -1,12 +1,9 @@
-// Every call the lost screens make to /api/lost, in one place.
-// Each function returns the useful part of the response, so pages can simply write
-// const reports = await getMyReports();
+// All API calls used by the lost screens.
 import { api } from '../../shared/api/client.js';
 
 export const getMyReports = () => api.get('/lost/reports/mine').then((res) => res.data.reports);
 export const getReport = (id) => api.get(`/lost/reports/${id}`).then((res) => res.data);
 export const createReport = (body) => api.post('/lost/reports', body).then((res) => res.data);
-// Upload the optional photo (a Blob) as a form; returns the URL to save on the report.
 export function uploadLostPhoto(blob) {
   const formData = new FormData();
   formData.append('file', blob, 'photo.jpg');

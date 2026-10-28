@@ -1,6 +1,4 @@
-// ESLint settings for the whole repo (server and client).
-// It catches common mistakes (unused variables, wrong hook use) before code is committed.
-// Formatting is left to Prettier, so these rules are only about correctness.
+// ESLint settings for the whole project.
 import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';

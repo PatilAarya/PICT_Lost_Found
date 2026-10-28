@@ -1,8 +1,4 @@
-// The frame around every logged-in page: a top bar (logo, alerts bell, user menu),
-// the menu and the page itself. Menu items come from every module's nav.js, filtered
-// by role; items only staff can see are grouped under "Desk tools". CSS in app.css puts
-// the menu at the bottom on phones and as a left rail from 900px wide. Pages wait for
-// the place names (shared/location-picker/places.js) so tickets never show raw ids.
+// The frame around every logged-in page: top bar, menu and the page.
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../shared/auth/useAuth.js';
@@ -12,7 +8,6 @@ import { BrandMark, Icon, Spinner } from '../shared/ui/index.js';
 import { getNavItems } from './moduleDiscovery.js';
 import { UserMenu } from './UserMenu.jsx';
 
-// One icon per menu path. Unknown paths simply show no icon.
 const NAV_ICONS = {
   '/lost': 'search',
   '/found': 'package',
@@ -24,12 +19,10 @@ const NAV_ICONS = {
   '/verify/flags': 'flag',
 };
 
-// A menu item is a "desk tool" when students cannot see it.
 function isStaffOnly(item) {
   return Boolean(item.roles) && !item.roles.includes('student');
 }
 
-// One link in the menu: icon plus label.
 function MenuLink({ item }) {
   return (
     <NavLink to={item.path} end className="nav-link">
@@ -41,14 +34,12 @@ function MenuLink({ item }) {
 
 export function AppShell() {
   const { role } = useAuth();
-  // announce: true makes this one copy of the hook show a toast for each new alert.
   const { unread } = useNotifications({ announce: true });
   const navItems = getNavItems(role);
   const mainItems = navItems.filter((item) => !isStaffOnly(item));
   const staffItems = navItems.filter(isStaffOnly);
   const [placesReady, setPlacesReady] = useState(false);
 
-  // Load building and room names once, so every ticket can say "Lab building, Canteen".
   useEffect(() => {
     loadPlaces().then(() => setPlacesReady(true));
   }, []);

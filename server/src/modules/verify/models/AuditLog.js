@@ -1,6 +1,4 @@
-// A record of every action taken by a handler or admin (approve, reject, release,
-// receive, review a flag). Unlike the custody log it is about people's decisions,
-// not one item's journey. services/audit.js writes it.
+// Model that records actions taken by handlers and admins.
 import mongoose from 'mongoose';
 
 const auditLogSchema = new mongoose.Schema(

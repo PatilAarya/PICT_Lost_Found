@@ -1,5 +1,4 @@
-// The last step of "report lost item": everything entered, as label and value pairs,
-// plus a checkbox to keep this item as a saved item for next time.
+// Summary of the lost report before sending it.
 import { formatDateTime, placeLabel } from '../utils/format.js';
 
 export function ReportSummary({ form, update }) {
