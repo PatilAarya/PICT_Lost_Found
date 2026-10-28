@@ -17,7 +17,7 @@ import { whyThisMatch } from '../services/explain.js';
 const HOUR = 60 * 60 * 1000;
 const lostTo = new Date('2026-10-27T12:00:00Z');
 const lostFrom = new Date(lostTo.getTime() - 3 * HOUR);
-const place = { buildingId: 'main', floorId: '1', areaId: 'staff-room' };
+const place = { buildingId: 'a1', floorId: '1', areaId: 'staff-room-1' };
 
 const lost = {
   category: 'bottle',
@@ -52,7 +52,7 @@ describe('factors', () => {
     expect(scorePlace(place, place).points).toBe(15);
     expect(scorePlace(place, { ...place, areaId: 'library' }).points).toBe(10);
     expect(scorePlace(place, { ...place, floorId: '2' }).points).toBe(6);
-    expect(scorePlace(place, { buildingId: 'lab', floorId: '1' }).points).toBe(0);
+    expect(scorePlace(place, { buildingId: 'a3', floorId: '1' }).points).toBe(0);
   });
 
   it('time: 10 within a day, falling to 0 at 72 hours, 0 if found before', () => {

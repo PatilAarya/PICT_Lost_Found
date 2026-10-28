@@ -35,7 +35,7 @@ describe('module auto-loader', () => {
 describe('meta module', () => {
   it('returns locations and desks', async () => {
     const locations = await request(app).get('/api/meta/locations');
-    expect(locations.body.buildings).toHaveLength(2);
+    expect(locations.body.buildings).toHaveLength(12);
     expect(locations.body.buildings[0].floors).toHaveLength(3);
 
     const desks = await request(app).get('/api/meta/desks');

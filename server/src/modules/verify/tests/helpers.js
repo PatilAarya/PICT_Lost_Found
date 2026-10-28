@@ -38,7 +38,7 @@ export function makeItem(finderId, custodyType = 'desk', status = 'in_custody') 
     category: 'wallet',
     title: 'Brown leather wallet',
     images: [{ publicUrl: 'https://example.com/blurred.jpg', privateId: 'private/abc', order: 0 }],
-    location: { buildingId: 'main', floorId: 'g', areaId: 'entrance' },
+    location: { buildingId: 'entrance', floorId: 'g', areaId: 'entrance-gate' },
     custody: {
       type: custodyType,
       deskId: custodyType === 'desk' ? 'security-main-gate' : undefined,

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 710" role="img" aria-label="PICT campus map">
+  <!-- Map of the PICT campus. Each clickable room is a
+       class="area" element whose id matches the area id in locations.json. -->
+  <rect class="wall" x="10" y="10" width="1300" height="690" fill="none" stroke="#1d3557" stroke-width="4"/>
+  <g class="area-group">
+    <rect class="area" id="parking-1" x="25" y="22" width="165" height="428" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="107.5" y="247.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Parking 1</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="a1" x="210" y="35" width="355" height="140" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="387.5" y="96.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">A1 building</text>
+    <text class="room-label" x="387.5" y="136.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Central Library</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="a2" x="565" y="35" width="147" height="140" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="638.5" y="96.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">A2</text>
+    <text class="room-label" x="638.5" y="136.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">building</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="a3" x="565" y="175" width="147" height="257" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="638.5" y="294.7" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">A3</text>
+    <text class="room-label" x="638.5" y="334.7" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">building</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="sports-courts" x="740" y="42" width="257" height="390" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="868.5" y="148.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Basketball</text>
+    <text class="room-label" x="868.5" y="348.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Volleyball</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="girls-hostel" x="1043" y="62" width="242" height="155" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="1164" y="150.7" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Girls hostel</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="canteen" x="1058" y="242" width="226" height="252" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="1171" y="379.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Canteen</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="f" x="349" y="520" width="287" height="160" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="492.5" y="591.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">F building</text>
+    <text class="room-label" x="492.5" y="631.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Auditorium</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="parking-2" x="672" y="528" width="156" height="162" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="750" y="600.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Parking</text>
+    <text class="room-label" x="750" y="640.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">2</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="edc" x="851" y="538" width="182" height="140" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="942" y="588.2" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#1d3557">Entrepreneurship</text>
+    <text class="room-label" x="942" y="615.7" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#1d3557">development</text>
+    <text class="room-label" x="942" y="643.2" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#1d3557">cell</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="boys-hostel" x="1053" y="524" width="242" height="145" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="1174" y="607.7" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Boys hostel</text>
+  </g>
+  <g class="area-group">
+    <rect class="area" id="entrance" x="25" y="630" width="270" height="60" rx="8" fill="#a8dadc" stroke="#1d3557" stroke-width="2"/>
+    <text class="room-label" x="160" y="671.2" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#1d3557">Main entrance</text>
+  </g>
+</svg>

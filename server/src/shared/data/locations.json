@@ -1,70 +1,351 @@
 {
   "buildings": [
     {
-      "id": "main",
-      "name": "Main building",
+      "id": "a1",
+      "name": "A1 building",
       "floors": [
         {
           "id": "g",
           "label": "Ground floor",
-          "plan": "/floorplans/main-g.svg",
-          "areas": [
-            { "id": "entrance", "name": "Main entrance" },
-            { "id": "office", "name": "College office" },
-            { "id": "corridor", "name": "Ground corridor" }
-          ]
+          "plan": "/floorplans/a1-g.svg",
+          "areas": [{ "id": "central-library", "name": "Central Library" }]
         },
         {
           "id": "1",
           "label": "First floor",
-          "plan": "/floorplans/main-1.svg",
+          "plan": "/floorplans/a1-1.svg",
           "areas": [
-            { "id": "classroom-101", "name": "Classroom 101" },
-            { "id": "classroom-102", "name": "Classroom 102" },
-            { "id": "staff-room", "name": "Staff room" }
+            { "id": "lab-101", "name": "Lab A1-101" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-102", "name": "Lab A1-102" },
+            { "id": "lab-103", "name": "Lab A1-103" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-104", "name": "Classroom 104" },
+            { "id": "classroom-105", "name": "Classroom 105" },
+            { "id": "classroom-106", "name": "Classroom 106" }
           ]
         },
         {
           "id": "2",
           "label": "Second floor",
-          "plan": "/floorplans/main-2.svg",
+          "plan": "/floorplans/a1-2.svg",
           "areas": [
-            { "id": "seminar-hall", "name": "Seminar hall" },
-            { "id": "library", "name": "Library" }
+            { "id": "lab-201", "name": "Lab A1-201" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-202", "name": "Lab A1-202" },
+            { "id": "lab-203", "name": "Lab A1-203" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-204", "name": "Classroom 204" },
+            { "id": "classroom-205", "name": "Classroom 205" },
+            { "id": "classroom-206", "name": "Classroom 206" }
           ]
         }
       ]
     },
     {
-      "id": "lab",
-      "name": "Lab building",
+      "id": "a2",
+      "name": "A2 building",
       "floors": [
         {
           "id": "g",
           "label": "Ground floor",
-          "plan": "/floorplans/lab-g.svg",
-          "areas": [
-            { "id": "canteen", "name": "Canteen" },
-            { "id": "parking", "name": "Two-wheeler parking" }
-          ]
+          "plan": "/floorplans/a2-g.svg",
+          "areas": [{ "id": "central-library", "name": "Central Library" }]
         },
         {
           "id": "1",
           "label": "First floor",
-          "plan": "/floorplans/lab-1.svg",
+          "plan": "/floorplans/a2-1.svg",
           "areas": [
-            { "id": "computer-lab-1", "name": "Computer lab 1" },
-            { "id": "computer-lab-2", "name": "Computer lab 2" }
+            { "id": "lab-101", "name": "Lab A2-101" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-102", "name": "Lab A2-102" },
+            { "id": "lab-103", "name": "Lab A2-103" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-104", "name": "Classroom 104" },
+            { "id": "classroom-105", "name": "Classroom 105" },
+            { "id": "classroom-106", "name": "Classroom 106" }
           ]
         },
         {
           "id": "2",
           "label": "Second floor",
-          "plan": "/floorplans/lab-2.svg",
+          "plan": "/floorplans/a2-2.svg",
           "areas": [
-            { "id": "electronics-lab", "name": "Electronics lab" },
-            { "id": "project-lab", "name": "Project lab" }
+            { "id": "lab-201", "name": "Lab A2-201" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-202", "name": "Lab A2-202" },
+            { "id": "lab-203", "name": "Lab A2-203" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-204", "name": "Classroom 204" },
+            { "id": "classroom-205", "name": "Classroom 205" },
+            { "id": "classroom-206", "name": "Classroom 206" }
           ]
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "name": "A3 building",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/a3-g.svg",
+          "areas": [
+            { "id": "lab-g01", "name": "Lab A3-G01" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-g02", "name": "Lab A3-G02" },
+            { "id": "lab-g03", "name": "Lab A3-G03" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-g04", "name": "Classroom G04" },
+            { "id": "classroom-g05", "name": "Classroom G05" },
+            { "id": "classroom-g06", "name": "Classroom G06" }
+          ]
+        },
+        {
+          "id": "1",
+          "label": "First floor",
+          "plan": "/floorplans/a3-1.svg",
+          "areas": [
+            { "id": "lab-101", "name": "Lab A3-101" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-102", "name": "Lab A3-102" },
+            { "id": "lab-103", "name": "Lab A3-103" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-104", "name": "Classroom 104" },
+            { "id": "classroom-105", "name": "Classroom 105" },
+            { "id": "classroom-106", "name": "Classroom 106" }
+          ]
+        },
+        {
+          "id": "2",
+          "label": "Second floor",
+          "plan": "/floorplans/a3-2.svg",
+          "areas": [
+            { "id": "lab-201", "name": "Lab A3-201" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-202", "name": "Lab A3-202" },
+            { "id": "lab-203", "name": "Lab A3-203" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-204", "name": "Classroom 204" },
+            { "id": "classroom-205", "name": "Classroom 205" },
+            { "id": "classroom-206", "name": "Classroom 206" }
+          ]
+        },
+        {
+          "id": "3",
+          "label": "Third floor",
+          "plan": "/floorplans/a3-3.svg",
+          "areas": [
+            { "id": "lab-301", "name": "Lab A3-301" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-302", "name": "Lab A3-302" },
+            { "id": "lab-303", "name": "Lab A3-303" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-304", "name": "Classroom 304" },
+            { "id": "classroom-305", "name": "Classroom 305" },
+            { "id": "classroom-306", "name": "Classroom 306" }
+          ]
+        },
+        {
+          "id": "4",
+          "label": "Fourth floor",
+          "plan": "/floorplans/a3-4.svg",
+          "areas": [
+            { "id": "lab-401", "name": "Lab A3-401" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-402", "name": "Lab A3-402" },
+            { "id": "lab-403", "name": "Lab A3-403" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-404", "name": "Classroom 404" },
+            { "id": "classroom-405", "name": "Classroom 405" },
+            { "id": "classroom-406", "name": "Classroom 406" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f",
+      "name": "F building",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/f-g.svg",
+          "areas": [{ "id": "auditorium", "name": "Auditorium" }]
+        },
+        {
+          "id": "1",
+          "label": "First floor",
+          "plan": "/floorplans/f-1.svg",
+          "areas": [
+            { "id": "lab-101", "name": "Lab F-101" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-102", "name": "Lab F-102" },
+            { "id": "lab-103", "name": "Lab F-103" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-104", "name": "Classroom 104" },
+            { "id": "classroom-105", "name": "Classroom 105" },
+            { "id": "classroom-106", "name": "Classroom 106" }
+          ]
+        },
+        {
+          "id": "2",
+          "label": "Second floor",
+          "plan": "/floorplans/f-2.svg",
+          "areas": [
+            { "id": "lab-201", "name": "Lab F-201" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-202", "name": "Lab F-202" },
+            { "id": "lab-203", "name": "Lab F-203" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-204", "name": "Classroom 204" },
+            { "id": "classroom-205", "name": "Classroom 205" },
+            { "id": "classroom-206", "name": "Classroom 206" }
+          ]
+        },
+        {
+          "id": "3",
+          "label": "Third floor",
+          "plan": "/floorplans/f-3.svg",
+          "areas": [
+            { "id": "lab-301", "name": "Lab F-301" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-302", "name": "Lab F-302" },
+            { "id": "lab-303", "name": "Lab F-303" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-304", "name": "Classroom 304" },
+            { "id": "classroom-305", "name": "Classroom 305" },
+            { "id": "classroom-306", "name": "Classroom 306" }
+          ]
+        },
+        {
+          "id": "4",
+          "label": "Fourth floor",
+          "plan": "/floorplans/f-4.svg",
+          "areas": [
+            { "id": "lab-401", "name": "Lab F-401" },
+            { "id": "staff-room-2", "name": "Staff room 2" },
+            { "id": "lab-402", "name": "Lab F-402" },
+            { "id": "lab-403", "name": "Lab F-403" },
+            { "id": "washroom", "name": "Washroom" },
+            { "id": "staff-room-1", "name": "Staff room 1" },
+            { "id": "classroom-404", "name": "Classroom 404" },
+            { "id": "classroom-405", "name": "Classroom 405" },
+            { "id": "classroom-406", "name": "Classroom 406" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "canteen",
+      "name": "Canteen",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/canteen-g.svg",
+          "areas": [{ "id": "canteen-hall", "name": "Canteen hall" }]
+        }
+      ]
+    },
+    {
+      "id": "sports-courts",
+      "name": "Sports courts",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground level",
+          "plan": "/floorplans/sports-courts-g.svg",
+          "areas": [
+            { "id": "basketball-court", "name": "Basketball court" },
+            { "id": "volleyball-court", "name": "Volleyball court" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "girls-hostel",
+      "name": "Girls hostel",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/girls-hostel-g.svg",
+          "areas": [{ "id": "hostel-building", "name": "Hostel building" }]
+        }
+      ]
+    },
+    {
+      "id": "boys-hostel",
+      "name": "Boys hostel",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/boys-hostel-g.svg",
+          "areas": [{ "id": "hostel-building", "name": "Hostel building" }]
+        }
+      ]
+    },
+    {
+      "id": "edc",
+      "name": "Entrepreneurship development cell",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground floor",
+          "plan": "/floorplans/edc-g.svg",
+          "areas": [{ "id": "edc-office", "name": "EDC office" }]
+        }
+      ]
+    },
+    {
+      "id": "parking-1",
+      "name": "Parking 1",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground level",
+          "plan": "/floorplans/parking-1-g.svg",
+          "areas": [{ "id": "parking-area", "name": "Parking area" }]
+        }
+      ]
+    },
+    {
+      "id": "parking-2",
+      "name": "Parking 2",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground level",
+          "plan": "/floorplans/parking-2-g.svg",
+          "areas": [{ "id": "parking-area", "name": "Parking area" }]
+        }
+      ]
+    },
+    {
+      "id": "entrance",
+      "name": "Main entrance",
+      "floors": [
+        {
+          "id": "g",
+          "label": "Ground level",
+          "plan": "/floorplans/entrance-g.svg",
+          "areas": [{ "id": "entrance-gate", "name": "Entrance gate" }]
         }
       ]
     }
