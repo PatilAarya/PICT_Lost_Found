@@ -1,0 +1,106 @@
+/*
+  Progress pieces from Layout.jsx. Timeline (DESIGN.md section 9): a dashed frost
+  line with punched circle stops, done stops filled with ink. Stepper: a segmented
+  progress bar plus one line naming the current and the next step in full.
+*/
+/* Timeline */
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: center;
+  min-height: 44px;
+}
+
+/* The dashed line: drawn from each stop down to the next one. */
+.timeline li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 30px;
+  bottom: -14px;
+  border-left: 2px dashed var(--frost);
+}
+
+.timeline-stop {
+  width: 18px;
+  height: 18px;
+  margin-left: 3px;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.timeline-done .timeline-stop {
+  background: var(--line);
+}
+
+.timeline-label {
+  color: var(--text-soft);
+}
+
+.timeline-done .timeline-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.timeline-time {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+/* Stepper */
+.stepper {
+  margin: 0 0 var(--space-5);
+}
+
+/* One segment per step: ink when done, steel for the current one, frost still to do. */
+.stepper-bar {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.stepper-bar li {
+  flex: 1 1 0;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--frost);
+}
+
+.stepper-bar .stepper-done {
+  background: var(--action);
+}
+
+.stepper-bar .stepper-current {
+  background: var(--steel);
+}
+
+.stepper-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  max-width: none;
+  margin: 0;
+}
+
+.stepper-count {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+.stepper-next {
+  margin-left: auto;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}

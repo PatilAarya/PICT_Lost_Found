@@ -2,15 +2,33 @@
 // release items with the owner's code, and receive items dropped at the desk.
 // The tab buttons use role="tab" and aria-selected so screen readers announce them.
 import { useState } from 'react';
-import { PageHeader } from '../../../shared/ui/index.js';
+import { Icon, PageHeader } from '../../../shared/ui/index.js';
 import { QueueTab } from '../components/desk/QueueTab.jsx';
 import { ReleaseTab } from '../components/desk/ReleaseTab.jsx';
 import { IncomingTab } from '../components/desk/IncomingTab.jsx';
 
 const TABS = [
-  { id: 'queue', label: 'Claims to decide', Panel: QueueTab },
-  { id: 'release', label: 'Release with code', Panel: ReleaseTab },
-  { id: 'incoming', label: 'Incoming items', Panel: IncomingTab },
+  {
+    id: 'queue',
+    label: 'Claims to decide',
+    icon: 'ticket',
+    help: 'Someone answered the secret questions. Compare the answers and decide.',
+    Panel: QueueTab,
+  },
+  {
+    id: 'release',
+    label: 'Release with code',
+    icon: 'lock',
+    help: 'The owner is at the desk. Check their college ID and type the code they show you.',
+    Panel: ReleaseTab,
+  },
+  {
+    id: 'incoming',
+    label: 'Incoming items',
+    icon: 'inbox',
+    help: 'A finder said they dropped these at the desk. Mark each one received once you have it.',
+    Panel: IncomingTab,
+  },
 ];
 
 export function DeskPage() {
@@ -19,7 +37,10 @@ export function DeskPage() {
 
   return (
     <section className="page verify-page">
-      <PageHeader title="Handler desk" />
+      <PageHeader
+        title="Security desk"
+        subtitle="Decide claims, hand items back and receive drop-offs."
+      />
       <div className="tabs" role="tablist" aria-label="Desk sections">
         {TABS.map((tab) => (
           <button
@@ -30,11 +51,13 @@ export function DeskPage() {
             className="tab"
             onClick={() => setActive(tab.id)}
           >
-            {tab.label}
+            <Icon name={tab.icon} size={20} />
+            <span>{tab.label}</span>
           </button>
         ))}
       </div>
-      <div role="tabpanel" aria-label={current.label}>
+      <div className="card" role="tabpanel" aria-label={current.label}>
+        <p className="card-subtitle">{current.help}</p>
         <current.Panel />
       </div>
     </section>

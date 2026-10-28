@@ -1,0 +1,130 @@
+/*
+  Form styles for Field.jsx, ChipSelect.jsx and ColorPicker.jsx (DESIGN.md section 9).
+  Fields: 2px ink border, label above, hint below, error in dark red with a pin icon.
+  Chips and category tiles: selected = frost fill with a 2px ink border.
+*/
+.field {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--touch);
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid color-mix(in srgb, var(--line) 45%, transparent);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+}
+
+.input:hover {
+  border-color: var(--line);
+}
+
+/* A strong ink border while typing, on top of the focus ring from base.css. */
+.input:focus {
+  border-color: var(--line);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--berry);
+}
+
+.field-hint,
+.field-error {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.field-hint {
+  color: var(--text-soft);
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--error-text);
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch);
+  padding: 0 var(--space-3);
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: var(--frost-tint);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--frost);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* Category tile: pictogram on top, name below. */
+.chip-tile {
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 104px;
+  min-height: 88px;
+  padding: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* On a selected tile the outline stays ink even in dark mode (the fill is light). */
+.chip[aria-pressed='true'] .pictogram {
+  color: var(--ink);
+}
+
+.swatch {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+
+.chip[aria-pressed='true'] .swatch {
+  border-color: var(--ink);
+}
+
+.swatch-stripes {
+  display: flex;
+  overflow: hidden;
+}
+
+.swatch-stripes span {
+  flex: 1;
+}
+
+/* On phones three tiles fit across, so the row is filled instead of leaving a gap. */
+@media (max-width: 599px) {
+  .chip-tile {
+    width: calc((100% - 2 * var(--space-3)) / 3);
+  }
+}

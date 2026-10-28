@@ -52,3 +52,22 @@ Branch keeper/env-and-email:
 - tests/found.test.js (new): desk ranking, prompts, custody log, deadline, two answers,
   and that answers and private ids never leave the server.
 - Formatting only (npm run format) on the other found files.
+
+## UI redesign (29 Oct 2026, from the team's screenshot review)
+- New look: navy main buttons (red kept for lost, attention and danger), a frost-tinted page
+  with white cards, real gaps between buttons, grey disabled buttons, centred dialogs,
+  a segmented Stepper that never cuts off step names, light-weight icons.
+- App shell (keeper): logo spot (BrandMark), alerts bell, avatar menu (UserMenu) instead of
+  the "Act as" dropdown, menu icons, "Desk tools" group. DevUserSwitcher.jsx replaced by
+  shared/auth/useDemoAccounts.js and DemoAccounts.jsx.
+- Login (keeper): split screen with the college logo, a sample ticket and how it works;
+  demo account cards in development.
+- Home: action cards and "how it works".
+- Found (acting for Member 3): one Found page with numbers, your items and a guide; one
+  "Post found item" button; the post flow in step cards with a live ticket preview; photo
+  step with choice tiles and labelled photo slots. /found/mine now redirects to /found.
+- Verify screens (with the team's agreement, client only): desk tabs, claim rows with a
+  score meter, centred claim review with answers side by side; analytics with explained
+  number cards, a busiest-hour sentence and readable charts; "History check" page with a
+  plain verdict, a how-it-works card, search, and readable timelines (hashes behind a toggle).
+- Data: "(placeholder)" removed from building and desk names.

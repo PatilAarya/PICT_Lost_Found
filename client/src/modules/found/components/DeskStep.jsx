@@ -3,7 +3,7 @@
 // the nearest one based on the location already picked, and lets the
 // finder pick a different one from the full list instead.
 import { useEffect, useState } from 'react';
-import { ChipSelect, PageHeader } from '../../../shared/ui/index.js';
+import { ChipSelect } from '../../../shared/ui/index.js';
 import { api } from '../../../shared/api/client.js';
 
 export default function DeskStep({ location, value, onChange }) {
@@ -30,7 +30,6 @@ export default function DeskStep({ location, value, onChange }) {
 
   return (
     <div className="desk-step">
-      <PageHeader title="Where will this item go?" />
       <ChipSelect
         options={[
           { value: 'desk', label: 'Drop it at a desk' },
@@ -39,6 +38,9 @@ export default function DeskStep({ location, value, onChange }) {
         value={value.type}
         onChange={(type) => onChange({ type, deskId: type === 'desk' ? value.deskId : '' })}
       />
+      {value.type === 'desk' && (
+        <p className="step-label">Which desk? The nearest one is chosen for you.</p>
+      )}
       {value.type === 'desk' && (
         <ChipSelect
           options={deskOptions}

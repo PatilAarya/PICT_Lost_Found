@@ -1,7 +1,7 @@
 /*
   Styles for the verify screens only, all class names start from verify pages.
-  Uses the DESIGN.md tokens (tokens.css): hard borders instead of shadows, red for
-  attention, steel for found, frost for in-progress. Mobile first; wider layouts at 700px.
+  Uses the DESIGN.md tokens (tokens.css): red for attention, steel for found, frost for
+  in-progress. The desk is styled in desk.css, analytics and integrity in their own files.
 */
 .verify-page {
   display: grid;
@@ -59,17 +59,6 @@
   padding: var(--space-3) var(--space-4);
   border-left: 4px solid var(--frost);
   background: var(--surface);
-}
-
-.muted {
-  color: var(--text-soft);
-  font-size: var(--text-sm);
-}
-
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
 }
 
 .tries-left {
@@ -141,79 +130,6 @@
 .confirm-list li.confirmed {
   border: 2px solid var(--line);
   font-weight: 700;
-}
-
-.tabs {
-  display: flex;
-  overflow-x: auto;
-  border-bottom: 2px solid var(--line);
-}
-
-.tab {
-  flex: 0 0 auto;
-  min-height: var(--touch);
-  padding: 0 var(--space-4);
-  border: 0;
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.tab[aria-selected='true'] {
-  background: var(--frost);
-  color: var(--ink);
-}
-
-.queue-row,
-.incoming-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-3);
-  align-items: center;
-}
-
-.queue-score {
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
-  font-weight: 700;
-}
-
-.photo-row {
-  display: flex;
-  gap: var(--space-2);
-  overflow-x: auto;
-}
-
-.photo-row img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border: 1px solid var(--line);
-}
-
-.compare-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
-}
-
-.compare-table th,
-.compare-table td {
-  padding: var(--space-2);
-  border-bottom: 1px solid var(--frost);
-  text-align: left;
-  vertical-align: top;
-}
-
-/* --score is set inline (0 to 1); the bar's width is that share of 60px. */
-.score-bar {
-  display: block;
-  width: calc(var(--score) * 60px);
-  height: 6px;
-  margin-bottom: var(--space-1);
-  background: var(--accent);
 }
 
 .flag-tag {

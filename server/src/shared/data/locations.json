@@ -2,7 +2,7 @@
   "buildings": [
     {
       "id": "main",
-      "name": "Main building (placeholder)",
+      "name": "Main building",
       "floors": [
         {
           "id": "g",
@@ -37,7 +37,7 @@
     },
     {
       "id": "lab",
-      "name": "Lab building (placeholder)",
+      "name": "Lab building",
       "floors": [
         {
           "id": "g",

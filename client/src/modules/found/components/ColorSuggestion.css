@@ -3,11 +3,11 @@
 .color-suggestion {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .color-suggestion__hint {
   margin: 0;
-  font-size: 13px;
-  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  color: var(--text-soft);
 }

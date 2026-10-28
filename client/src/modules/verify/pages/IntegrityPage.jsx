@@ -1,87 +1,110 @@
-// /verify/integrity (admin) - runs the custody chain check and draws every item's
-// log as linked blocks. Each block shows the start of its hash; a broken block and
-// everything after it are drawn in --berry, so a database edit is easy to see.
+// /verify/integrity (admin) - "History check". Every item's history is a chain: each
+// step stores a fingerprint (SHA-256 hash) of the step before it, so editing an old step
+// in the database breaks every fingerprint after it. This page runs the check when it
+// opens, shows one plain answer on top, and lists the items, broken ones first.
 import { useState } from 'react';
-import { errorMessage } from '../../../shared/api/client.js';
-import { Button, PageHeader, Stamp } from '../../../shared/ui/index.js';
+import { Button, Icon, PageHeader, Spinner, TextInput } from '../../../shared/ui/index.js';
 import { runIntegrityCheck } from '../api.js';
+import { useLoad } from '../hooks/useLoad.js';
+import { formatDateTime } from '../format.js';
+import { ChainItem } from '../components/ChainItem.jsx';
 
-// One item's chain: blocks joined by short lines.
-function ChainRow({ chain }) {
+const PAGE_SIZE = 12;
+
+// Run the check and remember when it ran (defined outside the component so it never changes).
+async function checkAllChains() {
+  const result = await runIntegrityCheck();
+  return { ...result, checkedAt: new Date() };
+}
+
+// True when at least one step of this item's history was changed.
+function isBroken(chain) {
+  return chain.blocks.some((block) => !block.valid);
+}
+
+// The big answer card: everything is fine, or how many items were changed.
+function Verdict({ result, checkedAt }) {
+  const brokenCount = result.brokenItems.length;
   return (
-    <li className="chain-row">
-      <p className="chain-title">
-        <span className="tabular">{chain.serial}</span> {chain.title}
-      </p>
-      <ol className="chain-blocks">
-        {chain.blocks.map((block) => (
-          <li key={block.seq} className={block.valid ? 'block' : 'block block-broken'}>
-            <span className="block-seq tabular">#{block.seq}</span>
-            <span className="block-action">{block.action.replaceAll('_', ' ').toLowerCase()}</span>
-            <code className="block-hash">{block.hash}</code>
-          </li>
-        ))}
-      </ol>
-    </li>
+    <div className={result.ok ? 'card verdict verdict-ok' : 'card verdict verdict-bad'}>
+      <Icon name={result.ok ? 'shield-check' : 'warning'} size={44} />
+      <div>
+        <h2 className="card-title">
+          {result.ok
+            ? `All ${result.chains.length} item histories are untouched`
+            : `${brokenCount} of ${result.chains.length} item histories were changed outside the app`}
+        </h2>
+        <p className="card-subtitle">
+          {result.ok
+            ? 'Nobody has edited any item history directly in the database.'
+            : 'Someone edited the database directly. The changed items are listed first below.'}{' '}
+          Checked {formatDateTime(checkedAt)}.
+        </p>
+      </div>
+    </div>
   );
 }
 
 export function IntegrityPage() {
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState('');
-  const [busy, setBusy] = useState(false);
+  const { data: result, loading, error, reload } = useLoad(checkAllChains);
+  const [search, setSearch] = useState('');
+  const [shown, setShown] = useState(PAGE_SIZE);
 
-  // Ask the server to recompute every hash.
-  async function handleCheck() {
-    setBusy(true);
-    setError('');
-    try {
-      setResult(await runIntegrityCheck());
-    } catch (err) {
-      setError(errorMessage(err));
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  // Broken chains first (true counts as 1), so the problem is at the top.
-  const isBroken = (chain) => Number(chain.blocks.some((block) => !block.valid));
+  // Broken chains first, then keep only the ones matching the search box.
+  const query = search.trim().toLowerCase();
   const chains = result
-    ? [...result.chains].sort((first, second) => isBroken(second) - isBroken(first))
+    ? [...result.chains]
+        .sort((first, second) => Number(isBroken(second)) - Number(isBroken(first)))
+        .filter((chain) => `${chain.serial} ${chain.title}`.toLowerCase().includes(query))
     : [];
 
   return (
     <section className="page verify-page">
       <PageHeader
-        title="Custody log integrity"
+        title="History check"
+        subtitle="Proves that nobody changed an item's history behind the app's back."
         actions={
-          <Button icon="shield" loading={busy} onClick={handleCheck}>
-            Run check
+          <Button icon="refresh" loading={loading} onClick={reload}>
+            Check again
           </Button>
         }
       />
       {error ? <p className="field-error">{error}</p> : null}
+      {!result && loading ? <Spinner /> : null}
+      {result ? <Verdict result={result} checkedAt={result.checkedAt} /> : null}
+      <div className="card how-check">
+        <h2 className="card-title">How the check works</h2>
+        <ol className="how-check-list">
+          <li>Every step of an item (posted, dropped at desk, handed over) is saved in order.</li>
+          <li>Each step also saves a fingerprint of the step before it, like links in a chain.</li>
+          <li>Editing an old step breaks every link after it, and this check finds the break.</li>
+        </ol>
+      </div>
       {result ? (
-        <div className="integrity-summary">
-          {result.ok ? (
-            <Stamp status="verified" />
-          ) : (
-            <span className="integrity-broken">Broken</span>
-          )}
-          <p>
-            {result.ok
-              ? `All ${result.chains.length} item logs are intact.`
-              : `Changed outside the app: ${result.brokenItems.length} of ${result.chains.length} item logs.`}
-          </p>
+        <div className="card">
+          <div className="chain-toolbar">
+            <h2 className="card-title">Items</h2>
+            <TextInput
+              type="search"
+              placeholder="Search by serial or name"
+              aria-label="Search items"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+          <ul className="chain-items">
+            {chains.slice(0, shown).map((chain) => (
+              <ChainItem key={chain.itemId} chain={chain} />
+            ))}
+          </ul>
+          {chains.length === 0 ? <p className="muted">No item matches your search.</p> : null}
+          {chains.length > shown ? (
+            <Button variant="quiet" onClick={() => setShown(shown + PAGE_SIZE)}>
+              Show more ({chains.length - shown} left)
+            </Button>
+          ) : null}
         </div>
-      ) : (
-        <p>Recomputes every hash in every item's custody log and shows where a chain breaks.</p>
-      )}
-      <ul className="chain-list">
-        {chains.map((chain) => (
-          <ChainRow key={chain.itemId} chain={chain} />
-        ))}
-      </ul>
+      ) : null}
     </section>
   );
 }

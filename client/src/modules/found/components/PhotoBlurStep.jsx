@@ -4,7 +4,6 @@
 // the parent form once every photo has been confirmed.
 import { useState } from 'react';
 import PhotoBlurEditor from './PhotoBlurEditor.jsx';
-import { PageHeader } from '../../../shared/ui/index.js';
 
 export default function PhotoBlurStep({ photos, onAllConfirmed }) {
   const [confirmedById, setConfirmedById] = useState({});
@@ -25,10 +24,9 @@ export default function PhotoBlurStep({ photos, onAllConfirmed }) {
 
   return (
     <div className="photo-blur-step">
-      <PageHeader
-        title="Check each photo"
-        subtitle={`Photo ${doneCount + 1} of ${photos.length}`}
-      />
+      <p className="step-label tabular">
+        Photo {doneCount + 1} of {photos.length}
+      </p>
       <PhotoBlurEditor key={currentPhoto.id} photo={currentPhoto} onConfirm={handleConfirm} />
     </div>
   );

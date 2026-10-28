@@ -1,6 +1,6 @@
 // Small text helpers for the found screens: a readable place and a readable date.
 // Intl.DateTimeFormat is the browser's own date formatter, so no library is needed.
-// Used by PostFoundItemPage.jsx and MyFoundItemsPage.jsx when building tickets.
+// Used by utils/ticket.js and the post flow when building tickets and summaries.
 
 const dateTime = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
 

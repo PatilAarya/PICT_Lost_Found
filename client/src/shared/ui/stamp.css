@@ -1,0 +1,67 @@
+/*
+  The rubber stamp (Stamp.jsx): a double-bordered box in narrow Archivo capitals,
+  tilted -4 degrees and blended with multiply so it looks pressed into the paper.
+  The drop-in animation is the app's one decorative motion (DESIGN.md section 7);
+  base.css switches all animation off for people who ask for reduced motion.
+*/
+.stamp {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border: 3px double var(--stamp-color);
+  color: var(--stamp-color);
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-4deg);
+  mix-blend-mode: var(--stamp-blend);
+}
+
+.stamp-lost {
+  --stamp-color: var(--stamp-lost);
+}
+
+.stamp-found {
+  --stamp-color: var(--stamp-found);
+}
+
+.stamp-done {
+  --stamp-color: var(--stamp-done);
+}
+
+.stamp-drop {
+  animation: stamp-drop 250ms ease-out;
+}
+
+/* Starts big and faint above the paper, then lands at normal size and angle. */
+@keyframes stamp-drop {
+  from {
+    opacity: 0;
+    transform: scale(1.6) rotate(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-4deg);
+  }
+}
+
+/* The small stamp-word used on compact tickets: same ink, no box. */
+.stamp-word {
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--stamp-color);
+}
+
+/* Plain red fails contrast as small text, so small lost words use the darker red. */
+.stamp-word.stamp-lost {
+  --stamp-color: var(--stamp-lost-small);
+}

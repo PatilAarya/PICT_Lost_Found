@@ -1,6 +1,6 @@
-// Remembers which seeded user the developer picked in the DevUserSwitcher.
+// Remembers which seeded demo account was picked (DemoAccounts.jsx or UserMenu.jsx).
 // Stored in localStorage (Web Storage) so the choice survives a page reload.
-// api/client.js and realtime/socket.js read it; DevUserSwitcher.jsx writes it.
+// api/client.js and realtime/socket.js read it; useDemoAccounts.js writes it.
 
 const STORAGE_KEY = 'pict-dev-user';
 

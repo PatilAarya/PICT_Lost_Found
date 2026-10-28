@@ -4,6 +4,8 @@
 // (the server checks the role again on every API call).
 import './verify.css';
 import './verify-charts.css';
+import './desk.css';
+import './integrity.css';
 import { MyClaimsPage } from './pages/MyClaimsPage.jsx';
 import { NewClaimPage } from './pages/NewClaimPage.jsx';
 import { ClaimPage } from './pages/ClaimPage.jsx';

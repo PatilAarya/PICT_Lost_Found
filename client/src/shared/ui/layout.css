@@ -1,0 +1,136 @@
+/*
+  Styles for Layout.jsx (page header, empty state, spinner), StatCard.jsx and
+  BrandMark.jsx. The timeline and stepper styles are in progress.css.
+*/
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.page-subtitle {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  border: 1.5px dashed var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  text-align: center;
+}
+
+.empty-title {
+  margin: 0;
+  max-width: 40ch;
+  font-size: var(--text-md);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  margin: var(--space-6) auto;
+  border: 3px solid var(--frost);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Number cards (StatCard.jsx) */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.stat-card {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border: var(--card-border);
+  border-left: 4px solid var(--steel);
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+
+.stat-attention {
+  border-left-color: var(--berry);
+}
+
+.stat-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-soft);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.stat-icon {
+  display: inline-grid;
+  place-items: center;
+  color: var(--accent);
+}
+
+.stat-value {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-value small {
+  font-size: var(--text-md);
+  color: var(--text-soft);
+}
+
+.stat-hint {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+}
+
+/* College logo (BrandMark.jsx): the real image, or a drawn badge when it is missing. */
+.brand-logo {
+  flex: none;
+  object-fit: contain;
+}
+
+.brand-badge {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.brand-badge-light {
+  border-color: var(--paper);
+}

@@ -2,7 +2,7 @@
   Design tokens from DESIGN.md: the five brand colours, derived values, type scale,
   spacing and radius. Every other stylesheet uses these variables, never raw hex codes.
   Dark mode swaps the meaning of paper and ink using prefers-color-scheme.
-  Owned by Member 1 after Phase 0.
+  Owned by Member 1.
 */
 :root {
   --paper: #f1faee;
@@ -15,8 +15,11 @@
   --paper-deep: color-mix(in srgb, var(--paper) 92%, var(--ink));
   --ink-soft: color-mix(in srgb, var(--ink) 65%, var(--paper));
 
-  /* What each surface uses; dark mode changes these, not the brand colours. */
-  --bg: var(--paper);
+  /* What each surface uses; dark mode changes these, not the brand colours.
+     --page is the background behind everything; --card is a raised panel on it. */
+  --page: color-mix(in srgb, var(--paper) 70%, var(--frost));
+  --card: color-mix(in srgb, var(--paper) 35%, #ffffff);
+  --bg: var(--card);
   --text: var(--ink);
   --surface: var(--paper-deep);
   --text-soft: var(--ink-soft);
@@ -24,6 +27,12 @@
   --focus: var(--steel);
   --error-text: var(--berry-ink);
   --line: var(--ink);
+  --hairline: color-mix(in srgb, var(--ink) 14%, transparent);
+
+  /* The main action colour: navy, with white text. Red is kept for "lost" and danger. */
+  --action: var(--ink);
+  --action-hover: color-mix(in srgb, var(--ink) 80%, var(--steel));
+  --action-text: #ffffff;
 
   --font-heading: 'Archivo Variable', system-ui, sans-serif;
   --font-body: 'Source Sans 3 Variable', system-ui, sans-serif;
@@ -42,14 +51,37 @@
   --space-6: 32px;
   --space-7: 48px;
 
-  --radius: 4px;
+  --radius: 6px;
+  --radius-card: 10px;
   --touch: 44px;
-  --content-max: 1100px;
+  --content-max: 1180px;
+
+  /* Borders do the work, not blurred shadows (DESIGN.md section 5). */
+  --border: 2px solid var(--line);
+  --card-border: 1px solid var(--hairline);
+  --divider: 1px solid var(--hairline);
+  --lift: 0 3px 0 var(--line);
+
+  /* Hover and pressed tints of frost and steel (the only allowed tints). */
+  --frost-tint: color-mix(in srgb, var(--frost) 35%, var(--card));
+  --steel-press: color-mix(in srgb, var(--steel) 85%, var(--ink));
+
+  /* Ticket paper: honeydew in light mode, a raised surface in dark mode. */
+  --ticket-paper: var(--paper);
+
+  /* Stamp ink colours; dark mode swaps the ones that would be too dark. */
+  --stamp-lost: var(--berry);
+  --stamp-lost-small: var(--berry-ink);
+  --stamp-found: var(--steel);
+  --stamp-done: var(--ink);
+  --stamp-blend: multiply;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: var(--ink);
+    --page: color-mix(in srgb, var(--ink) 92%, #000000);
+    --card: var(--ink);
+    --bg: var(--card);
     --text: var(--paper);
     --surface: color-mix(in srgb, var(--ink) 85%, var(--paper));
     --text-soft: color-mix(in srgb, var(--paper) 70%, var(--ink));
@@ -58,5 +90,18 @@
     /* Red is never small text in dark mode, so error text stays paper-coloured. */
     --error-text: var(--paper);
     --line: var(--paper);
+    --hairline: color-mix(in srgb, var(--paper) 18%, transparent);
+    --action: var(--frost);
+    --action-hover: color-mix(in srgb, var(--frost) 85%, var(--paper));
+    --action-text: var(--ink);
+    --frost-tint: color-mix(in srgb, var(--frost) 20%, var(--ink));
+    --ticket-paper: var(--surface);
+    /* Steel and ink are too dark to read on the dark page, so stamps use frost and paper.
+       multiply would make ink vanish on a dark background, so stamps blend normally. */
+    --stamp-found: var(--frost);
+    --stamp-done: var(--paper);
+    /* Red is never small text in dark mode (DESIGN.md section 3). */
+    --stamp-lost-small: var(--paper);
+    --stamp-blend: normal;
   }
 }
