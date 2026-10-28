@@ -1,6 +1,6 @@
 /*
   The home page (HomePage.jsx): big action cards and the "how it works" steps.
-  The coloured left edge repeats the ticket idea: red for lost, steel for found.
+  The pictogram's small detail is red on "lost" and steel on "found".
 */
 .action-grid {
   display: grid;
@@ -15,7 +15,6 @@
   gap: var(--space-4);
   padding: var(--space-5);
   border: var(--card-border);
-  border-left: 6px solid var(--steel);
   border-radius: var(--radius-card);
   background: var(--card);
   color: var(--text);
@@ -24,11 +23,6 @@
 
 .action-lost {
   --pg-detail: var(--berry);
-  border-left-color: var(--berry);
-}
-
-.action-desk {
-  border-left-color: var(--ink);
 }
 
 .action-card:hover {

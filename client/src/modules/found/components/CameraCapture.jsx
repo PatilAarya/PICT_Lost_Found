@@ -4,8 +4,8 @@
 // image) and then shrunk by resizeImage before being handed back to the
 // parent form. The parent decides what happens next (blur step, upload).
 import { useRef, useState } from 'react';
-import { useCameraStream } from '../hooks/useCameraStream.js';
-import { resizeImage } from '../utils/resizeImage.js';
+import { useCameraStream } from '../../../shared/media/useCameraStream.js';
+import { resizeImage } from '../../../shared/media/resizeImage.js';
 import { Button, Icon } from '../../../shared/ui/index.js';
 import './CameraCapture.css';
 
@@ -23,7 +23,8 @@ export default function CameraCapture({ photos, onPhotosChange }) {
   async function capturePhoto() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    if (!video || !canvas) return;
+    // videoWidth stays 0 until the first picture arrives from the camera.
+    if (!video || !canvas || video.videoWidth === 0) return;
 
     setBusy(true);
     // Draw at the video's real resolution first; resizeImage shrinks it

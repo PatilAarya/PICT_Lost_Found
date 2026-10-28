@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PageHeader, PropertyTag, StepCard, Stepper, useToast } from '../../../shared/ui/index.js';
 import { errorMessage } from '../../../shared/api/client.js';
-import { createReport, getSavedItems } from '../api.js';
+import { createReport, getSavedItems, uploadLostPhoto } from '../api.js';
+import { useObjectUrl } from '../../../shared/media/useObjectUrl.js';
 import { ReportStepBody } from '../components/ReportStepBody.jsx';
 import { STEPS, canContinue, emptyReport, reportFromSaved } from '../utils/reportSteps.js';
 import { ticketFromReport } from '../utils/format.js';
@@ -14,14 +15,15 @@ import '../lost.css';
 
 const LAST_STEP = STEPS.length - 1;
 
-// The form as the server wants it: real dates, and no empty saved item id.
-function toRequestBody(form) {
+// The form as the server wants it: real dates, the photo's URL, no empty saved item id.
+function toRequestBody(form, imageUrl) {
   return {
     category: form.category,
     title: form.title,
     description: form.description,
     colors: form.colors,
     brand: form.brand,
+    imageUrl: imageUrl || undefined,
     lastSeen: form.lastSeen,
     lostFrom: new Date(form.lostFrom).toISOString(),
     lostTo: new Date(form.lostTo).toISOString(),
@@ -38,6 +40,7 @@ export function ReportLostPage() {
   const [savedItems, setSavedItems] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
   const [busy, setBusy] = useState(false);
+  const previewUrl = useObjectUrl(form.photo);
 
   // Load saved items once; if the link named one (?saved=id), fill the form from it.
   useEffect(() => {
@@ -56,11 +59,12 @@ export function ReportLostPage() {
     setForm((current) => ({ ...current, ...patch }));
   }
 
-  // Send the report, then open its page.
+  // Upload the photo (if there is one), send the report, then open its page.
   async function handleSubmit() {
     setBusy(true);
     try {
-      const { report, matchCount } = await createReport(toRequestBody(form));
+      const imageUrl = form.photo ? await uploadLostPhoto(form.photo) : '';
+      const { report, matchCount } = await createReport(toRequestBody(form, imageUrl));
       toast(
         matchCount > 0
           ? `Reported. We already found ${matchCount} possible ${matchCount === 1 ? 'match' : 'matches'}.`
@@ -107,6 +111,7 @@ export function ReportLostPage() {
               serial: '',
               status: 'open',
               title: form.title || 'Your lost item',
+              imageUrl: previewUrl,
               category: form.category || 'other',
             })}
           />

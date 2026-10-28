@@ -25,7 +25,7 @@
   max-width: none;
   margin: 0;
   padding: var(--space-3) var(--space-4);
-  border-left: 4px solid var(--berry);
+  border: var(--card-border);
   border-radius: var(--radius);
   background: var(--card);
 }

@@ -19,6 +19,8 @@ export const reportSchema = z
     description: z.string().trim().max(500).optional(),
     colors: z.array(z.enum(COLORS)).optional(),
     brand: z.string().trim().max(60).optional(),
+    // Optional photo from POST /api/lost/photos (a Cloudinary or /api/lost/photos/files URL).
+    imageUrl: z.string().max(500).optional(),
     lastSeen: locationSchema,
     lostFrom: z.coerce.date(),
     lostTo: z.coerce.date(),

@@ -1,11 +1,11 @@
 /*
   The claim ticket (PropertyTag.jsx). Two columns: the main part and the stub.
-  The left edge strip is red for lost and steel for found. The perforation is a dashed
-  frost border on the stub, with half-circle notches cut at its top and bottom.
+  Lost or found shows in the stub letter (red L, steel F) and the pictogram's small detail.
+  The perforation is a dashed frost border on the stub, with half-circle notches.
   Hard borders only; the one allowed lift is a 3px ink shadow on hover or press.
 */
 .ticket {
-  --tag-edge: var(--berry);
+  --tag-ink: var(--berry);
   --pg-detail: var(--berry);
   position: relative;
   display: grid;
@@ -15,7 +15,6 @@
   margin: 0;
   padding: 0;
   border: var(--border);
-  border-left: 8px solid var(--tag-edge);
   background: var(--ticket-paper);
   color: var(--text);
   font: inherit;
@@ -23,13 +22,13 @@
 }
 
 .ticket-found {
-  --tag-edge: var(--steel);
+  --tag-ink: var(--steel);
   --pg-detail: var(--steel);
 }
 
-/* Finished (recovered, released, closed): the dark "done" colour, so it never reads as lost. */
+/* Finished (recovered, released, closed): the stub letter turns dark, so it never reads as lost. */
 .ticket-finished {
-  --tag-edge: var(--line);
+  --tag-ink: var(--line);
   --pg-detail: var(--line);
 }
 
@@ -148,7 +147,7 @@
   font-size: var(--text-xl);
   font-weight: 800;
   line-height: 1;
-  color: var(--tag-edge);
+  color: var(--tag-ink);
 }
 
 /* The number runs down the stub, like the rotated text on a real ticket. */

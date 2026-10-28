@@ -57,7 +57,7 @@
 .notice {
   margin: 0;
   padding: var(--space-3) var(--space-4);
-  border-left: 4px solid var(--frost);
+  border-radius: var(--radius);
   background: var(--surface);
 }
 

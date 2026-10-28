@@ -1,6 +1,7 @@
 // Small helpers for the lost screens: readable places and dates, the value a
 // datetime-local input needs, and a lost report shaped for PropertyTag.
 // Intl.DateTimeFormat is the browser's own date formatter, so no library is needed.
+import { placeName } from '../../../shared/location-picker/places.js';
 
 const dateTime = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
 
@@ -9,11 +10,10 @@ export function formatDateTime(value) {
   return value ? dateTime.format(new Date(value)) : '';
 }
 
-// "main, floor 1, staff room" from a Location object, or '' when there is none.
+// "Lab building, Ground floor, Canteen" from a Location object, or '' when there is none.
+// The names come from locations.json through shared/location-picker/places.js.
 export function placeLabel(location) {
-  if (!location) return '';
-  const parts = [location.buildingId, `floor ${location.floorId}`, location.areaId];
-  return parts.filter(Boolean).join(', ').replaceAll('-', ' ');
+  return placeName(location);
 }
 
 // A Date as "2026-10-27T13:15", the format an <input type="datetime-local"> expects.

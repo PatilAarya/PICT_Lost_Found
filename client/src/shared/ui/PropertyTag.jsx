@@ -74,7 +74,7 @@ function TicketStub({ item, compact }) {
 }
 
 // Statuses that mean the story is over: the item is back with its owner, or nobody needs it.
-// These tickets get a dark "finished" edge instead of red or steel (DESIGN.md section 2).
+// These tickets get a dark "finished" stub letter instead of red or steel (DESIGN.md section 2).
 const FINISHED = ['recovered', 'released', 'closed', 'donated'];
 
 export function PropertyTag({ item, onClick, compact = false }) {
@@ -93,7 +93,7 @@ export function PropertyTag({ item, onClick, compact = false }) {
           <TicketMedia item={item} size={compact ? 40 : 56} />
         </span>
         <span className="ticket-text">
-          {/* Said first by screen readers, so the kind never depends on the edge colour. */}
+          {/* Said first by screen readers, so the kind never depends on colour. */}
           <span className="visually-hidden">
             {item.kind === 'found' ? 'Found item' : 'Lost item'}
           </span>

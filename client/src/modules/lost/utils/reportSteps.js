@@ -21,7 +21,7 @@ export const STEPS = [
   {
     name: 'Details',
     title: 'Describe it',
-    hint: 'A short name, its colours and anything that stands out.',
+    hint: 'A short name, its colours, anything that stands out, and a photo if you have one.',
     tip: 'Words like the brand or a sticker help the match engine.',
   },
   {
@@ -53,6 +53,7 @@ export function emptyReport() {
     description: '',
     colors: [],
     brand: '',
+    photo: null, // optional Blob from PhotoPicker, uploaded when the report is sent
     lastSeen: null,
     lostFrom: toLocalInput(new Date(now.getTime() - 3 * 60 * 60 * 1000)),
     lostTo: toLocalInput(now),

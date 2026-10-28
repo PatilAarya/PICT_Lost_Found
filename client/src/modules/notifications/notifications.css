@@ -1,7 +1,7 @@
 /*
   The Alerts page (NotificationsPage.jsx). Each alert is a row: icon, text, Open button.
-  New alerts get a steel edge and a tinted icon, and the word "New", so the difference
-  never depends on colour alone.
+  Every row looks the same; a new alert only has a tinted round icon and the word "New",
+  so the difference never depends on colour alone.
 */
 .alert-list {
   display: grid;
@@ -21,10 +21,6 @@
 
 .alert-row:last-child {
   border-bottom: 0;
-}
-
-.alert-new {
-  box-shadow: inset 3px 0 0 var(--steel);
 }
 
 .alert-icon {
