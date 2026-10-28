@@ -17,7 +17,7 @@ import { getHiddenDetailPrompts } from './modules/found/hidden-detail-prompts.js
 
 let app;
 const HOUR = 3600000;
-const place = { buildingId: 'main', floorId: '1', areaId: 'staff-room' };
+const place = { buildingId: 'a1', floorId: '1', areaId: 'staff-room-1' };
 const people = {
   owner: 'owner@pict.edu',
   finder: 'finder@pict.edu',

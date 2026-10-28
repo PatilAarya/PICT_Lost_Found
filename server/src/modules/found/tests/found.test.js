@@ -20,7 +20,7 @@ function itemBody(changes = {}) {
   return {
     category: 'wallet',
     title: 'Brown leather wallet',
-    location: { buildingId: 'main', floorId: 'g', areaId: 'entrance' },
+    location: { buildingId: 'entrance', floorId: 'g', areaId: 'entrance-gate' },
     foundAt: new Date().toISOString(),
     custody: { type: 'desk', deskId: 'security-main-gate' },
     images: [{ publicUrl: '/api/found/files/a.jpg', privateId: 'local:private/a.jpg', order: 0 }],
@@ -51,11 +51,11 @@ afterAll(stopTestDb);
 
 describe('desk suggestion', () => {
   it('puts a desk in the same building and floor first', () => {
-    expect(rankDesks({ buildingId: 'lab', floorId: '1' })[0].id).toBe('lab-office');
+    expect(rankDesks({ buildingId: 'a3', floorId: '1' })[0].id).toBe('lab-office');
   });
 
   it('falls back to desks that list the building as nearby', () => {
-    const ids = rankDesks({ buildingId: 'lab', floorId: '2' }).map((desk) => desk.id);
+    const ids = rankDesks({ buildingId: 'a3', floorId: '2' }).map((desk) => desk.id);
     expect(ids.indexOf('admin-office')).toBeLessThan(ids.indexOf('security-main-gate'));
   });
 });

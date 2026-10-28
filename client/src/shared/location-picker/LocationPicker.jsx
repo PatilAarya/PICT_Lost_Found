@@ -1,13 +1,16 @@
 // LocationPicker { value, onChange, mode } (contract section G). value is a Location
-// { buildingId, floorId, areaId, x, y }. Choose a building, then a floor, then tap the
-// floor plan: mode "pin" also records the exact spot (x, y from 0 to 1), mode "area"
-// only the room. Rooms are also listed as buttons under the plan, for keyboards and for
+// { buildingId, floorId, areaId, x, y }. Tap a place on the campus map (or its button),
+// then choose a floor, then tap the floor plan: mode "pin" also records the exact spot
+// (x, y from 0 to 1), mode "area" only the room. Rooms are also listed as buttons under the plan, for keyboards and for
 // floors that have no plan yet. Buildings come from GET /api/meta/locations.
 import { useEffect, useState } from 'react';
 import { api } from '../api/client.js';
 import { ChipSelect } from '../ui/index.js';
 import { FloorPlan } from './FloorPlan.jsx';
 import './locationPicker.css';
+
+// The campus map. Each place on it is a class="area" whose id is a building id.
+const CAMPUS_PLAN = '/floorplans/campus.svg';
 
 // Find an item by id in a list, or return null.
 function findById(list, id) {
@@ -37,6 +40,10 @@ export function LocationPicker({ value, onChange, mode = 'area' }) {
   function chooseBuilding(buildingId) {
     onChange({ buildingId });
   }
+  // A tap on the campus map. Tapping the same place (or empty ground) keeps the floor.
+  function chooseFromMap({ areaId }) {
+    if (areaId && areaId !== current.buildingId) chooseBuilding(areaId);
+  }
   function chooseFloor(floorId) {
     onChange({ buildingId: current.buildingId, floorId });
   }
@@ -47,7 +54,15 @@ export function LocationPicker({ value, onChange, mode = 'area' }) {
   return (
     <div className="location-picker">
       <div className="picker-row">
-        <p className="picker-label">Building</p>
+        <p className="picker-label">Tap the place on the campus map</p>
+        {/* The campus map reuses FloorPlan: places are its "rooms", the building is the chosen one. */}
+        <FloorPlan
+          floor={{ plan: CAMPUS_PLAN, areas: buildings }}
+          value={{ areaId: current.buildingId }}
+          mode="area"
+          onPick={chooseFromMap}
+        />
+        <p className="picker-label">Or choose the place</p>
         <ChipSelect
           options={toOptions(buildings, 'name')}
           value={current.buildingId}

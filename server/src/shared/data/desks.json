@@ -4,28 +4,38 @@
       "id": "security-main-gate",
       "name": "Security desk, main gate",
       "type": "security_desk",
-      "buildingId": "main",
+      "buildingId": "entrance",
       "floorId": "g",
       "hours": "8:00 to 20:00, all days",
-      "nearBuildingIds": ["main"]
+      "nearBuildingIds": ["entrance", "parking-1", "parking-2", "f"]
     },
     {
       "id": "lab-office",
-      "name": "Lab building department office",
+      "name": "A3 building department office",
       "type": "department_office",
-      "buildingId": "lab",
+      "buildingId": "a3",
       "floorId": "1",
       "hours": "9:30 to 17:30, Monday to Saturday",
-      "nearBuildingIds": ["lab"]
+      "nearBuildingIds": ["a3"]
     },
     {
       "id": "admin-office",
       "name": "Admin office",
       "type": "admin_office",
-      "buildingId": "main",
+      "buildingId": "a1",
       "floorId": "g",
       "hours": "10:00 to 17:00, Monday to Friday",
-      "nearBuildingIds": ["main", "lab"]
+      "nearBuildingIds": [
+        "a1",
+        "a2",
+        "a3",
+        "f",
+        "canteen",
+        "sports-courts",
+        "girls-hostel",
+        "boys-hostel",
+        "edc"
+      ]
     }
   ]
 }

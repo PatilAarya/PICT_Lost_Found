@@ -13,7 +13,7 @@ import { matchFoundItem } from '../services/runMatching.js';
 
 let app;
 let alerts;
-const place = { buildingId: 'main', floorId: '1', areaId: 'staff-room' };
+const place = { buildingId: 'a1', floorId: '1', areaId: 'staff-room-1' };
 const now = Date.now();
 
 // A report body for a green bottle lost in the staff room a few hours ago.

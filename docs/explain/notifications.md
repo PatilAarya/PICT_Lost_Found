@@ -44,8 +44,8 @@ Files: `server/src/modules/notifications/`, `client/src/shared/realtime/useNotif
 ## 4. Two-minute demo script
 
 1. Log in as **Sneha Patil** and open **Alerts**: two "Possible match" alerts, and the bell shows 2.
-2. In a second window, log in as **Aarav Sharma** and post a found item: black JBL earbuds in the Lab building canteen.
+2. In a second window, log in as **Aarav Sharma** and post a found item: black JBL earbuds in the Canteen.
 3. Back in Sneha's window, without refreshing: a toast appears, the bell goes up, and the new alert with its reason is on top.
 4. Press **Open**: it marks the alert read and opens the report with the match.
-5. Start **Report lost item**, go to Where, choose Lab building and Ground floor, and tap the canteen: it turns red and a pin appears.
+5. Start **Report lost item**, go to Where, tap the Canteen on the campus map, choose Ground floor, and tap the canteen hall: it turns red and a pin appears.
 6. Show `pinMaths.js`: two small functions, one subtraction and one division each.

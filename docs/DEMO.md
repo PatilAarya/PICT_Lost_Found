@@ -26,7 +26,7 @@ Use one normal window and one private window, so two people are logged in at onc
 
 1. **Login** (A). Show the split-screen login. Log in with an email code, or the Student card.
 2. **Report lost** (A). Lost, then Report lost item. Category Bottle, "Blue steel bottle",
-   colour blue, Main building, Second floor, tap the Library on the plan (the pin drops),
+   colour blue, tap A1 building on the campus map, Ground floor, tap the Central Library on the plan (the pin drops),
    time window "the last two hours". Report it: "No matches yet".
 3. **Post found** (B, Aarav). Found, then Post found item. Bottle, upload a photo, drag over
    any sticker to blur it, title "Steel bottle", colour blue, two secret answers
